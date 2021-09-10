@@ -63,7 +63,8 @@ const Login = ({navigation, route}) => {
   }, []);
   // const password_ref = useRef(null);
   return (
-   
+    <>
+      <CustomSafeAreaView backgroundColor={'#000'} barStyle={'light-content'} />
 
       <View
         style={{
@@ -77,7 +78,7 @@ const Login = ({navigation, route}) => {
             style={{
               flex: 1,
               marginHorizontal: 0,
-              width: '100%',
+              width: screen_width,
             }}></LoginTopCurve>
         </View>
         <View style={{flex: 1, paddingHorizontal: 20}}>
@@ -126,7 +127,7 @@ const Login = ({navigation, route}) => {
           <LoginBottomCurve></LoginBottomCurve>
         </View>
       </View>
-    
+    </>
   );
 };
 export default Login;
