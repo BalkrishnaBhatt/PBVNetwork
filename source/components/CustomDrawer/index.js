@@ -32,10 +32,11 @@ const CustomDrawer = ({...props}) => {
       }}>
       <SafeAreaView></SafeAreaView>
       <TouchableOpacity
-        onPress={() =>
+        onPress={() => {
           //  props.navigation.dispatch(DrawerActions.closeDrawer())
-          DrawerActions.closeDrawer()
-        }
+          // DrawerActions.closeDrawer()
+          // navigation.closeDrawer()
+        }}
         activeOpacity={0.8}
         style={{
           backgroundColor: '#F5F5F5',
@@ -89,7 +90,7 @@ const CustomDrawer = ({...props}) => {
       <TouchableOpacity
         style={[Styles.view_button, {borderBottomWidth: 0}]}
         activeOpacity={0.8}
-        onPress={() => props.navigation.navigate(NAVIGATION.HOME)}>
+        onPress={() => props.navigation.navigate(NAVIGATION.SETTINGS)}>
         <Text style={Styles.text_button}>Setting</Text>
       </TouchableOpacity>
       <View style={{flex: 1}}></View>

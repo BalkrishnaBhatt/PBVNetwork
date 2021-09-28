@@ -23,6 +23,10 @@ const Common_styles = StyleSheet.create({
   Flex_Direction_Row: {
     flexDirection: 'row',
   },
+  Flex_Direction_Row_with_center: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   SafeAreaView: {
     backgroundColor: Colors.black_opacity_40,
   },
