@@ -23,12 +23,21 @@ import Styles from './style';
 import {NAVIGATION} from '../../../constant';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {Fonts} from '../../../utils/fonts';
+import {useSelector, useDispatch} from 'react-redux';
 const Tab = createMaterialTopTabNavigator();
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
 
 const ProfileScreen = ({navigation, route, ...props}) => {
   //   const {dark, theme, toggle} = useContext(ThemeContext);
+  let AuthenticationReducer = useSelector(state => state.AuthenticationReducer);
+  useEffect(() => {
+    if (AuthenticationReducer.email) {
+      setName(AuthenticationReducer.email);
+    } else {
+      setName('srp');
+    }
+  }, [AuthenticationReducer]);
   const [name, setName] = useState('');
   const [firmName, setFirmName] = useState('');
   const [jurisdiction, setJurisdiction] = useState('');

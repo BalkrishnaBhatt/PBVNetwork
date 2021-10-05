@@ -13,7 +13,7 @@ export const Colors = {
   black_opacity_40: 'rgba(0,0,0,0.4)',
   black_opacity_25: 'rgba(0,0,0,0.3)',
   modal_blur: 'rgba(0,0,0,0.4)',
-  ActivityIndicator: 'rgba(255,255,255,0.7)',
+  ActivityIndicator: 'rgba(125,255,255,0.7)',
   primary_color: '#CBA500',
   light_primary_color: 'rgba(203, 165, 0, 0.2)',
   red: '#FF0000',

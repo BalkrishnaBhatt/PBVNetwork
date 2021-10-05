@@ -17,6 +17,8 @@ import {Colors} from '../../../utils/colors';
 import {NAVIGATION, EMAIL_PATTERN} from '../../../constant';
 import {Fonts} from '../../../utils/fonts';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import {useSelector, useDispatch} from 'react-redux';
+import {loginSave, setLoader} from '../../../redux/actions';
 // const screen_width = Dimensions.get('window').width;
 // const screen_height = Dimensions.get('window').height;
 const config = {
@@ -25,10 +27,9 @@ const config = {
   // gestureIsClickThreshold: 20,
 };
 const Login = ({navigation, route}) => {
-  //   const {dark, theme, toggle} = useContext(ThemeContext);
-
-  const [emailId, setEmailId] = useState('');
-  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+  const [emailId, setEmailId] = useState('pbvnetwork');
+  const [password, setPassword] = useState('Oqy6sCcFYB(UlDQ6%23x');
   const [emailIdErrorText, setEmailIdErrorText] = useState('');
   const [passwordErrorText, setPasswordErrorText] = useState('');
   const [screen_width, set_screen_width] = useState(
@@ -49,19 +50,23 @@ const Login = ({navigation, route}) => {
 
   const validate = () => {
     let error_flag = true;
-    if (emailId == '') {
-      setEmailIdErrorText('Please Enter Email or Username');
-      error_flag = false;
-    } else if (!validateEmail()) {
-      setEmailIdErrorText('Sorry, your email is invalid.');
-      error_flag = false;
-    }
+    // if (emailId == '') {
+    //   setEmailIdErrorText('Please Enter Email or Username');
+    //   error_flag = false;
+    // } else if (!validateEmail()) {
+    //   setEmailIdErrorText('Sorry, your email is invalid.');
+    //   error_flag = false;
+    // }
     if (password == '') {
       setPasswordErrorText('Please Enter Password');
       error_flag = false;
     }
     if (error_flag) {
       navigation.navigate(NAVIGATION.DASHBOARD);
+      // dispatch(loginSave(emailId, password, navigation));
+      // setTimeout(() => {
+      //   dispatch(setLoader(true));
+      // }, 3000);
     }
   };
   const validateEmail = () => {
