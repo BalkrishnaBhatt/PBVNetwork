@@ -1,5 +1,5 @@
-// import GroupDetailReducer from './GroupDetailReducer';
-// import GroupReducer from './GroupReducer';
+import GroupDetailReducer from './GroupDetailReducer';
+import GroupReducer from './GroupReducer';
 // import HomeReducer from './HomeReducer';
 // import MemberReducer from './MemberReducer';
 // import UserReducer from './UserReducer';
@@ -7,11 +7,11 @@ import AuthenticationReducer from './AuthenticationReducer';
 import LoaderReducer from './LoaderReducer';
 import HomeReducer from './HomeReducer';
 export {
-  // GroupDetailReducer,
+  GroupDetailReducer,
   // UserReducer,
   // HomeReducer,
   // MemberReducer,
-  // GroupReducer,
+  GroupReducer,
   AuthenticationReducer,
   LoaderReducer,
   HomeReducer,

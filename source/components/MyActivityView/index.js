@@ -2,7 +2,7 @@ import React, {useRef} from 'react';
 import {TextInput, Text, View, TouchableOpacity, Image} from 'react-native';
 import {Colors} from '../../utils/colors';
 import {Fonts} from '../../utils/fonts';
-
+import moment from 'moment';
 import HTML from 'react-native-render-html';
 import {FavouriteSymbol, CommentsSymbol, DeleteSymbol} from '../../utils/svg';
 const MyActivityView = ({item}) => {
@@ -38,7 +38,7 @@ const MyActivityView = ({item}) => {
       activeOpacity={0.8}
       onPress={() => {}}>
       <Image
-        source={{uri: item.user_avatar.thumb}}
+        source={{uri: item.user_avatar && item.user_avatar.thumb}}
         resizeMode="cover"
         style={{height: 25, width: 25, borderRadius: 9}}
       />
@@ -79,7 +79,7 @@ const MyActivityView = ({item}) => {
           <Text style={{fontSize: 12, fontWeight: '400'}}>
             {item.description}
           </Text>{' '}
-          {item.group_name}
+          {item.group_name} 
         </Text> */}
         <Text
           style={{
@@ -88,7 +88,8 @@ const MyActivityView = ({item}) => {
             color: Colors.border_color,
             marginVertical: 15,
           }}>
-          3 hours, 39 minutes ago
+          {/* 3 hours, 39 minutes ago */}
+          {moment(item.date).fromNow()}
         </Text>
         <View style={{flexDirection: 'row'}}>
           <View

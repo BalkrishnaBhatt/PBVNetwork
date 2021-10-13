@@ -9,9 +9,9 @@ export const getHomeNews = navigation => {
   const config = {
     headers: {
       // 'Content-Type': 'application/json',
-      Authorization:
-        'Bearer ' +
-        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvd3d3LnBidm5ldHdvcmsuY29tIiwiaWF0IjoxNjMzMzYyMTM4LCJuYmYiOjE2MzMzNjIxMzgsImV4cCI6MTYzMzk2NjkzOCwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMSJ9fX0.JBpBLyOwIr1zI4nPZ7-gZDl2IoGJSruYQm-6zGzn30Y',
+      // Authorization:
+      //   'Bearer ' +
+      //   'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvd3d3LnBidm5ldHdvcmsuY29tIiwiaWF0IjoxNjMzMzYyMTM4LCJuYmYiOjE2MzMzNjIxMzgsImV4cCI6MTYzMzk2NjkzOCwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMSJ9fX0.JBpBLyOwIr1zI4nPZ7-gZDl2IoGJSruYQm-6zGzn30Y',
     },
   };
 

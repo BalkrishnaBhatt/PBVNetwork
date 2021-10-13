@@ -26,9 +26,9 @@ import Styles from './style';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import Overview from '../../GroupScreens/Overview';
 import Manage from '../../GroupScreens/Manage';
-import MyActivities from '../../HomeScreens/MyActivities';
-import LatestNews from '../../HomeScreens/LatestNews';
-import OpportunityMatching from '../../HomeScreens/OpportunityMatching';
+import UserNews from '../../ProfileScreens/UserNews';
+import UserOpportunity from '../../ProfileScreens/UserOpportunity';
+import UserActivities from '../../ProfileScreens/UserActivities';
 import ProfileScreen from '../../ProfileScreens/ProfileScreen';
 import Notification from '../../ProfileScreens/Notification';
 const Tab = createMaterialTopTabNavigator();
@@ -177,7 +177,7 @@ const Profile = ({navigation, route, ...props}) => {
                         }}>
                         {label}
                       </Text> */}
-                      {label == NAVIGATION.MY_ACTIVITIES ? (
+                      {label == NAVIGATION.USER_ACTIVITIES ? (
                         <HomeTabSymbol
                           style={Styles.HomeTabSymbol}
                           fill={
@@ -186,7 +186,7 @@ const Profile = ({navigation, route, ...props}) => {
                               : Colors.inactive_tab
                           }
                         />
-                      ) : label == NAVIGATION.OPPORTUNITY_MATCHING ? (
+                      ) : label == NAVIGATION.USER_OPPORTUNITY ? (
                         <OpportunityTabSymbol
                           style={Styles.HomeTabSymbol}
                           fill={
@@ -235,29 +235,23 @@ const Profile = ({navigation, route, ...props}) => {
                     </TouchableOpacity>
                   );
                 })}
-                {/* <View style={Styles.tab_back}>
-                  <ManageTabSymbol
-                    style={Styles.HomeTabSymbol}
-                    fill={Colors.inactive_tab}
-                  />
-                </View> */}
                 {/* </ScrollView> */}
               </View>
             )}>
             <Tab.Screen name={NAVIGATION.OVERVIEW} component={Overview} />
             <Tab.Screen
-              name={NAVIGATION.LATEST_NEWS}
-              component={LatestNews}
+              name={NAVIGATION.USER_NEWS}
+              component={UserNews}
               initialParams={{from_group: true}}
             />
             <Tab.Screen
-              name={NAVIGATION.MY_ACTIVITIES}
-              component={MyActivities}
+              name={NAVIGATION.USER_ACTIVITIES}
+              component={UserActivities}
               initialParams={{from_group: true}}
             />
             <Tab.Screen
-              name={NAVIGATION.OPPORTUNITY_MATCHING}
-              component={OpportunityMatching}
+              name={NAVIGATION.USER_OPPORTUNITY}
+              component={UserOpportunity}
               initialParams={{from_group: true}}
             />
             <Tab.Screen

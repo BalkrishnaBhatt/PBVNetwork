@@ -127,7 +127,7 @@ const ManageMembers = ({navigation, route, ...props}) => {
             </Text>
           </View>
         </View>
-        <View style={{flexDirection: 'row'}}>
+        {/* <View style={{flexDirection: 'row'}}>
           <TouchableOpacity style={button_style} activeOpacity={0.8}>
             <Text style={text_button}>{'Kick & Ban'}</Text>
           </TouchableOpacity>
@@ -140,7 +140,7 @@ const ManageMembers = ({navigation, route, ...props}) => {
           <TouchableOpacity style={button_style} activeOpacity={0.8}>
             <Text style={text_button}>{'Remove from group'}</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
       </TouchableOpacity>
     );
   };

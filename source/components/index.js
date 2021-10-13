@@ -7,6 +7,8 @@ import CustomLoader from './CustomLoader';
 import CustomSafeAreaView from './CustomSafeAreaView';
 import CustomTextInput from './CustomTextInput';
 import ImagePickerComponent from './ImagePickerComponent';
+import GroupListView from './GroupListView';
+import OpportunityView from './OpportunityView';
 export {
   ContentLoader,
   CustomDrawer,
@@ -17,4 +19,6 @@ export {
   NewsView,
   ImagePickerComponent,
   CustomTextInput,
+  GroupListView,
+  OpportunityView,
 };

@@ -6,14 +6,20 @@ export const NAVIGATION = {
   HOME: 'home',
   PROFILE: 'profile',
   ///////////////////////////////////////////////////
+  GROUPS_ROUTER: 'groups_router',
   GROUPS: 'groups',
   GROUP_DETAIL: 'group_detail',
   OVERVIEW: 'overview',
   MANAGE: 'manage',
+  GROUP_ACTIVITIES: 'group_activities',
+  GROUP_NEWS: 'group_news',
+  GROUP_OPPORTUNITY: 'group_opportuniy',
   MANAGE_DETAILS: 'Details',
   MANAGE_MEMBERS: 'Members',
+  ///////////////////////////////////////////////////
   CLIENT_PORTFOLIO: 'Client Portfolio',
   PBV_RATING: 'PBV Rating',
+  ///////////////////////////////////////////////////
   NOTIFICATION: 'notification',
   UNREAD: 'Unread',
   READ: 'Read',
@@ -33,7 +39,11 @@ export const NAVIGATION = {
   LATEST_NEWS: 'LATEST NEWS',
   OPPORTUNITY_MATCHING: 'OPPORTUNITY MATCHING',
   PBV_GROUP_PROFILE: 'PBV GROUP PROFILE',
+  ///////////////////////////////////////////////////
   PROFILE_SCREEN: 'profile_screen',
+  USER_ACTIVITIES: 'user_activities',
+  USER_NEWS: 'user_news',
+  USER_OPPORTUNITY: 'user_opportuniy',
 };
 export const VARIABLE = {
   // IS_BACKGROUND_PROCESS_SETTED: 'is_background_process_setted',

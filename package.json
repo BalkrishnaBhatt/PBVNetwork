@@ -16,6 +16,7 @@
     "@react-navigation/native-stack": "^6.1.0",
     "accordion-collapse-react-native": "^1.0.1",
     "axios": "^0.22.0",
+    "moment": "^2.29.1",
     "react": "17.0.1",
     "react-native": "0.64.2",
     "react-native-chart-kit": "^6.11.0",

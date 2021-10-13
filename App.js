@@ -69,18 +69,18 @@ const DrawerNavigator = () => {
   //   BackHandler.exitApp();
   // };
 
-  // useEffect(() => {
-  //   if (LoaderReducer && LoaderReducer.isLoading) {
-  //     setIsLoading(LoaderReducer.isLoading);
-  //   } else {
-  //     setIsLoading(true);
-  //   }
-  // }, [LoaderReducer]);
+  useEffect(() => {
+    if (LoaderReducer && LoaderReducer.isLoading) {
+      setIsLoading(LoaderReducer.isLoading);
+    } else {
+      setIsLoading(false);
+    }
+  }, [LoaderReducer]);
   return (
     <>
       {LoaderReducer && (
         <CustomLoader
-          errorMessage={'LoaderReducer.loading'}
+          // errorMessage={'LoaderReducer.loading'}
           // visible={LoaderReducer.loading}
           visible={isLoading}
         />
@@ -98,15 +98,6 @@ const DrawerNavigator = () => {
           // }}
           // initialParams={{ isDarkTheme: isDarkTheme }}
         />
-        <Drawer.Screen
-          name={NAVIGATION.GROUPS}
-          component={Groups}
-          // options={{
-          //   drawerLabel: 'Profile Settings',
-          //   drawerIcon: () => <Feather name="settings" size={24} color="black" />,
-          //   headerTitle: 'Profile Settings',
-          // }}
-        />
         <Drawer.Screen name={NAVIGATION.MEMBERS} component={Members} />
         <Drawer.Screen
           name={NAVIGATION.CREATE_OPPORTUNITY}
@@ -119,7 +110,20 @@ const DrawerNavigator = () => {
         />
         <Drawer.Screen name={NAVIGATION.FAQS} component={Faqs} />
         <Drawer.Screen name={NAVIGATION.PROFILE} component={Profile} />
-        <Drawer.Screen name={NAVIGATION.GROUP_DETAIL} component={GroupDetail} />
+        <Drawer.Screen
+          name={NAVIGATION.GROUPS_ROUTER}
+          component={GroupRouter}
+        />
+        {/* <Drawer.Screen
+          name={NAVIGATION.GROUPS}
+          component={Groups}
+          // options={{
+          //   drawerLabel: 'Profile Settings',
+          //   drawerIcon: () => <Feather name="settings" size={24} color="black" />,
+          //   headerTitle: 'Profile Settings',
+          // }}
+        />
+        <Drawer.Screen name={NAVIGATION.GROUP_DETAIL} component={GroupDetail} /> */}
         {/* <Drawer.Screen
          name={NAVIGATION.PROFILE_SCREEN}
          component={ProfileScreen}
@@ -130,6 +134,18 @@ const DrawerNavigator = () => {
     </>
   );
 };
+
+const GroupRouter = () => {
+  return (
+    <>
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name={NAVIGATION.GROUPS} component={Groups} />
+        <Stack.Screen name={NAVIGATION.GROUP_DETAIL} component={GroupDetail} />
+      </Stack.Navigator>
+    </>
+  );
+};
+
 export default function App() {
   useEffect(() => {
     // checkLocalAuth();

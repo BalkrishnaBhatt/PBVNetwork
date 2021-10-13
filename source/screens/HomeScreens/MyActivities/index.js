@@ -51,6 +51,9 @@ const MyActivities = ({navigation, route}) => {
     dispatch(getHomeActivities());
     dispatch(getHomeNews());
     // setTimeout(() => {
+    //   dispatch(setLoader(true));
+    // }, 3000);
+    // setTimeout(() => {
     //   dispatch(setLoader(false));
     // }, 6000);
   }, []);

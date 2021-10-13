@@ -61,27 +61,6 @@ export default StyleSheet.create({
     fontWeight: '500',
   },
   ///////////////////////////////////////////////////////
-  view_sort: {
-    borderRadius: 7,
-    borderWidth: 1,
-    borderColor: Colors.primary_color,
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: 'flex-end',
-    marginHorizontal: 20,
-  },
-  text_sort: {
-    color: Colors.primary_color,
-    fontSize: 12,
-    margin: 5,
-    marginRight: 15,
-  },
-  DownArrowSymbol: {
-    height: 15,
-    width: 15,
-    marginRight: 7,
-  },
-  ///////////////////////////////////////////////////////
   header_symbol: {
     height: 25,
     width: 25,

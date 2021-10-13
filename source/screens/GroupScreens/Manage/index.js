@@ -44,14 +44,15 @@ const Manage = ({navigation, route, ...props}) => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <Tab.Navigator
             tabBar={({state, descriptors, navigation}) => (
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                style={{
-                  paddingHorizontal: 20,
-                  flexGrow: 1,
-                  // paddingRight: 100,
-                }}>
+              // <ScrollView
+              //   horizontal
+              //   showsHorizontalScrollIndicator={false}
+              //   style={{
+              //     paddingHorizontal: 20,
+              //     flexGrow: 1,
+              //     // paddingRight: 100,
+              //   }}>
+              <>
                 {state.routes.map((route, index) => {
                   const {options} = descriptors[route.key];
                   const label =
@@ -79,6 +80,10 @@ const Manage = ({navigation, route, ...props}) => {
                           ? Colors.white
                           : Colors.primary_color,
                         marginRight: 4,
+                        marginHorizontal: 20,
+                        width: '30%',
+                        alignItems: 'center',
+                        justifyContent: 'center',
                       }}>
                       <Text
                         style={{
@@ -95,13 +100,14 @@ const Manage = ({navigation, route, ...props}) => {
                     </TouchableOpacity>
                   );
                 })}
-              </ScrollView>
+              </>
+              /* </ScrollView> */
             )}>
-            <Tab.Screen
+            {/* <Tab.Screen
               name={NAVIGATION.MANAGE_DETAILS}
               component={ManageDetails}
               initialParams={{from_group: false}}
-            />
+            /> */}
             <Tab.Screen
               name={NAVIGATION.MANAGE_MEMBERS}
               component={ManageMembers}

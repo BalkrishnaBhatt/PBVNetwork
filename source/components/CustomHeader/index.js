@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, TouchableOpacity, View, Image} from 'react-native';
 import {OpenDrawerSymbol} from '../../utils/svg';
 import {Colors} from '../../utils/colors';
 import {NAVIGATION} from '../../constant';
 
+import {useSelector, useDispatch} from 'react-redux';
 const CustomHeader = ({
   navigation,
   headerSymbolColor = Colors.black,
@@ -17,6 +18,15 @@ const CustomHeader = ({
   //   setIsDarkTheme((isDarkTheme) => !isDarkTheme);
   // };
   // console.log('navi--?',props.navigation);
+  let AuthenticationReducer = useSelector(state => state.AuthenticationReducer);
+  useEffect(() => {
+    if (AuthenticationReducer.email) {
+      setUserImage(AuthenticationReducer.userImage);
+    } else {
+      setUserImage('');
+    }
+  }, [AuthenticationReducer]);
+  const [userImage, setUserImage] = useState('');
   return (
     <View
       style={{
@@ -47,7 +57,7 @@ const CustomHeader = ({
             width: 40,
             borderRadius: 20,
           }}
-          source={{uri: 'https://picsum.photos/200/300'}}
+          source={{uri: userImage}}
         />
       </TouchableOpacity>
     </View>
