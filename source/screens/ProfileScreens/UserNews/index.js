@@ -22,6 +22,7 @@ import {
   getHomeActivities,
   getHomeNews,
   setLoader,
+  getUserNews,
 } from '../../../redux/actions';
 
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -30,22 +31,22 @@ import {
   NewsView,
   ContentLoader,
   CustomSafeAreaView,
+  EmptyList,
 } from '../../../components';
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
 
 const UserNews = ({navigation, route}) => {
   const dispatch = useDispatch();
-  let HomeReducer = useSelector(state => state.HomeReducer);
+  let UserReducer = useSelector(state => state.UserReducer);
   useEffect(() => {
-    if (HomeReducer) {
-      setIsLoading(HomeReducer.isLoading);
-      setNewsList(HomeReducer.homeNews);
+    if (UserReducer) {
+      setIsLoading(UserReducer.isLoading);
+      // setNewsList(UserReducer.userNews);
     }
-  }, [HomeReducer]);
+  }, [UserReducer]);
   useEffect(() => {
-    dispatch(getHomeActivities());
-    dispatch(getHomeNews());
+    dispatch(getUserNews(navigation));
   }, []);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -61,20 +62,20 @@ const UserNews = ({navigation, route}) => {
     },
   ]);
   const [newsList, setNewsList] = useState([
-    {
-      news_title:
-        'Telereal Trillium’s £7.9 Million Acquisition of Marlborough House',
-      news_details:
-        'Reed Smith has advised Telereal Trillium on the deal. Telereal Trillium, one of ...',
-    },
-    {
-      news_title: 'Sonoma Pharmaceuticals’ $6 Million At-The-Market Offering',
-      news_details: '',
-    },
-    {
-      news_title: 'Magna International’s Acquisition of Venoeer',
-      news_details: '',
-    },
+    // {
+    //   news_title:
+    //     'Telereal Trillium’s £7.9 Million Acquisition of Marlborough House',
+    //   news_details:
+    //     'Reed Smith has advised Telereal Trillium on the deal. Telereal Trillium, one of ...',
+    // },
+    // {
+    //   news_title: 'Sonoma Pharmaceuticals’ $6 Million At-The-Market Offering',
+    //   news_details: '',
+    // },
+    // {
+    //   news_title: 'Magna International’s Acquisition of Venoeer',
+    //   news_details: '',
+    // },
   ]);
   // const [open, setOpen] = useState(false);
   // const [value, setValue] = useState(null);
@@ -155,6 +156,9 @@ const UserNews = ({navigation, route}) => {
                 />
               )}
               keyExtractor={item => item.id}
+              ListEmptyComponent={() => {
+                return <EmptyList />;
+              }}
             />
           </ScrollView>
         )}

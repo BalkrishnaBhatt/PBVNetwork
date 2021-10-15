@@ -27,6 +27,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {loginSave, setLoader} from '../../../redux/actions';
 import axiosInstance from '../../../axios';
 import {console_log} from '../../../utils/loggers';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // const screen_width = Dimensions.get('window').width;
 // const screen_height = Dimensions.get('window').height;
 const config = {
@@ -71,12 +72,12 @@ const Login = ({navigation, route}) => {
       error_flag = false;
     }
     if (error_flag) {
-      navigation.navigate(NAVIGATION.DASHBOARD);
-      // setIsLoading(true);
-      // LoginRequest();
+      // navigation.navigate(NAVIGATION.DASHBOARD);
+      setIsLoading(true);
+      LoginRequest();
     }
   };
-  const LoginRequest = () => {
+  const LoginRequest = async () => {
     let url =
       'jwt-auth/v1/token' + '?username=' + emailId + '&password=' + password;
     const config = {
@@ -86,13 +87,17 @@ const Login = ({navigation, route}) => {
     };
     axiosInstance
       .post(url, config)
-      .then(function (response) {
+      .then(async response => {
         setIsLoading(false);
         if (response.data && response.data.token) {
           navigation.navigate(NAVIGATION.DASHBOARD);
         }
-        console_log('login response: ', JSON.stringify(response.data, null, 2));
+        // console_log('login response: ', JSON.stringify(response.data, null, 2));
         // handle success
+        await AsyncStorage.setItem(
+          VARIABLE.USER_INFO,
+          JSON.stringify(response.data),
+        );
         dispatch(loginSave(response.data));
       })
       .catch(function (error) {

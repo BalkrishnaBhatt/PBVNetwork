@@ -26,11 +26,11 @@ const OpportunityView = ({item}) => {
       onPress={() => {
         // navigation.navigate(NAVIGATION.PROFILE);
       }}>
-      <Image
+      {/* <Image
         source={{uri: item.profile_image}}
         resizeMode="cover"
         style={{height: 50, width: 50, borderRadius: 15}}
-      />
+      /> */}
       <View
         style={{
           paddingHorizontal: 10,
@@ -53,7 +53,7 @@ const OpportunityView = ({item}) => {
             fontFamily: Fonts.Regular_font,
             fontWeight: '300',
           }}>
-          {item.description}
+          {item.content}
         </Text>
         <Text style={text_style}>
           Expire Date:
@@ -62,7 +62,7 @@ const OpportunityView = ({item}) => {
               color: Colors.primary_color,
             }}>
             {' '}
-            {item.date}
+            {item.expire_date}
           </Text>
         </Text>
         <Text style={text_style}>

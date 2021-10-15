@@ -17,6 +17,7 @@ import {
   NewsView,
   ContentLoader,
   CustomSafeAreaView,
+  EmptyList,
 } from '../../../components';
 
 const screen_width = Dimensions.get('window').width;
@@ -158,6 +159,9 @@ const LatestNews = ({navigation, route}) => {
                 />
               )}
               keyExtractor={item => item.id}
+              ListEmptyComponent={() => {
+                return <EmptyList />;
+              }}
             />
           </ScrollView>
         )}

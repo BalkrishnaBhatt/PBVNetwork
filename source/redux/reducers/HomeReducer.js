@@ -7,7 +7,7 @@ const initialState = {
   homeNews: [],
   homeLatestNews: [],
   homeOpportunity: [],
-  homePBVGroupProfile: [],
+  // homePBVGroupProfile: [],
 };
 
 const HomeReducer = (state = initialState, action) => {
@@ -36,12 +36,12 @@ const HomeReducer = (state = initialState, action) => {
         homeOpportunity: action.list,
         isLoading: false,
       };
-    case actionTypes.GET_HOME_PBV_GROUP_PROGILE:
-      return {
-        ...state,
-        homePBVGroupProfile: action.list,
-        isLoading: false,
-      };
+    // case actionTypes.GET_HOME_PBV_GROUP_PROGILE:
+    //   return {
+    //     ...state,
+    //     homePBVGroupProfile: action.list,
+    //     isLoading: false,
+    //   };
     case actionTypes.SET_HOME_LOADING:
       return {
         ...state,

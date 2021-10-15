@@ -16,9 +16,10 @@ export const getGroupActivity = navigation => {
     axiosInstance
       .get(url + group_id, config)
       .then(function (response) {
+        let data = response.data;
         console.log(
           'getGroupActivity response: ',
-          JSON.stringify(response.data, null, 2),
+          JSON.stringify(data, null, 2),
         );
         // handle success
         dispatch(get_group_activities(response.data));

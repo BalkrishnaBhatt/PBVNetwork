@@ -14,7 +14,14 @@ import images from '../../utils/images';
 import {FavouriteSymbol, CommentsSymbol, DeleteSymbol} from '../../utils/svg';
 const ContentLoader = () => {
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        // justifyContent: 'center',
+        height: 200,
+        // alignSelf: 'flex-start',
+      }}>
       {/* <Image
         source={images.contentLoader}
         // source={{

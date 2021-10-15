@@ -47,6 +47,7 @@ export const NAVIGATION = {
 };
 export const VARIABLE = {
   // IS_BACKGROUND_PROCESS_SETTED: 'is_background_process_setted',
+  USER_INFO: 'user_info',
 };
 
 export const EMAIL_PATTERN = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;

@@ -81,7 +81,7 @@ const Signup = ({navigation, route}) => {
     }
 
     if (error_flag) {
-      navigation.navigate(NAVIGATION.DASHBOARD);
+      // navigation.navigate(NAVIGATION.DASHBOARD);
     }
   };
   const validateEmail = () => {

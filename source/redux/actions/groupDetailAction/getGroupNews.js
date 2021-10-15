@@ -2,6 +2,7 @@ import * as actionTypes from '../../actionTypes';
 import axiosInstance from '../../../axios';
 
 import {Store} from '../../store';
+import {console_log} from '../../../utils/loggers';
 export const getGroupNews = navigation => {
   let url = 'pbvnetwork/v1/groupnews/';
   const config = {
@@ -16,12 +17,12 @@ export const getGroupNews = navigation => {
     axiosInstance
       .get(url + group_id, config)
       .then(function (response) {
-        console.log(
+        console_log(
           'getGroupNews response: ',
           JSON.stringify(response.data, null, 2),
         );
         // handle success
-        dispatch(get_group_activities(response.data));
+        dispatch(get_group_news(response.data));
       })
       .catch(function (error) {
         // handle error
@@ -44,9 +45,9 @@ export const set_loader = loaderState => {
     loaderState: loaderState,
   };
 };
-export const get_group_activities = list => {
+export const get_group_news = list => {
   return {
-    type: actionTypes.GET_GROUP_ACTIVITIES,
+    type: actionTypes.GET_GROUP_NEWS,
     list,
   };
 };

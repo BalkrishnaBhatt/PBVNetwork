@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   ScrollView,
   Text,
@@ -9,8 +9,6 @@ import {
   Modal,
   TextInput,
 } from 'react-native';
-import CustomSafeAreaView from '../../../components/CustomSafeAreaView';
-import CustomHeader from '../../../components/CustomHeader';
 import {CloseSymbol} from '../../../utils/svg';
 import {Colors} from '../../../utils/colors';
 import Styles from './style';
@@ -20,39 +18,113 @@ import {
   CollapseHeader,
   CollapseBody,
 } from 'accordion-collapse-react-native';
+import {useSelector, useDispatch} from 'react-redux';
+import {console_log} from '../../../utils/loggers';
+import {
+  getAllGroups,
+  getMyGroups,
+  getGroupDetails,
+  getFaqs,
+} from '../../../redux/actions';
+import {
+  ContentLoader,
+  GroupListView,
+  CustomHeader,
+  CustomSafeAreaView,
+} from '../../../components';
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
 
 const Faqs = ({navigation, route, ...props}) => {
-  //   const {dark, theme, toggle} = useContext(ThemeContext);
-
-  const [selected, setSelected] = useState(1);
+  const dispatch = useDispatch();
+  let InfoReducer = useSelector(state => state.InfoReducer);
+  useEffect(() => {
+    if (InfoReducer !== undefined && InfoReducer.faqList !== undefined) {
+      let data_to_set = [];
+      data_to_set = InfoReducer;
+      let obj = {
+        category_name: 'Leave a Reply',
+        faqs: [],
+      };
+      data_to_set = InfoReducer.faqList;
+      data_to_set.push(obj);
+      setFaqList(data_to_set);
+      setSelected(InfoReducer.faqList[0].category_name);
+      // console.log(
+      //   'InfoReducer.faqList: ',
+      //   JSON.stringify(data_to_set, null, 2),
+      // );
+      setSelectedIndex(0);
+      setQuestionList(InfoReducer.faqList[0].faqs);
+      setIsLoading(InfoReducer.isLoading);
+    }
+    // else {
+    //   setPosts([]);
+    // }
+  }, [InfoReducer]);
+  useEffect(() => {
+    dispatch(getFaqs(navigation));
+  }, []);
+  const [isLoading, setIsLoading] = useState(true);
+  const [selected, setSelected] = useState('');
+  const [selectedIndex, setSelectedIndex] = useState(0);
   // const [collapseOpen, setCollapseOpen] = useState(0);
   const [comment, setComment] = useState('');
+  const [faqList, setFaqList] = useState([]);
   const [commentErrorText, setCommentErrorText] = useState('');
   const [questionList, setQuestionList] = useState([
-    {
-      header_text: 'Can I customize the header?',
-      body_text:
-        'Appropriately grow covalent benefits whereas emerging leadership. Appropriately network goal-oriented core competencies vis-a-vis corporate services. Quickly foster front-end quality vectors without bleeding-edge intellectual capital. Interactively enhance multifunctional web services vis-a-vis bleeding-edge convergence. Professionally pontificate standards compliant e-commerce without robust solutions.',
-    },
-    {
-      header_text: 'Can I customize the header?',
-      body_text:
-        'Appropriately grow covalent benefits whereas emerging leadership. Appropriately network goal-oriented core competencies vis-a-vis corporate services. Quickly foster front-end quality vectors without bleeding-edge intellectual capital. Interactively enhance multifunctional web services vis-a-vis bleeding-edge convergence. Professionally pontificate standards compliant e-commerce without robust solutions.',
-    },
-    {
-      header_text: 'Can I customize the header?',
-      body_text:
-        'Appropriately grow covalent benefits whereas emerging leadership. Appropriately network goal-oriented core competencies vis-a-vis corporate services. Quickly foster front-end quality vectors without bleeding-edge intellectual capital. Interactively enhance multifunctional web services vis-a-vis bleeding-edge convergence. Professionally pontificate standards compliant e-commerce without robust solutions.',
-    },
-    {
-      header_text: 'Can I customize the header?',
-      body_text:
-        'Appropriately grow covalent benefits whereas emerging leadership. Appropriately network goal-oriented core competencies vis-a-vis corporate services. Quickly foster front-end quality vectors without bleeding-edge intellectual capital. Interactively enhance multifunctional web services vis-a-vis bleeding-edge convergence. Professionally pontificate standards compliant e-commerce without robust solutions.',
-    },
+    // {
+    //   header_text: 'Can I customize the header?',
+    //   body_text:
+    //     'Appropriately grow covalent benefits whereas emerging leadership. Appropriately network goal-oriented core competencies vis-a-vis corporate services. Quickly foster front-end quality vectors without bleeding-edge intellectual capital. Interactively enhance multifunctional web services vis-a-vis bleeding-edge convergence. Professionally pontificate standards compliant e-commerce without robust solutions.',
+    // },
+    // {
+    //   header_text: 'Can I customize the header?',
+    //   body_text:
+    //     'Appropriately grow covalent benefits whereas emerging leadership. Appropriately network goal-oriented core competencies vis-a-vis corporate services. Quickly foster front-end quality vectors without bleeding-edge intellectual capital. Interactively enhance multifunctional web services vis-a-vis bleeding-edge convergence. Professionally pontificate standards compliant e-commerce without robust solutions.',
+    // },
+    // {
+    //   header_text: 'Can I customize the header?',
+    //   body_text:
+    //     'Appropriately grow covalent benefits whereas emerging leadership. Appropriately network goal-oriented core competencies vis-a-vis corporate services. Quickly foster front-end quality vectors without bleeding-edge intellectual capital. Interactively enhance multifunctional web services vis-a-vis bleeding-edge convergence. Professionally pontificate standards compliant e-commerce without robust solutions.',
+    // },
+    // {
+    //   header_text: 'Can I customize the header?',
+    //   body_text:
+    //     'Appropriately grow covalent benefits whereas emerging leadership. Appropriately network goal-oriented core competencies vis-a-vis corporate services. Quickly foster front-end quality vectors without bleeding-edge intellectual capital. Interactively enhance multifunctional web services vis-a-vis bleeding-edge convergence. Professionally pontificate standards compliant e-commerce without robust solutions.',
+    // },
   ]);
 
+  const renderTabsHeader = ({item, index}) => {
+    return (
+      <TouchableOpacity
+        activeOpacity={0.8}
+        style={[
+          Styles.selected_header,
+          {
+            borderColor:
+              selectedIndex == index
+                ? Colors.primary_color
+                : Colors.transparant,
+          },
+        ]}
+        onPress={() => {
+          setSelectedIndex(index);
+          setSelected(item.category_name);
+          setQuestionList(item.faqs);
+        }}>
+        <Text
+          style={[
+            Styles.selected_header_text,
+            {
+              color: selectedIndex == index ? Colors.primary_color : '#a5a5a5',
+            },
+          ]}>
+          {item.category_name}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
   const renderQuestion = ({item, index}) => {
     return (
       <Collapse
@@ -81,7 +153,7 @@ const Faqs = ({navigation, route, ...props}) => {
                 fontFamily: Fonts.Regular_font,
                 fontWeight: '400',
               }}>
-              {item.header_text}
+              {item.title}
             </Text>
           </View>
         </CollapseHeader>
@@ -103,7 +175,15 @@ const Faqs = ({navigation, route, ...props}) => {
                 fontFamily: Fonts.Regular_font,
                 fontWeight: '300',
               }}>
-              {item.body_text}
+              {item.description
+                .replace('<p>', '')
+                .replace('</p>', '')
+                .replace('<p>', '')
+                .replace('</p>', '')
+                .replace('<p>', '')
+                .replace('</p>', '')
+                .replace('<p>', '')
+                .replace('</p>', '')}
             </Text>
           </View>
         </CollapseBody>
@@ -118,8 +198,13 @@ const Faqs = ({navigation, route, ...props}) => {
       error_flag = false;
     }
     if (error_flag) {
-      setSelected(1);
+      setDefaultTab();
     }
+  };
+  const setDefaultTab = () => {
+    setSelected(faqList[0].category_name);
+    setQuestionList(faqList[0].faqs);
+    setSelectedIndex(0);
   };
   return (
     <>
@@ -132,101 +217,47 @@ const Faqs = ({navigation, route, ...props}) => {
           // height: screen_height,
           // width: screen_width,
         }}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <CustomHeader navigation={navigation} {...props}></CustomHeader>
-          <Text style={Styles.text_home}>FAQs</Text>
-          <View style={{flexDirection: 'row', marginHorizontal: 20}}>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              style={[
-                Styles.selected_header,
-                {
-                  borderColor:
-                    selected == 1 ? Colors.primary_color : Colors.transparant,
-                },
-              ]}
-              onPress={() => {
-                setSelected(1);
-              }}>
-              <Text
-                style={[
-                  Styles.selected_header_text,
-                  {
-                    color: selected == 1 ? Colors.primary_color : '#a5a5a5',
-                  },
-                ]}>
-                SITE QUESTIONS
-              </Text>
-            </TouchableOpacity>
-            <View style={Styles.view_gap} />
-            <TouchableOpacity
-              activeOpacity={0.8}
-              style={[
-                Styles.selected_header,
-                {
-                  borderColor:
-                    selected == 2 ? Colors.primary_color : Colors.transparant,
-                },
-              ]}
-              onPress={() => {
-                setSelected(2);
-              }}>
-              <Text
-                style={[
-                  Styles.selected_header_text,
-                  {
-                    color: selected == 2 ? Colors.primary_color : '#a5a5a5',
-                  },
-                ]}>
-                CONTENT QUESTIONS
-              </Text>
-            </TouchableOpacity>
-            <View style={Styles.view_gap} />
-            <TouchableOpacity
-              activeOpacity={0.8}
-              style={[
-                Styles.selected_header,
-                {
-                  borderColor:
-                    selected == 3 ? Colors.primary_color : Colors.transparant,
-                },
-              ]}
-              onPress={() => {
-                setSelected(3);
-              }}>
-              <Text
-                style={[
-                  Styles.selected_header_text,
-                  {
-                    color: selected == 3 ? Colors.primary_color : '#a5a5a5',
-                  },
-                ]}>
-                Leave a Reply
-              </Text>
-            </TouchableOpacity>
-          </View>
+        {isLoading ? (
+          <ContentLoader />
+        ) : (
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <CustomHeader navigation={navigation} {...props}></CustomHeader>
+            <Text style={Styles.text_home}>FAQs</Text>
 
-          <FlatList
-            style={{margin: 20}}
-            showsVerticalScrollIndicator={false}
-            data={questionList}
-            renderItem={renderQuestion}
-            keyExtractor={item => item.id}
-          />
-        </ScrollView>
+            <FlatList
+              style={{margin: 20, flex: 1, width: '100%'}}
+              showsVerticalScrollIndicator={false}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              ItemSeparatorComponent={() => {
+                return <View style={Styles.view_gap} />;
+              }}
+              data={faqList}
+              renderItem={renderTabsHeader}
+              keyExtractor={item => item.id}
+            />
+            <FlatList
+              style={{margin: 20}}
+              showsVerticalScrollIndicator={false}
+              data={questionList}
+              renderItem={renderQuestion}
+              keyExtractor={item => item.id}
+            />
+          </ScrollView>
+        )}
       </View>
 
       <Modal
         animationType="fade"
         transparent={true}
-        visible={selected == 3}
+        visible={selected == 'Leave a Reply'}
         onRequestClose={() => {
-          setSelected(1);
+          setDefaultTab();
         }}>
         <TouchableOpacity
           // activeOpacity={1}
           onPress={() => {
-            setSelected(1);
+            setDefaultTab();
           }}
           style={Styles.view_main_modal}>
           <TouchableOpacity activeOpacity={1} style={Styles.modal_white_back}>
@@ -234,7 +265,7 @@ const Faqs = ({navigation, route, ...props}) => {
               onPress={() =>
                 //  props.navigation.dispatch(DrawerActions.closeDrawer())
                 // DrawerActions.closeDrawer()
-                setSelected(1)
+                setDefaultTab()
               }
               activeOpacity={0.8}
               style={Styles.view_close}>

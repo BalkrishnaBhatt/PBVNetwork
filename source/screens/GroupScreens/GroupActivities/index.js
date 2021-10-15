@@ -31,6 +31,7 @@ import {
   NewsView,
   ContentLoader,
   CustomSafeAreaView,
+  EmptyList,
 } from '../../../components';
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
@@ -43,53 +44,14 @@ const GroupActivities = ({navigation, route}) => {
       setPosts(GroupDetailReducer.groupActivities);
       setIsLoading(GroupDetailReducer.isLoading);
     }
-    // else {
-    //   setPosts([]);
-    // }
   }, [GroupDetailReducer]);
   useEffect(() => {
     dispatch(getGroupActivity(navigation));
-    // setTimeout(() => {
-    //   dispatch(setLoader(false));
-    // }, 6000);
   }, []);
 
   const [isLoading, setIsLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
-  const [posts, setPosts] = useState([
-    {
-      image: 'https://picsum.photos/200/300',
-      person_name: 'RodolfoVega',
-      description: 'joined the group',
-      group_name: 'Baraona Marshall y Cia',
-      date: '1630489742',
-      number_of_comments: '20',
-    },
-    {
-      image: 'https://picsum.photos/200/300',
-      person_name: 'RodolfoVega',
-      description: 'joined the group',
-      group_name: 'Baraona Marshall y Cia',
-      date: '1630489742',
-      number_of_comments: '20',
-    },
-    {
-      image: 'https://picsum.photos/200/300',
-      person_name: 'RodolfoVega',
-      description: 'joined the group',
-      group_name: 'Baraona Marshall y Cia',
-      date: '1630489742',
-      number_of_comments: '20',
-    },
-    {
-      image: 'https://picsum.photos/200/300',
-      person_name: 'RodolfoVega',
-      description: 'joined the group',
-      group_name: 'Baraona Marshall y Cia',
-      date: '1630489742',
-      number_of_comments: '20',
-    },
-  ]);
+  const [posts, setPosts] = useState([]);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
@@ -208,6 +170,9 @@ const GroupActivities = ({navigation, route}) => {
               data={posts}
               renderItem={renderPosts}
               keyExtractor={item => item.id}
+              ListEmptyComponent={() => {
+                return <EmptyList />;
+              }}
             />
           </ScrollView>
         )}

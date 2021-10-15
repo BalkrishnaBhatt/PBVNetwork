@@ -149,6 +149,16 @@ const GroupRouter = () => {
 export default function App() {
   useEffect(() => {
     // checkLocalAuth();
+
+    YellowBox.ignoreWarnings([
+      'Animated: `useNativeDriver`',
+      'source.uri should not be an empty string',
+      'YellowBox has been replaced with LogBox. Please call LogBox.ignoreLogs() instead.',
+    ]);
+    LogBox.ignoreAllLogs(true);
+    console.ignoredYellowBox = [
+      'Warning: You are manually calling a React.PropTypes validation',
+    ];
   }, []);
 
   return (
@@ -165,7 +175,7 @@ export default function App() {
         <StatusBar style="dark" />
         <NavigationContainer>
           <Stack.Navigator screenOptions={{headerShown: false}}>
-            {/* <Stack.Screen name={NAVIGATION.SPLASH} component={Splash} /> */}
+            <Stack.Screen name={NAVIGATION.SPLASH} component={Splash} />
             <Stack.Screen name={NAVIGATION.LOGIN} component={Login} />
             <Stack.Screen name={NAVIGATION.SIGN_UP} component={Signup} />
             <Stack.Screen

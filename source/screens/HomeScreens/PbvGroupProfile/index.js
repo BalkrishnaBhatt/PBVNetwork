@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   ScrollView,
   Text,
@@ -13,6 +13,14 @@ import {DownArrowSymbol} from '../../../utils/svg';
 import {Colors} from '../../../utils/colors';
 import Styles from './style';
 import {Fonts} from '../../../utils/fonts';
+import {useSelector, useDispatch} from 'react-redux';
+import {console_log} from '../../../utils/loggers';
+import {
+  getAllGroups,
+  getMyGroups,
+  getGroupDetails,
+} from '../../../redux/actions';
+import {ContentLoader, GroupListView, EmptyList} from '../../../components';
 
 import DropDownPicker from 'react-native-dropdown-picker';
 import {NAVIGATION} from '../../../constant';
@@ -20,34 +28,49 @@ const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
 
 const PbvGroupProfile = ({navigation, route}) => {
-  //   const {dark, theme, toggle} = useContext(ThemeContext);
+  const dispatch = useDispatch();
+  let GroupReducer = useSelector(state => state.GroupReducer);
+  useEffect(() => {
+    if (GroupReducer) {
+      setPeronsList(GroupReducer.allGroups.splice(0, 5));
+      setIsLoading(GroupReducer.isLoading);
+    }
+    // else {
+    //   setPosts([]);
+    // }
+  }, [GroupReducer]);
+  useEffect(() => {
+    dispatch(getAllGroups(navigation));
+    dispatch(getMyGroups(navigation));
+  }, []);
 
+  const [isLoading, setIsLoading] = useState(true);
   const [peronsList, setPeronsList] = useState([
-    {
-      person_name: 'Latham & Watkins',
-      profile_image: 'https://picsum.photos/200/300',
-      number_of_members: '302',
-    },
-    {
-      person_name: 'White & Case',
-      profile_image: 'https://picsum.photos/200/300',
-      number_of_members: '289',
-    },
-    {
-      person_name: 'Baker McKenzie',
-      profile_image: 'https://picsum.photos/200/300',
-      number_of_members: '324',
-    },
-    {
-      person_name: 'Simpson Thacher & Bartlett',
-      profile_image: 'https://picsum.photos/200/300',
-      number_of_members: '488',
-    },
-    {
-      person_name: 'Clifford Chance',
-      profile_image: 'https://picsum.photos/200/300',
-      number_of_members: '526',
-    },
+    // {
+    //   person_name: 'Latham & Watkins',
+    //   profile_image: 'https://picsum.photos/200/300',
+    //   number_of_members: '302',
+    // },
+    // {
+    //   person_name: 'White & Case',
+    //   profile_image: 'https://picsum.photos/200/300',
+    //   number_of_members: '289',
+    // },
+    // {
+    //   person_name: 'Baker McKenzie',
+    //   profile_image: 'https://picsum.photos/200/300',
+    //   number_of_members: '324',
+    // },
+    // {
+    //   person_name: 'Simpson Thacher & Bartlett',
+    //   profile_image: 'https://picsum.photos/200/300',
+    //   number_of_members: '488',
+    // },
+    // {
+    //   person_name: 'Clifford Chance',
+    //   profile_image: 'https://picsum.photos/200/300',
+    //   number_of_members: '526',
+    // },
   ]);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -76,7 +99,7 @@ const PbvGroupProfile = ({navigation, route}) => {
           navigation.navigate(NAVIGATION.GROUP_DETAIL);
         }}>
         <Image
-          source={{uri: item.profile_image}}
+          source={{uri: item.avatar_urls.thumb}}
           resizeMode="cover"
           style={{height: 50, width: 50, borderRadius: 15}}
         />
@@ -89,7 +112,7 @@ const PbvGroupProfile = ({navigation, route}) => {
               fontFamily: Fonts.Regular_font,
               fontWeight: '300',
             }}>
-            {item.person_name}
+            {item.name}
           </Text>
           <Text
             style={{
@@ -98,7 +121,10 @@ const PbvGroupProfile = ({navigation, route}) => {
               fontFamily: Fonts.Regular_font,
               fontWeight: '300',
             }}>
-            {item.number_of_members} members
+            {item.total_member_count !== null && item.total_member_count !== ''
+              ? item.total_member_count
+              : 0}{' '}
+            members
           </Text>
         </View>
       </TouchableOpacity>
@@ -166,6 +192,9 @@ const PbvGroupProfile = ({navigation, route}) => {
               data={peronsList}
               renderItem={renderPersons}
               keyExtractor={item => item.id}
+              ListEmptyComponent={() => {
+                return <EmptyList />;
+              }}
             />
           </View>
         </ScrollView>

@@ -30,7 +30,9 @@ import {
   NewsView,
   ContentLoader,
   CustomSafeAreaView,
+  EmptyList,
 } from '../../../components';
+import images from '../../../utils/images';
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
 
@@ -127,14 +129,14 @@ const MyActivities = ({navigation, route}) => {
     {label: 'My Profile', value: 'My Profile'},
     {label: 'My Group', value: 'My Group'},
   ]);
-  const [open2, setOpen2] = useState(false);
-  const [value2, setValue2] = useState(null);
-  const [items2, setItems2] = useState([
-    {label: 'Everything', value: 'Everything'},
-    {label: 'Updates', value: 'Updates'},
-    {label: 'Group Memberships', value: 'Group Memberships'},
-    {label: 'Group Updates', value: 'Group Updates'},
-  ]);
+  // const [open2, setOpen2] = useState(false);
+  // const [value2, setValue2] = useState(null);
+  // const [items2, setItems2] = useState([
+  //   {label: 'Everything', value: 'Everything'},
+  //   {label: 'Updates', value: 'Updates'},
+  //   {label: 'Group Memberships', value: 'Group Memberships'},
+  //   {label: 'Group Updates', value: 'Group Updates'},
+  // ]);
 
   const renderPosts = ({item}) => {
     return <MyActivityView item={item} />;
@@ -176,106 +178,104 @@ const MyActivities = ({navigation, route}) => {
           backgroundColor: Colors.white,
           flex: 1,
         }}>
-        {isLoading ? (
-          <ContentLoader />
-        ) : (
-          <ScrollView showsVerticalScrollIndicator={false}>
-            {route.params.from_group ? (
-              <DropDownPicker
-                open={open2}
-                value={value2}
-                items={items2}
-                setOpen={setOpen2}
-                setValue={setValue2}
-                // setItems={setItems2}
-                placeholder={'Everything'}
-                placeholderStyle={Styles.placeholderStyle}
-                style={Styles.DropDownPicker2}
-                dropDownContainerStyle={Styles.dropDownContainerStyle2}
-                textStyle={Styles.textStyle}
-                // labelStyle={Styles.labelStyle}
-                arrowIconStyle={{tintColor: Colors.primary_color}}
-              />
-            ) : null}
-            <View style={Styles.view_whats_new}>
-              <Image
-                source={{uri: 'https://picsum.photos/200/300'}}
-                style={Styles.view_whats_new_sub}
-              />
-              <Text style={Styles.text_whats_new}>What's New, PBVNetwork?</Text>
-            </View>
-            <TextInput
-              value={searchText}
-              onChangeText={text => {
-                setSearchText(text);
-              }}
-              multiline={true}
-              style={Styles.TextInput}
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {/* {route.params.from_group ? (
+            <DropDownPicker
+              open={open2}
+              value={value2}
+              items={items2}
+              setOpen={setOpen2}
+              setValue={setValue2}
+              // setItems={setItems2}
+              placeholder={'Everything'}
+              placeholderStyle={Styles.placeholderStyle}
+              style={Styles.DropDownPicker2}
+              dropDownContainerStyle={Styles.dropDownContainerStyle2}
+              textStyle={Styles.textStyle}
+              // labelStyle={Styles.labelStyle}
+              arrowIconStyle={{tintColor: Colors.primary_color}}
             />
+          ) : null} */}
+          <View style={Styles.view_whats_new}>
+            <Image
+              source={{uri: 'https://picsum.photos/200/300'}}
+              style={Styles.view_whats_new_sub}
+            />
+            <Text style={Styles.text_whats_new}>What's New, PBVNetwork?</Text>
+          </View>
+          <TextInput
+            value={searchText}
+            onChangeText={text => {
+              setSearchText(text);
+            }}
+            multiline={true}
+            style={Styles.TextInput}
+          />
 
-            <View
+          <View
+            style={{
+              flexDirection: 'row',
+              marginHorizontal: 20,
+              height: 40,
+              // borderWidth: 1,
+            }}>
+            <View style={{flex: 1}}></View>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => {
+                // navigation.navigate(label);
+              }}
               style={{
-                flexDirection: 'row',
-                marginHorizontal: 20,
-                height: 40,
-                // borderWidth: 1,
+                borderRadius: 7,
+                backgroundColor: Colors.light_primary_color,
+                marginLeft: -120,
+                justifyContent: 'center',
+                height: 30,
               }}>
-              <View style={{flex: 1}}></View>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => {
-                  // navigation.navigate(label);
-                }}
+              <Text
                 style={{
-                  borderRadius: 7,
-                  backgroundColor: Colors.light_primary_color,
-                  marginLeft: -120,
-                  justifyContent: 'center',
-                  height: 30,
+                  color: Colors.primary_color,
+                  fontSize: 12,
+                  marginHorizontal: 15,
+                  marginVertical: 5,
+                  fontWeight: '500',
+                  fontFamily: Fonts.Regular_font,
                 }}>
-                <Text
-                  style={{
-                    color: Colors.primary_color,
-                    fontSize: 12,
-                    marginHorizontal: 15,
-                    marginVertical: 5,
-                    fontWeight: '500',
-                    fontFamily: Fonts.Regular_font,
-                  }}>
-                  POST UPDATE
-                </Text>
-              </TouchableOpacity>
-            </View>
-            {route.params.from_group ? null : (
-              <DropDownPicker
-                open={open}
-                value={value}
-                items={items}
-                setOpen={setOpen}
-                setValue={setValue}
-                // setItems={setItems}
-                placeholder={'Post in'}
-                placeholderStyle={Styles.placeholderStyle}
-                style={Styles.DropDownPicker}
-                dropDownContainerStyle={Styles.dropDownContainerStyle}
-                textStyle={Styles.textStyle}
-                // labelStyle={Styles.labelStyle}
-                arrowIconStyle={{tintColor: Colors.primary_color}}
+                POST UPDATE
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <DropDownPicker
+            open={open}
+            value={value}
+            items={items}
+            setOpen={setOpen}
+            setValue={setValue}
+            // setItems={setItems}
+            placeholder={'Post in'}
+            placeholderStyle={Styles.placeholderStyle}
+            style={Styles.DropDownPicker}
+            dropDownContainerStyle={Styles.dropDownContainerStyle}
+            textStyle={Styles.textStyle}
+            // labelStyle={Styles.labelStyle}
+            arrowIconStyle={{tintColor: Colors.primary_color}}
+          />
+          {isLoading ? (
+            <ContentLoader />
+          ) : (
+            <>
+              <FlatList
+                style={{marginVertical: 15}}
+                showsVerticalScrollIndicator={false}
+                data={posts}
+                renderItem={renderPosts}
+                keyExtractor={item => item.id}
               />
-            )}
-            <FlatList
-              style={{marginVertical: 15}}
-              showsVerticalScrollIndicator={false}
-              data={posts}
-              renderItem={renderPosts}
-              keyExtractor={item => item.id}
-            />
-            {/* <View>
+              {/* <View>
               {posts.map(item => {
                 <MyActivityView item={item} />;
               })}
             </View> */}
-            {route.params.from_group ? null : (
               <>
                 <TouchableOpacity
                   activeOpacity={0.8}
@@ -312,6 +312,9 @@ const MyActivities = ({navigation, route}) => {
                     />
                   )}
                   keyExtractor={item => item.id}
+                  ListEmptyComponent={() => {
+                    return <EmptyList />;
+                  }}
                 />
 
                 {/* <View
@@ -326,9 +329,9 @@ const MyActivities = ({navigation, route}) => {
                   })}
                 </View> */}
               </>
-            )}
-          </ScrollView>
-        )}
+            </>
+          )}
+        </ScrollView>
       </View>
     </>
   );

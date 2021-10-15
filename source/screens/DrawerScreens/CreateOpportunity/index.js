@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   ScrollView,
   Text,
@@ -7,18 +7,58 @@ import {
   Dimensions,
   TextInput,
 } from 'react-native';
-import CustomSafeAreaView from '../../../components/CustomSafeAreaView';
-import CustomHeader from '../../../components/CustomHeader';
+import {
+  MyActivityView,
+  NewsView,
+  ContentLoader,
+  CustomSafeAreaView,
+  CustomTextInput,
+  CustomLoader,
+  CustomHeader,
+} from '../../../components';
 import {DownArrowSymbol} from '../../../utils/svg';
 import {Colors} from '../../../utils/colors';
 import Styles from './style';
 import DropDownPicker from 'react-native-dropdown-picker';
+import {useSelector, useDispatch} from 'react-redux';
+import {
+  loginSave,
+  setLoader,
+  getFaqs,
+  getJurisdictionList,
+  getAreaOfPracticeList,
+  getTownList,
+  getIndustryList,
+} from '../../../redux/actions';
+import axiosInstance from '../../../axios';
+import {console_log} from '../../../utils/loggers';
 
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
 
 const CreateOpportunity = ({navigation, route, ...props}) => {
-  //   const {dark, theme, toggle} = useContext(ThemeContext);
+  const dispatch = useDispatch();
+  let InfoReducer = useSelector(state => state.InfoReducer);
+  useEffect(() => {
+    if (InfoReducer !== undefined) {
+      // setFaqList(data_to_set);
+      setItemsJurisdiction(InfoReducer.jurisdictionList);
+      setItemsAreaPractice(InfoReducer.areaPractice);
+      setItemsTown(InfoReducer.townList);
+      setItemsIndustry(InfoReducer.industryList);
+      setIsLoading(InfoReducer.isLoading);
+    }
+    // else {
+    //   setPosts([]);
+    // }
+  }, [InfoReducer]);
+  useEffect(() => {
+    dispatch(getJurisdictionList(navigation));
+    dispatch(getAreaOfPracticeList(navigation));
+    dispatch(getTownList(navigation));
+    dispatch(getIndustryList(navigation));
+  }, []);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [opportunityTitle, setOpportunityTitle] = useState('');
   const [opportunityDesc, setOpportunityDesc] = useState('');
@@ -32,30 +72,30 @@ const CreateOpportunity = ({navigation, route, ...props}) => {
   const [valueIndustry, setValueIndustry] = useState(null);
 
   const [itemsJurisdiction, setItemsJurisdiction] = useState([
-    {label: 'INDIA', value: 'INDIA'},
-    {label: 'UNITED STATES', value: 'UNITED STATES'},
-    {label: 'UNITED ARAB EMIRATES', value: 'UNITED ARAB EMIRATES'},
-    {label: 'BELGIUM', value: 'BELGIUM'},
-    {label: 'SPAIN', value: 'SPAIN'},
-    {label: 'ESTONIA', value: 'ESTONIA'},
+    // {label: 'INDIA', value: 'INDIA'},
+    // {label: 'UNITED STATES', value: 'UNITED STATES'},
+    // {label: 'UNITED ARAB EMIRATES', value: 'UNITED ARAB EMIRATES'},
+    // {label: 'BELGIUM', value: 'BELGIUM'},
+    // {label: 'SPAIN', value: 'SPAIN'},
+    // {label: 'ESTONIA', value: 'ESTONIA'},
   ]);
   const [itemsAreaPractice, setItemsAreaPractice] = useState([
-    {label: 'Finance', value: 'Finance'},
-    {label: 'Equity Capital Markets', value: 'Equity Capital Markets'},
-    {label: 'Life Science & Healt Care', value: 'Life Science & Healt Care'},
-    {label: 'Project', value: 'Project'},
+    // {label: 'Finance', value: 'Finance'},
+    // {label: 'Equity Capital Markets', value: 'Equity Capital Markets'},
+    // {label: 'Life Science & Healt Care', value: 'Life Science & Healt Care'},
+    // {label: 'Project', value: 'Project'},
   ]);
   const [itemsTown, setItemsTown] = useState([
-    {label: 'New Delhi', value: 'New Delhi'},
-    {label: 'Roma', value: 'Roma'},
-    {label: 'London', value: 'London'},
-    {label: 'Derby', value: 'Derby'},
+    // {label: 'New Delhi', value: 'New Delhi'},
+    // {label: 'Roma', value: 'Roma'},
+    // {label: 'London', value: 'London'},
+    // {label: 'Derby', value: 'Derby'},
   ]);
   const [itemsIndustry, setItemsIndustry] = useState([
-    {label: 'TMT', value: 'TMT'},
-    {label: 'Aviation & Transportation', value: 'Aviation & Transportation'},
-    {label: 'Finance', value: 'Finance'},
-    {label: 'Manufacturing', value: 'Manufacturing'},
+    // {label: 'TMT', value: 'TMT'},
+    // {label: 'Aviation & Transportation', value: 'Aviation & Transportation'},
+    // {label: 'Finance', value: 'Finance'},
+    // {label: 'Manufacturing', value: 'Manufacturing'},
   ]);
   return (
     <>

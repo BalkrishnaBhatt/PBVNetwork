@@ -21,10 +21,10 @@ export const getAllGroups = navigation => {
     axiosInstance
       .get(url, config)
       .then(function (response) {
-        console_log(
-          'getAllGroups response: ',
-          JSON.stringify(response.data, null, 2),
-        );
+        // console_log(
+        //   'getAllGroups response: ',
+        //   JSON.stringify(response.data, null, 2),
+        // );
         // handle success
         dispatch(get_all_groups(response.data));
         // navigation.navigate('login');
@@ -35,11 +35,6 @@ export const getAllGroups = navigation => {
       })
       .catch(function (error) {
         // handle error
-        // if (error.response) {
-        //     console_log('Error in premium register', error.response.data)
-        //     dispatch(displayErrorModalFewSecs('Error while registering your account : ', error.response.data))
-        //     dispatch(premiumRegisterFailed(error.response.data))
-        // }
         let error_code = error.response.data.code;
         // handle error
         if (

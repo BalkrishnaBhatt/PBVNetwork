@@ -18,14 +18,15 @@ import {
   MyActivityView,
   NewsView,
   ContentLoader,
-  CustomSafeAreaView,
   OpportunityView,
+  EmptyList,
 } from '../../../components';
 import {useSelector, useDispatch} from 'react-redux';
 import {
   getHomeActivities,
   getHomeNews,
   setLoader,
+  getUserOpportunity,
 } from '../../../redux/actions';
 
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -34,80 +35,22 @@ const screen_height = Dimensions.get('window').height;
 
 const UserOpportunity = ({navigation, route}) => {
   const dispatch = useDispatch();
-  let HomeReducer = useSelector(state => state.HomeReducer);
+  let UserReducer = useSelector(state => state.UserReducer);
   useEffect(() => {
-    if (HomeReducer) {
-      // setPosts(HomeReducer.homeActivities);
-      setIsLoading(HomeReducer.isLoading);
-      // setNewsList(HomeReducer.homeNews);
+    if (UserReducer) {
+      setPeronsList(UserReducer.userOpportunity);
+      setIsLoading(UserReducer.isLoading);
+      // setNewsList(UserReducer.homeNews);
     }
-    // else {
-    //   setPosts([]);
-    // }
-  }, [HomeReducer]);
+  }, [UserReducer]);
   useEffect(() => {
-    dispatch(getHomeActivities());
-    dispatch(getHomeNews());
-    // setTimeout(() => {
-    //   dispatch(setLoader(false));
-    // }, 6000);
+    dispatch(getUserOpportunity(navigation));
   }, []);
 
   const [isLoading, setIsLoading] = useState(true);
 
   const [searchText, setSearchText] = useState('');
-  const [peronsList, setPeronsList] = useState([
-    {
-      title: 'Start Opportunity',
-      person_name: 'Latham & Watkins',
-      profile_image: 'https://picsum.photos/200/300',
-      description:
-        'This is just testing opportunity created. Which will show on the opportunity page in group and user dashboard as well.',
-      date: '2020-10-31',
-      jurisdiction: 'UNITED ARAB EMIRATES',
-      town: 'Nottingham',
-    },
-    {
-      title: 'Start Opportunity',
-      person_name: 'White & Case',
-      profile_image: 'https://picsum.photos/200/300',
-      description:
-        'This is just testing opportunity created. Which will show on the opportunity page in group and user dashboard as well.',
-      date: '2020-10-31',
-      jurisdiction: 'UNITED ARAB EMIRATES',
-      town: 'Nottingham',
-    },
-    {
-      title: 'Start Opportunity',
-      person_name: 'Baker McKenzie',
-      profile_image: 'https://picsum.photos/200/300',
-      description:
-        'This is just testing opportunity created. Which will show on the opportunity page in group and user dashboard as well.',
-      date: '2020-10-31',
-      jurisdiction: 'UNITED ARAB EMIRATES',
-      town: 'Nottingham',
-    },
-    {
-      title: 'Start Opportunity',
-      person_name: 'Simpson Thacher & Bartlett',
-      profile_image: 'https://picsum.photos/200/300',
-      description:
-        'This is just testing opportunity created. Which will show on the opportunity page in group and user dashboard as well.',
-      date: '2020-10-31',
-      jurisdiction: 'UNITED ARAB EMIRATES',
-      town: 'Nottingham',
-    },
-    {
-      title: 'Start Opportunity',
-      person_name: 'Clifford Chance',
-      profile_image: 'https://picsum.photos/200/300',
-      description:
-        'This is just testing opportunity created. Which will show on the opportunity page in group and user dashboard as well.',
-      date: '2020-10-31',
-      jurisdiction: 'UNITED ARAB EMIRATES',
-      town: 'Nottingham',
-    },
-  ]);
+  const [peronsList, setPeronsList] = useState([]);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
@@ -167,6 +110,9 @@ const UserOpportunity = ({navigation, route}) => {
               data={peronsList}
               renderItem={renderPersons}
               keyExtractor={item => item.id}
+              ListEmptyComponent={() => {
+                return <EmptyList />;
+              }}
             />
           </ScrollView>
         )}

@@ -36,6 +36,7 @@ const Groups = ({navigation, route, ...props}) => {
     if (GroupReducer) {
       setAllGroups(GroupReducer.allGroups);
       setMyGroups(GroupReducer.myGroups);
+      // console.log('GroupReducer.myGroups: ', GroupReducer.myGroups);
       setIsLoading(GroupReducer.isLoading);
     }
     // else {
@@ -170,6 +171,7 @@ const Groups = ({navigation, route, ...props}) => {
               activeOpacity={0.8}
               onPress={() => {
                 setAllGroupSelected(true);
+                dispatch(getAllGroups(navigation));
               }}>
               <Text
                 style={[
@@ -195,6 +197,7 @@ const Groups = ({navigation, route, ...props}) => {
               activeOpacity={0.8}
               onPress={() => {
                 setAllGroupSelected(false);
+                dispatch(getMyGroups(navigation));
               }}>
               <Text
                 style={[
@@ -205,7 +208,7 @@ const Groups = ({navigation, route, ...props}) => {
                       : Colors.primary_color,
                   },
                 ]}>
-                My Groups({allGroups.length})
+                My Groups({myGroups.length})
               </Text>
             </TouchableOpacity>
           </View>

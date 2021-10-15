@@ -22,6 +22,7 @@ import {
   getHomeActivities,
   getHomeNews,
   setLoader,
+  getUserActivity,
 } from '../../../redux/actions';
 
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -30,27 +31,24 @@ import {
   NewsView,
   ContentLoader,
   CustomSafeAreaView,
+  EmptyList,
 } from '../../../components';
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
 
 const UserActivities = ({navigation, route}) => {
   const dispatch = useDispatch();
-  let HomeReducer = useSelector(state => state.HomeReducer);
+  let UserReducer = useSelector(state => state.UserReducer);
   useEffect(() => {
-    if (HomeReducer) {
-      setPosts(HomeReducer.homeActivities);
-      setIsLoading(HomeReducer.isLoading);
+    if (UserReducer) {
+      setPosts(UserReducer.userActivities);
+      // console.log('UserReducer.userActivities: ', UserReducer.userActivities);
+      setIsLoading(UserReducer.isLoading);
+      // console.log('UserReducer.isLoading: ', UserReducer.isLoading);
     }
-    // else {
-    //   setPosts([]);
-    // }
-  }, [HomeReducer]);
+  }, [UserReducer]);
   useEffect(() => {
-    dispatch(getHomeActivities());
-    // setTimeout(() => {
-    //   dispatch(setLoader(false));
-    // }, 6000);
+    dispatch(getUserActivity(navigation));
   }, []);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -207,6 +205,9 @@ const UserActivities = ({navigation, route}) => {
               data={posts}
               renderItem={renderPosts}
               keyExtractor={item => item.id}
+              ListEmptyComponent={() => {
+                return <EmptyList />;
+              }}
             />
           </ScrollView>
         )}

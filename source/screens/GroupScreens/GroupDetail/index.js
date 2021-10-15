@@ -44,25 +44,21 @@ const GroupDetail = ({navigation, route, ...props}) => {
   useEffect(() => {
     if (GroupDetailReducer) {
       setGroupDetails(GroupDetailReducer.groupDetails);
-      console.log(
-        'GroupDetailReducer.groupDetails: ',
-        GroupDetailReducer.groupDetails,
-      );
+      // console.log(
+      //   'GroupDetailReducer.groupDetails: ',
+      //   GroupDetailReducer.groupDetails,
+      // );
       // setIsLoading(GroupDetailReducer.isLoading);
-      console.log(
-        'GroupDetailReducer.isLoading: ',
-        GroupDetailReducer.isLoading,
-      );
     }
     // else {
     //   setPosts([]);
     // }
   }, [GroupDetailReducer]);
-  // useEffect(() => {
-  //   // dispatch(getGroupDetails(navigation));
-  //   setIsLoading(GroupDetailReducer.isLoading);
-  //   setGroupDetails(GroupDetailReducer.groupDetails);
-  // }, []);
+  useEffect(() => {
+    // dispatch(getGroupDetails(navigation));
+    // setIsLoading(GroupDetailReducer.isLoading);
+    // setGroupDetails(GroupDetailReducer.groupDetails);
+  }, []);
   const [groupDetails, setGroupDetails] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   return (

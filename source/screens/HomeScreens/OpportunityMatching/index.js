@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   ScrollView,
   Text,
@@ -9,42 +9,59 @@ import {
   FlatList,
   TextInput,
 } from 'react-native';
-import CustomSafeAreaView from '../../../components/CustomSafeAreaView';
 import {DownArrowSymbol, SearchSymbol} from '../../../utils/svg';
 import {Colors} from '../../../utils/colors';
 import Styles from './style';
 import {NAVIGATION} from '../../../constant';
 import {Fonts} from '../../../utils/fonts';
+import {console_log} from '../../../utils/loggers';
 
+import {
+  MyActivityView,
+  NewsView,
+  ContentLoader,
+  CustomSafeAreaView,
+  OpportunityView,
+  EmptyList,
+} from '../../../components';
+import {useSelector, useDispatch} from 'react-redux';
+import {
+  getHomeActivities,
+  getHomeNews,
+  setLoader,
+  getUserOpportunity,
+} from '../../../redux/actions';
 import DropDownPicker from 'react-native-dropdown-picker';
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
 
 const OpportunityMatching = ({navigation, route}) => {
-  //   const {dark, theme, toggle} = useContext(ThemeContext);
+  const dispatch = useDispatch();
+  let UserReducer = useSelector(state => state.UserReducer);
+  useEffect(() => {
+    if (UserReducer) {
+      setPeronsList(UserReducer.userOpportunity);
+      // console.log('UserReducer.userOpportunity: ', UserReducer.userOpportunity);
+      setIsLoading(UserReducer.isLoading);
+      // setNewsList(UserReducer.homeNews);
+    }
+  }, [UserReducer]);
+  useEffect(() => {
+    dispatch(getUserOpportunity(navigation));
+  }, []);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const [searchText, setSearchText] = useState('');
   const [peronsList, setPeronsList] = useState([
-    {
-      person_name: 'Latham & Watkins',
-      profile_image: 'https://picsum.photos/200/300',
-    },
-    {
-      person_name: 'White & Case',
-      profile_image: 'https://picsum.photos/200/300',
-    },
-    {
-      person_name: 'Baker McKenzie',
-      profile_image: 'https://picsum.photos/200/300',
-    },
-    {
-      person_name: 'Simpson Thacher & Bartlett',
-      profile_image: 'https://picsum.photos/200/300',
-    },
-    {
-      person_name: 'Clifford Chance',
-      profile_image: 'https://picsum.photos/200/300',
-    },
+    // {
+    //   person_name: 'Latham & Watkins',
+    //   profile_image: 'https://picsum.photos/200/300',
+    // },
+    // {
+    //   person_name: 'White & Case',
+    //   profile_image: 'https://picsum.photos/200/300',
+    // },
   ]);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -76,7 +93,8 @@ const OpportunityMatching = ({navigation, route}) => {
           navigation.navigate(NAVIGATION.PROFILE);
         }}>
         <Image
-          source={{uri: item.profile_image}}
+          // source={{uri: item.profile_image}}
+          source={{uri: 'https://picsum.photos/200/300'}}
           resizeMode="cover"
           style={{height: 50, width: 50, borderRadius: 15}}
         />
@@ -89,7 +107,7 @@ const OpportunityMatching = ({navigation, route}) => {
               fontFamily: Fonts.Regular_font,
               fontWeight: '300',
             }}>
-            {item.person_name}
+            {item.title}
           </Text>
           <Text
             style={{
@@ -172,6 +190,9 @@ const OpportunityMatching = ({navigation, route}) => {
             data={peronsList}
             renderItem={renderPersons}
             keyExtractor={item => item.id}
+            ListEmptyComponent={() => {
+              return <EmptyList />;
+            }}
           />
         </ScrollView>
       </View>

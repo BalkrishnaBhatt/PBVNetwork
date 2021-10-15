@@ -1,6 +1,8 @@
 import * as actionTypes from '../../actionTypes';
 // import axios from 'axios';
 import axiosInstance from '../../../axios';
+import {VARIABLE} from '../../../constant';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // import {displayErrorModalFewSecs} from '../../errorModal';
 // import {premiumLoginSuccess} from '../premiumLogin/premiumLogin';
 
@@ -84,6 +86,7 @@ import axiosInstance from '../../../axios';
 //   };
 // };
 export const loginSave = user_info => {
+  // console.log('loginSave called ');
   return {
     type: actionTypes.LOGIN,
     user_info: user_info,

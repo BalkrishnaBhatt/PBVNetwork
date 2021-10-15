@@ -24,14 +24,16 @@ import {
   setLoader,
   getGroupNews,
 } from '../../../redux/actions';
-
-import DropDownPicker from 'react-native-dropdown-picker';
 import {
   MyActivityView,
   NewsView,
   ContentLoader,
   CustomSafeAreaView,
+  GroupNewsView,
+  EmptyList,
 } from '../../../components';
+
+import DropDownPicker from 'react-native-dropdown-picker';
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
 
@@ -42,6 +44,10 @@ const GroupNews = ({navigation, route}) => {
     if (GroupDetailReducer) {
       setIsLoading(GroupDetailReducer.isLoading);
       setNewsList(GroupDetailReducer.groupNews);
+      // console.log(
+      //   'GroupDetailReducer.groupNews: ',
+      //   GroupDetailReducer.groupNews,
+      // );
     }
   }, [GroupDetailReducer]);
   useEffect(() => {
@@ -61,20 +67,20 @@ const GroupNews = ({navigation, route}) => {
     },
   ]);
   const [newsList, setNewsList] = useState([
-    {
-      news_title:
-        'Telereal Trillium’s £7.9 Million Acquisition of Marlborough House',
-      news_details:
-        'Reed Smith has advised Telereal Trillium on the deal. Telereal Trillium, one of ...',
-    },
-    {
-      news_title: 'Sonoma Pharmaceuticals’ $6 Million At-The-Market Offering',
-      news_details: '',
-    },
-    {
-      news_title: 'Magna International’s Acquisition of Venoeer',
-      news_details: '',
-    },
+    // {
+    //   news_title:
+    //     'Telereal Trillium’s £7.9 Million Acquisition of Marlborough House',
+    //   news_details:
+    //     'Reed Smith has advised Telereal Trillium on the deal. Telereal Trillium, one of ...',
+    // },
+    // {
+    //   news_title: 'Sonoma Pharmaceuticals’ $6 Million At-The-Market Offering',
+    //   news_details: '',
+    // },
+    // {
+    //   news_title: 'Magna International’s Acquisition of Venoeer',
+    //   news_details: '',
+    // },
   ]);
   // const [open, setOpen] = useState(false);
   // const [value, setValue] = useState(null);
@@ -118,7 +124,7 @@ const GroupNews = ({navigation, route}) => {
     );
   };
   const renderNews = ({item}) => {
-    return <NewsView item={item} />;
+    return <GroupNewsView item={item} />;
   };
   return (
     <>
@@ -155,6 +161,9 @@ const GroupNews = ({navigation, route}) => {
                 />
               )}
               keyExtractor={item => item.id}
+              ListEmptyComponent={() => {
+                return <EmptyList />;
+              }}
             />
           </ScrollView>
         )}
