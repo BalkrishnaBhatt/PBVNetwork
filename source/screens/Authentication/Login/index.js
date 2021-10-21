@@ -20,7 +20,7 @@ import {
   NextRoundArrowSymbol,
 } from '../../../utils/svg';
 import {Colors} from '../../../utils/colors';
-import {NAVIGATION, EMAIL_PATTERN} from '../../../constant';
+import {NAVIGATION, EMAIL_PATTERN, VARIABLE} from '../../../constant';
 import {Fonts} from '../../../utils/fonts';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import {useSelector, useDispatch} from 'react-redux';
@@ -89,9 +89,6 @@ const Login = ({navigation, route}) => {
       .post(url, config)
       .then(async response => {
         setIsLoading(false);
-        if (response.data && response.data.token) {
-          navigation.navigate(NAVIGATION.DASHBOARD);
-        }
         // console_log('login response: ', JSON.stringify(response.data, null, 2));
         // handle success
         await AsyncStorage.setItem(
@@ -99,6 +96,9 @@ const Login = ({navigation, route}) => {
           JSON.stringify(response.data),
         );
         dispatch(loginSave(response.data));
+        if (response.data && response.data.token) {
+          navigation.navigate(NAVIGATION.DASHBOARD);
+        }
       })
       .catch(function (error) {
         setIsLoading(false);

@@ -6,17 +6,28 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import CustomSafeAreaView from '../../../components/CustomSafeAreaView';
-import CustomTextInput from '../../../components/CustomTextInput';
+import {
+  MyActivityView,
+  NewsView,
+  ContentLoader,
+  CustomSafeAreaView,
+  CustomTextInput,
+  CustomLoader,
+} from '../../../components';
 import {
   SignUpBottomCurve,
   SignUpTopCurve,
   NextRoundArrowSymbol,
 } from '../../../utils/svg';
 import {Colors} from '../../../utils/colors';
-import {NAVIGATION, EMAIL_PATTERN} from '../../../constant';
+import {NAVIGATION, EMAIL_PATTERN, VARIABLE} from '../../../constant';
 import {Fonts} from '../../../utils/fonts';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import {useSelector, useDispatch} from 'react-redux';
+import {loginSave, setLoader} from '../../../redux/actions';
+import axiosInstance from '../../../axios';
+import {console_log} from '../../../utils/loggers';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // const screen_width = Dimensions.get('window').width;
 // const screen_height = Dimensions.get('window').height;
@@ -26,7 +37,8 @@ const config = {
   directionalOffsetThreshold: 80,
 };
 const Signup = ({navigation, route}) => {
-  //   const {dark, theme, toggle} = useContext(ThemeContext);
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -82,6 +94,8 @@ const Signup = ({navigation, route}) => {
 
     if (error_flag) {
       // navigation.navigate(NAVIGATION.DASHBOARD);
+      setIsLoading(true);
+      SignUpRequest();
     }
   };
   const validateEmail = () => {
@@ -90,6 +104,52 @@ const Signup = ({navigation, route}) => {
   const onSwipeDown = gestureState => {
     navigation.navigate(NAVIGATION.LOGIN);
     console.log('swiped down');
+  };
+  const SignUpRequest = async () => {
+    let url = 'pbvnetwork/v1/pbvuserregistration';
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    let formData = {
+      pbvncust_subscribe: true,
+      pbvncust_firstname: firmName,
+      pbvncust_lastname: lastName,
+      pbvncust_firmname: firmName,
+      pbvncust_email: emailId,
+      pbvncust_username: userName,
+    };
+    axiosInstance
+      .post(url, formData, config)
+      .then(async response => {
+        setIsLoading(false);
+        console_log('signup response: ', JSON.stringify(response, null, 2));
+        // handle success
+        if (response.data.user_id == false) {
+          setEmailIdErrorText('Email Already Exists');
+        } else {
+          await AsyncStorage.setItem(
+            VARIABLE.USER_INFO,
+            JSON.stringify(response.data),
+          );
+          dispatch(loginSave(response.data));
+          navigation.navigate(NAVIGATION.DASHBOARD);
+        }
+      })
+      .catch(function (error) {
+        // console.log('loginSave error: ', error);
+        setIsLoading(false);
+        let error_code = error.response.data;
+        // handle error
+        if (error_code == '[jwt_auth] invalid_username') {
+          setEmailIdErrorText('Invalid Username');
+        } else if (error_code == '[jwt_auth] incorrect_password') {
+          setPasswordErrorText('Incorrect Password');
+        }
+        console_log(JSON.stringify(error.response.data, null, 2));
+        // console_log('Error of config', error.config);
+      });
   };
   return (
     <>
@@ -104,6 +164,11 @@ const Signup = ({navigation, route}) => {
         <CustomSafeAreaView
           backgroundColor={'#000'}
           barStyle={'light-content'}
+        />
+        <CustomLoader
+          // errorMessage={'LoaderReducer.loading'}
+          // visible={LoaderReducer.loading}
+          visible={isLoading}
         />
         <ScrollView
           bounces={false}
@@ -205,7 +270,7 @@ const Signup = ({navigation, route}) => {
                 setLastNameErrorText('');
               }}
               errorText={lastNameErrorText}
-              secureTextEntry={true}
+              // secureTextEntry={true}
             />
             <CustomTextInput
               label={'Email'}

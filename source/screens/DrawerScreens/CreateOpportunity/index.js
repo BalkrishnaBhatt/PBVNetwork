@@ -32,6 +32,7 @@ import {
 } from '../../../redux/actions';
 import axiosInstance from '../../../axios';
 import {console_log} from '../../../utils/loggers';
+import {Store} from '../../../redux/store';
 
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
@@ -97,6 +98,49 @@ const CreateOpportunity = ({navigation, route, ...props}) => {
     // {label: 'Finance', value: 'Finance'},
     // {label: 'Manufacturing', value: 'Manufacturing'},
   ]);
+  const PostOpportunity = async () => {
+    let url =
+      'pbvnetwork/v1/createopportunity?pbvncust_create_opportunity=true' +
+      '&opportunity_title=' +
+      opportunityTitle +
+      '&opportunity_desc=' +
+      opportunityDesc +
+      '&opportunity_expire_date=' +
+      expirationDate +
+      '&opportunity_jurisdiction=' +
+      valueJurisdiction +
+      '&opportunity_town=' +
+      valueTown +
+      '&opportunity_areapractice[]=' +
+      valueAreaPractice +
+      '&opportunity_industry[]=' +
+      valueIndustry;
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + Store.getState().AuthenticationReducer.token,
+      },
+    };
+    axiosInstance
+      .post(url, config)
+      .then(async response => {
+        console_log(
+          'PostOpportunity response: ',
+          JSON.stringify(response, null, 2),
+        );
+        if (response.status == 200) {
+          // setSearchText('');
+          dispatch(setLoader(false));
+          dispatch(getHomeActivities());
+        }
+      })
+      .catch(function (error) {
+        dispatch(setLoader(false));
+        console_log(JSON.stringify(error, null, 2));
+        // let error_code = error.response.data.code;
+        // handle error
+      });
+  };
   return (
     <>
       <CustomSafeAreaView backgroundColor={'#000'} barStyle={'light-content'} />
@@ -136,7 +180,7 @@ const CreateOpportunity = ({navigation, route, ...props}) => {
             <TextInput
               value={opportunityDesc}
               onChangeText={text => {
-                setOpportunityTitle(text);
+                setOpportunityDesc(text);
               }}
               placeholder="Opportunity Desc"
               placeholderTextColor={Colors.border_color}
@@ -212,6 +256,7 @@ const CreateOpportunity = ({navigation, route, ...props}) => {
                       activeOpacity={0.8}
                       onPress={() => {
                         // navigation.navigate(label);
+                        PostOpportunity();
                       }}
                       style={Styles.view_load_more}>
                       <Text style={Styles.text_load_more}>

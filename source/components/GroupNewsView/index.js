@@ -32,7 +32,7 @@ const GroupNewsView = ({item}) => {
           fontFamily: Fonts.Regular_font,
           fontWeight: '300',
         }}>
-        {item.post_name}
+        {item.post_title}
       </Text>
     </TouchableOpacity>
   );

@@ -48,11 +48,54 @@ const MyActivityView = ({item}) => {
           marginHorizontal: 8,
           flex: 1,
         }}>
-        <HTML
+        <View
+          style={{
+            flexDirection: 'row',
+          }}>
+          <HTML
+            source={{
+              html:
+                item && item.title
+                  ? item.title.replace(/<a/g, '<b').replace(/a>/g, 'b>')
+                  : '',
+              // html: item.title,
+            }}
+            tagsStyles={{
+              b: {
+                fontSize: 13,
+                fontWeight: 'bold',
+                fontFamily: Fonts.Regular_font,
+              },
+              li: {
+                // fontSize: Dimens.dimen_16,
+                // fontFamily: Fonts.Roboto_Regular,
+                // marginVertical: Dimens.dimen_2,
+              },
+            }}
+          />
+          <Text
+            style={{
+              flex: 1,
+              fontSize: 13,
+              fontWeight: 'bold',
+              fontFamily: Fonts.Regular_font,
+            }}>
+            {' '}
+            {item.content &&
+              item.content.rendered
+                .replace('<p>', '')
+                .replace('</p>', '')
+                .replace('<b>', '')
+                .replace('</b>', '')}
+          </Text>
+        </View>
+        {/* <HTML
           source={{
             html:
-              item && item.title
-                ? item.title.replace(/<a/g, '<b').replace(/a>/g, 'b>')
+              item && item.content && item.content.rendered
+                ? item.content.rendered
+                    .replace(/<a/g, '<b')
+                    .replace(/a>/g, 'b>')
                 : '',
             // html: item.title,
           }}
@@ -68,7 +111,7 @@ const MyActivityView = ({item}) => {
               // marginVertical: Dimens.dimen_2,
             },
           }}
-        />
+        /> */}
         {/* <Text
           style={{
             fontSize: 12,

@@ -21,6 +21,7 @@ const ContentLoader = () => {
         // justifyContent: 'center',
         height: 200,
         // alignSelf: 'flex-start',
+        paddingTop: 150,
       }}>
       {/* <Image
         source={images.contentLoader}

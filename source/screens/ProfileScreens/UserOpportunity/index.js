@@ -51,14 +51,14 @@ const UserOpportunity = ({navigation, route}) => {
 
   const [searchText, setSearchText] = useState('');
   const [peronsList, setPeronsList] = useState([]);
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
-    {label: 'NEWEST', value: 'NEWEST'},
-    {label: 'ACTIVE', value: 'ACTIVE'},
-    {label: 'POPULAR', value: 'POPULAR'},
-    {label: 'ALPHABETICAL', value: 'ALPHABETICAL'},
-  ]);
+  // const [open, setOpen] = useState(false);
+  // const [value, setValue] = useState(null);
+  // const [items, setItems] = useState([
+  //   {label: 'NEWEST', value: 'NEWEST'},
+  //   {label: 'ACTIVE', value: 'ACTIVE'},
+  //   {label: 'POPULAR', value: 'POPULAR'},
+  //   {label: 'ALPHABETICAL', value: 'ALPHABETICAL'},
+  // ]);
   const renderPersons = ({item}) => {
     return <OpportunityView item={item} />;
   };
@@ -85,7 +85,7 @@ const UserOpportunity = ({navigation, route}) => {
                 style={Styles.TextInput}
               />
             </View>
-            <DropDownPicker
+            {/* <DropDownPicker
               open={open}
               value={value}
               items={items}
@@ -99,7 +99,7 @@ const UserOpportunity = ({navigation, route}) => {
               textStyle={Styles.textStyle}
               // labelStyle={Styles.labelStyle}
               arrowIconStyle={{tintColor: Colors.primary_color}}
-            />
+            /> */}
             <FlatList
               style={{
                 marginVertical: 15,

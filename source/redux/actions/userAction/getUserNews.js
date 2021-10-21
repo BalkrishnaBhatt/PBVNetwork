@@ -2,6 +2,7 @@ import * as actionTypes from '../../actionTypes';
 import axiosInstance from '../../../axios';
 
 import {Store} from '../../store';
+import {console_log} from '../../../utils/loggers';
 export const getUserNews = navigation => {
   let url = 'pbvnetwork/v1/usernews/';
   const config = {
@@ -17,10 +18,7 @@ export const getUserNews = navigation => {
       .get(url + user_id, config)
       .then(function (response) {
         let data = response.data;
-        console.log(
-          'getUserActivity response: ',
-          JSON.stringify(data.length, null, 2),
-        );
+        console_log('getUserNews response: ', JSON.stringify(data, null, 2));
         // handle success
         dispatch(get_user_news(response.data));
       })

@@ -1,15 +1,83 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {ScrollView, Text, View, Dimensions} from 'react-native';
-import CustomSafeAreaView from '../../../components/CustomSafeAreaView';
-import CustomHeader from '../../../components/CustomHeader';
 import {Colors} from '../../../utils/colors';
 import Styles from './style';
+import {useSelector, useDispatch} from 'react-redux';
+import {console_log} from '../../../utils/loggers';
+import {
+  getAllGroups,
+  getMyGroups,
+  getGroupDetails,
+  getFaqs,
+  getPrivacyPolicy,
+  getUserAgreement,
+} from '../../../redux/actions';
+import {
+  ContentLoader,
+  GroupListView,
+  CustomHeader,
+  CustomSafeAreaView,
+} from '../../../components';
+import HTML from 'react-native-render-html';
+import {Fonts} from '../../../utils/fonts';
 
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
 
 const TermAndCondition = ({navigation, route, ...props}) => {
-  //   const {dark, theme, toggle} = useContext(ThemeContext);
+  const dispatch = useDispatch();
+  let InfoReducer = useSelector(state => state.InfoReducer);
+  useEffect(() => {
+    if (InfoReducer !== undefined && InfoReducer.privacyPolicy !== undefined) {
+      setPrivacyPolicy(InfoReducer.privacyPolicy);
+      setUserAgreement(InfoReducer.userAgreement);
+      setIsLoading(InfoReducer.isLoading);
+    }
+  }, [InfoReducer]);
+  useEffect(() => {
+    dispatch(getPrivacyPolicy(navigation));
+    dispatch(getUserAgreement(navigation));
+  }, []);
+  const [isLoading, setIsLoading] = useState(true);
+  const [privacyPolicy, setPrivacyPolicy] = useState({});
+  const [userAgreement, setUserAgreement] = useState({});
+  const html_style = {
+    p: {
+      fontSize: 13,
+      fontWeight: '300',
+      fontFamily: Fonts.Regular_font,
+      color: Colors.inactive_tab,
+    },
+    b: {
+      fontSize: 13,
+      fontWeight: 'bold',
+      fontFamily: Fonts.Regular_font,
+    },
+    h2: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      fontFamily: Fonts.Regular_font,
+      color: Colors.primary_color,
+    },
+    h3: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      fontFamily: Fonts.Regular_font,
+      color: Colors.primary_color,
+    },
+    a: {
+      fontSize: 13,
+      fontWeight: '300',
+      fontFamily: Fonts.Regular_font,
+      color: Colors.primary_color,
+      textDecorationLine: 'none',
+    },
+    li: {
+      fontSize: 13,
+      fontFamily: Fonts.Regular_font,
+      color: Colors.inactive_tab,
+    },
+  };
   return (
     <>
       <CustomSafeAreaView backgroundColor={'#000'} barStyle={'light-content'} />
@@ -18,13 +86,31 @@ const TermAndCondition = ({navigation, route, ...props}) => {
         style={{
           backgroundColor: Colors.white,
           flex: 1,
+          // paddingHorizontal: 20,
           // height: screen_height,
           // width: screen_width,
         }}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <CustomHeader navigation={navigation} {...props}></CustomHeader>
-          <Text style={Styles.text_home}>Term & Condition</Text>
-          <Text style={Styles.text_term}>
+          <View style={{padding: 20}}>
+            <Text style={Styles.text_home}>Term & Condition</Text>
+            <HTML
+              // style={{marginLeft: 20}}
+              source={{
+                html: userAgreement.post_content,
+              }}
+              tagsStyles={html_style}
+            />
+            <Text style={Styles.text_home}>Privacy Policy</Text>
+            <HTML
+              // style={{marginLeft: 20}}
+              source={{
+                html: privacyPolicy.post_content,
+              }}
+              tagsStyles={html_style}
+            />
+          </View>
+          {/* <Text style={Styles.text_term}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
             tristique nisl nec viverra congue. Fusce id dapibus odio. Aenean
             turpis est, ultrices eu tempor at, egestas eget ex. Donec semper in
@@ -65,7 +151,7 @@ const TermAndCondition = ({navigation, route, ...props}) => {
             </Text>
             Duis turpis odio, pretium in urna sed, convallis vehicula ex. Etiam
             at mauris rutrum, pretium metus ut, pretium lacus.
-          </Text>
+          </Text> */}
         </ScrollView>
       </View>
     </>

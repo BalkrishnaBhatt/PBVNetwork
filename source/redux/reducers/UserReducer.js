@@ -9,6 +9,8 @@ const initialState = {
   userOpportunity: [],
   userProfile: {},
   // homePBVGroupProfile: [],
+  userNotificationUnread: [],
+  userNotificationRead: [],
 };
 
 const HomeReducer = (state = initialState, action) => {
@@ -35,6 +37,18 @@ const HomeReducer = (state = initialState, action) => {
       return {
         ...state,
         userOpportunity: action.list,
+        isLoading: false,
+      };
+    case actionTypes.GET_USER_NOTIFICATION_READ:
+      return {
+        ...state,
+        userNotificationRead: action.list,
+        isLoading: false,
+      };
+    case actionTypes.GET_USER_NOTIFICATION_UNREAD:
+      return {
+        ...state,
+        userNotificationUnread: action.list,
         isLoading: false,
       };
     case actionTypes.GET_USER_PROFILE:

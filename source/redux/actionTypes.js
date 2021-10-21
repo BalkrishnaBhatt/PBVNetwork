@@ -52,5 +52,6 @@ export const GET_TOWN_LIST = 'GET_TOWN_LIST';
 export const GET_INDUSTRY_LIST = 'GET_INDUSTRY_LIST';
 export const GET_TERM_CONDITION = 'GET_TERM_CONDITION';
 export const GET_PRIVACY_POLICY = 'GET_PRIVACY_POLICY';
+export const GET_USER_AGREEMENT = 'GET_USER_AGREEMENT';
 // export const GET_FAQ = 'SET_LOADER';
 // export const GET_FAQ = 'SET_LOADER';

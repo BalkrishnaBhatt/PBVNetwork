@@ -32,6 +32,7 @@ import {
   ContentLoader,
   CustomSafeAreaView,
   EmptyList,
+  GroupNewsView,
 } from '../../../components';
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
@@ -42,7 +43,7 @@ const UserNews = ({navigation, route}) => {
   useEffect(() => {
     if (UserReducer) {
       setIsLoading(UserReducer.isLoading);
-      // setNewsList(UserReducer.userNews);
+      setNewsList(UserReducer.userNews);
     }
   }, [UserReducer]);
   useEffect(() => {
@@ -119,7 +120,7 @@ const UserNews = ({navigation, route}) => {
     );
   };
   const renderNews = ({item}) => {
-    return <NewsView item={item} />;
+    return <GroupNewsView item={item} />;
   };
   return (
     <>

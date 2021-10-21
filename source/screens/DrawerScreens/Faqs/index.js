@@ -58,9 +58,6 @@ const Faqs = ({navigation, route, ...props}) => {
       setQuestionList(InfoReducer.faqList[0].faqs);
       setIsLoading(InfoReducer.isLoading);
     }
-    // else {
-    //   setPosts([]);
-    // }
   }, [InfoReducer]);
   useEffect(() => {
     dispatch(getFaqs(navigation));

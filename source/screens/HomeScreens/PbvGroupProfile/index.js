@@ -8,7 +8,6 @@ import {
   Dimensions,
   FlatList,
 } from 'react-native';
-import CustomSafeAreaView from '../../../components/CustomSafeAreaView';
 import {DownArrowSymbol} from '../../../utils/svg';
 import {Colors} from '../../../utils/colors';
 import Styles from './style';
@@ -20,7 +19,12 @@ import {
   getMyGroups,
   getGroupDetails,
 } from '../../../redux/actions';
-import {ContentLoader, GroupListView, EmptyList} from '../../../components';
+import {
+  ContentLoader,
+  GroupListView,
+  EmptyList,
+  CustomSafeAreaView,
+} from '../../../components';
 
 import DropDownPicker from 'react-native-dropdown-picker';
 import {NAVIGATION} from '../../../constant';
@@ -40,7 +44,7 @@ const PbvGroupProfile = ({navigation, route}) => {
     // }
   }, [GroupReducer]);
   useEffect(() => {
-    dispatch(getAllGroups(navigation));
+    dispatch(getAllGroups(navigation, value));
     dispatch(getMyGroups(navigation));
   }, []);
 
@@ -75,11 +79,12 @@ const PbvGroupProfile = ({navigation, route}) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
-    {label: 'NEWEST', value: 'NEWEST'},
-    {label: 'ACTIVE', value: 'ACTIVE'},
-    {label: 'POPULAR', value: 'POPULAR'},
-    {label: 'ALPHABETICAL', value: 'ALPHABETICAL'},
+    {label: 'Last Active', value: 'Last Active'},
+    {label: 'Most Members', value: 'Most Members'},
+    {label: 'Newly Created', value: 'Newly Created'},
+    {label: 'Alphabetical', value: 'Alphabetical'},
   ]);
+
   const renderPersons = ({item}) => {
     return (
       <TouchableOpacity
@@ -181,21 +186,25 @@ const PbvGroupProfile = ({navigation, route}) => {
               // labelStyle={Styles.labelStyle}
               arrowIconStyle={{tintColor: Colors.primary_color}}
             />
-            <FlatList
-              style={{
-                marginVertical: 15,
-                marginHorizontal: 20,
-                marginBottom: 50,
-                // marginTop: 70,
-              }}
-              showsVerticalScrollIndicator={false}
-              data={peronsList}
-              renderItem={renderPersons}
-              keyExtractor={item => item.id}
-              ListEmptyComponent={() => {
-                return <EmptyList />;
-              }}
-            />
+            {isLoading ? (
+              <ContentLoader />
+            ) : (
+              <FlatList
+                style={{
+                  marginVertical: 15,
+                  marginHorizontal: 20,
+                  marginBottom: 50,
+                  // marginTop: 70,
+                }}
+                showsVerticalScrollIndicator={false}
+                data={peronsList}
+                renderItem={renderPersons}
+                keyExtractor={item => item.id}
+                ListEmptyComponent={() => {
+                  return <EmptyList />;
+                }}
+              />
+            )}
           </View>
         </ScrollView>
       </View>

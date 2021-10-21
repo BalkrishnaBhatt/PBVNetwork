@@ -24,7 +24,7 @@ export const getAreaOfPracticeList = navigation => {
         let raw_data = response.data;
         let data_set = [];
         raw_data.map((element, index) => {
-          let obj = {label: element.name, value: element.name};
+          let obj = {label: element.name, value: element.id};
           data_set[index] = obj;
         });
         console_log(

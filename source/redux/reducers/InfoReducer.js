@@ -8,6 +8,8 @@ const initialState = {
   townList: [],
   areaPractice: [],
   industryList: [],
+  privacyPolicy: {},
+  userAgreement: {},
 };
 
 const InfoReducer = (state = initialState, action) => {
@@ -46,6 +48,18 @@ const InfoReducer = (state = initialState, action) => {
       return {
         ...state,
         industryList: action.list,
+        isLoading: false,
+      };
+    case actionTypes.GET_PRIVACY_POLICY:
+      return {
+        ...state,
+        privacyPolicy: action.list,
+        isLoading: false,
+      };
+    case actionTypes.GET_USER_AGREEMENT:
+      return {
+        ...state,
+        userAgreement: action.list,
         isLoading: false,
       };
     // case actionTypes.GET_HOME_LATEST_NEWS:

@@ -46,7 +46,7 @@ const GroupActivities = ({navigation, route}) => {
     }
   }, [GroupDetailReducer]);
   useEffect(() => {
-    dispatch(getGroupActivity(navigation));
+    dispatch(getGroupActivity(navigation, value2));
   }, []);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -88,6 +88,13 @@ const GroupActivities = ({navigation, route}) => {
               items={items2}
               setOpen={setOpen2}
               setValue={setValue2}
+              // setValue={value => {
+              //   console.log('dropdonvalw: ', value);
+              // }}
+              onChangeValue={value => {
+                // console.log('dropdonvalw: ', value);
+                dispatch(getGroupActivity(navigation, value));
+              }}
               // setItems={setItems2}
               placeholder={'Everything'}
               placeholderStyle={Styles.placeholderStyle}

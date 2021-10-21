@@ -2,39 +2,36 @@ import * as actionTypes from '../../actionTypes';
 import axiosInstance from '../../../axios';
 
 import {Store} from '../../store';
-import {console_log} from '../../../utils/loggers';
-export const getGroupActivity = (navigation, selected_value) => {
-  let url = 'buddypress/v1/activity/?group_id=';
+export const getUserNotifications = (navigation, is_new) => {
+  let url = 'buddypress/v1/notifications';
   const config = {
     headers: {
       // 'Content-Type': 'application/json',
       Authorization: 'Bearer ' + Store.getState().AuthenticationReducer.token,
     },
   };
-  let group_id = Store.getState().GroupDetailReducer.groupDetails.id;
+  if (is_new) {
+    url = url + '?new=true';
+  }
+  let user_id = Store.getState().AuthenticationReducer.userId;
+  console.log('user_id: ', user_id);
+  //   console.log('getUserNotificationsurl: ', url);
   return async dispatch => {
     dispatch(set_loader(true));
-
-    let selected_value_to_pass =
-      '&type=' +
-      (selected_value == 'Updates'
-        ? 'activity_update'
-        : selected_value == 'Group Memberships'
-        ? 'joined_group'
-        : selected_value == 'Group Updates'
-        ? 'group_details_updated'
-        : '');
-    // console.log('url: ', url + group_id + selected_value_to_pass);
     axiosInstance
-      .get(url + group_id + selected_value_to_pass, config)
+      .get(url, config)
       .then(function (response) {
         let data = response.data;
-        console_log(
-          'getGroupActivity response: ',
+        console.log(
+          'getUserNotifications response: ',
           JSON.stringify(data, null, 2),
         );
         // handle success
-        dispatch(get_group_activities(response.data));
+        if (is_new) {
+          dispatch(get_user_Notification_unread(response.data));
+        } else {
+          dispatch(get_user_Notification_read(response.data));
+        }
       })
       .catch(function (error) {
         // handle error
@@ -53,13 +50,19 @@ export const getGroupActivity = (navigation, selected_value) => {
 
 export const set_loader = loaderState => {
   return {
-    type: actionTypes.SET_GROUP_LOADING,
+    type: actionTypes.SET_USER_LOADING,
     loaderState: loaderState,
   };
 };
-export const get_group_activities = list => {
+export const get_user_Notification_unread = list => {
   return {
-    type: actionTypes.GET_GROUP_ACTIVITIES,
+    type: actionTypes.GET_USER_NOTIFICATION_UNREAD,
+    list,
+  };
+};
+export const get_user_Notification_read = list => {
+  return {
+    type: actionTypes.GET_USER_NOTIFICATION_READ,
     list,
   };
 };

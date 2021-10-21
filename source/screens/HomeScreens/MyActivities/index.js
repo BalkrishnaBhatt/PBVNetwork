@@ -18,11 +18,15 @@ import {Colors} from '../../../utils/colors';
 import Styles from './style';
 import {Fonts} from '../../../utils/fonts';
 import {useSelector, useDispatch} from 'react-redux';
+import {NAVIGATION, EMAIL_PATTERN, VARIABLE} from '../../../constant';
 import {
   getHomeActivities,
   getHomeNews,
   setLoader,
 } from '../../../redux/actions';
+import axiosInstance from '../../../axios';
+import {console_log} from '../../../utils/loggers';
+import {Store} from '../../../redux/store';
 
 import DropDownPicker from 'react-native-dropdown-picker';
 import {
@@ -45,23 +49,51 @@ const MyActivities = ({navigation, route}) => {
       setIsLoading(HomeReducer.isLoading);
       setNewsList(HomeReducer.homeNews);
     }
-    // else {
-    //   setPosts([]);
-    // }
   }, [HomeReducer]);
   useEffect(() => {
     dispatch(getHomeActivities());
     dispatch(getHomeNews());
-    // setTimeout(() => {
-    //   dispatch(setLoader(true));
-    // }, 3000);
-    // setTimeout(() => {
-    //   dispatch(setLoader(false));
-    // }, 6000);
   }, []);
 
   const [isLoading, setIsLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
+  const [searchTextErrorText, setSearchTextErrorText] = useState('');
+
+  const PostActivity = async () => {
+    let url = 'buddypress/v1/activity';
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + Store.getState().AuthenticationReducer.token,
+      },
+    };
+    let formData = {
+      context: 'edit',
+      user_id: Store.getState().AuthenticationReducer.userId,
+      component: 'activity',
+      type: 'activity_update',
+      content: searchText,
+    };
+    axiosInstance
+      .post(url, formData, config)
+      .then(async response => {
+        if (response.status == 200) {
+          setSearchText('');
+          dispatch(setLoader(false));
+          dispatch(getHomeActivities());
+        }
+        console_log(
+          'my activity response: ',
+          JSON.stringify(response, null, 2),
+        );
+      })
+      .catch(function (error) {
+        dispatch(setLoader(false));
+        console_log(JSON.stringify(error, null, 2));
+        // let error_code = error.response.data.code;
+        // handle error
+      });
+  };
   const [newsCategory, setNewsCategory] = useState([
     {
       news_category: 'LATEST NEWS',
@@ -171,6 +203,14 @@ const MyActivities = ({navigation, route}) => {
   const renderNews = ({item}) => {
     return <NewsView item={item} />;
   };
+  const validatePost = () => {
+    if (searchText == '') {
+      setSearchTextErrorText('Please Enter Post Content');
+    } else {
+      dispatch(setLoader(true));
+      PostActivity();
+    }
+  };
   return (
     <>
       <View
@@ -207,11 +247,24 @@ const MyActivities = ({navigation, route}) => {
             value={searchText}
             onChangeText={text => {
               setSearchText(text);
+              setSearchTextErrorText('');
             }}
             multiline={true}
             style={Styles.TextInput}
           />
-
+          {searchTextErrorText == '' ? null : (
+            <Text
+              style={{
+                color: Colors.red,
+                fontSize: 12,
+                fontFamily: Fonts.Regular_font,
+                marginTop: -10,
+                marginBottom: 10,
+                marginHorizontal: 30,
+              }}>
+              {searchTextErrorText}
+            </Text>
+          )}
           <View
             style={{
               flexDirection: 'row',
@@ -223,7 +276,7 @@ const MyActivities = ({navigation, route}) => {
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => {
-                // navigation.navigate(label);
+                validatePost();
               }}
               style={{
                 borderRadius: 7,

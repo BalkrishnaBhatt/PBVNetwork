@@ -1,45 +1,37 @@
 import * as actionTypes from '../../actionTypes';
+// import axios from 'axios';
 import axiosInstance from '../../../axios';
+// import {displayErrorModalFewSecs} from '../../errorModal';
 
 import {Store} from '../../store';
+import {useSelector, useDispatch} from 'react-redux';
+import {NAVIGATION} from '../../../constant';
 import {console_log} from '../../../utils/loggers';
-export const getGroupActivity = (navigation, selected_value) => {
-  let url = 'buddypress/v1/activity/?group_id=';
+export const getUserAgreement = navigation => {
+  let url = 'pbvnetwork/v1/useragreement';
   const config = {
     headers: {
       // 'Content-Type': 'application/json',
       Authorization: 'Bearer ' + Store.getState().AuthenticationReducer.token,
     },
   };
-  let group_id = Store.getState().GroupDetailReducer.groupDetails.id;
+
   return async dispatch => {
     dispatch(set_loader(true));
-
-    let selected_value_to_pass =
-      '&type=' +
-      (selected_value == 'Updates'
-        ? 'activity_update'
-        : selected_value == 'Group Memberships'
-        ? 'joined_group'
-        : selected_value == 'Group Updates'
-        ? 'group_details_updated'
-        : '');
-    // console.log('url: ', url + group_id + selected_value_to_pass);
     axiosInstance
-      .get(url + group_id + selected_value_to_pass, config)
+      .get(url, config)
       .then(function (response) {
-        let data = response.data;
         console_log(
-          'getGroupActivity response: ',
-          JSON.stringify(data, null, 2),
+          'getUserAgreement response: ',
+          JSON.stringify(response.data, null, 2),
         );
         // handle success
-        dispatch(get_group_activities(response.data));
+        dispatch(get_user_agreement(response.data));
       })
       .catch(function (error) {
         // handle error
-
         let error_code = error.response.data.code;
+        // handle error
         if (
           error_code == 'jwt_auth_invalid_token' ||
           error_code == 'rest_forbidden'
@@ -47,19 +39,20 @@ export const getGroupActivity = (navigation, selected_value) => {
           navigation.navigate(NAVIGATION.LOGIN);
         }
         console_log(JSON.stringify(error.response.data, null, 2));
+        // console_log('Error of config', error.config);
       });
   };
 };
 
 export const set_loader = loaderState => {
   return {
-    type: actionTypes.SET_GROUP_LOADING,
+    type: actionTypes.SET_INFO_LOADING,
     loaderState: loaderState,
   };
 };
-export const get_group_activities = list => {
+export const get_user_agreement = list => {
   return {
-    type: actionTypes.GET_GROUP_ACTIVITIES,
+    type: actionTypes.GET_USER_AGREEMENT,
     list,
   };
 };
