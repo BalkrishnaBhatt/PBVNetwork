@@ -40,7 +40,7 @@ const Home = ({navigation, route, ...props}) => {
   }, []);
   return (
     <>
-      <CustomSafeAreaView backgroundColor={'#000'} barStyle={'light-content'} />
+      <CustomSafeAreaView backgroundColor={'#fff'} barStyle={'light-content'} />
 
       <View style={Styles.View_Main}>
         <ScrollView showsVerticalScrollIndicator={false}>

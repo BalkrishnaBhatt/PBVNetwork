@@ -58,7 +58,7 @@ const CustomDrawer = ({...props}) => {
       <TouchableOpacity
         style={Styles.view_button}
         activeOpacity={0.8}
-        onPress={() => props.navigation.navigate(NAVIGATION.GROUPS)}>
+        onPress={() => props.navigation.navigate(NAVIGATION.GROUPS_ROUTER)}>
         <Text style={Styles.text_button}>Groups</Text>
       </TouchableOpacity>
       <TouchableOpacity

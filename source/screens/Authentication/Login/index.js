@@ -6,17 +6,28 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import CustomSafeAreaView from '../../../components/CustomSafeAreaView';
-import CustomTextInput from '../../../components/CustomTextInput';
+import {
+  MyActivityView,
+  NewsView,
+  ContentLoader,
+  CustomSafeAreaView,
+  CustomTextInput,
+  CustomLoader,
+} from '../../../components';
 import {
   LoginTopCurve,
   LoginBottomCurve,
   NextRoundArrowSymbol,
 } from '../../../utils/svg';
 import {Colors} from '../../../utils/colors';
-import {NAVIGATION, EMAIL_PATTERN} from '../../../constant';
+import {NAVIGATION, EMAIL_PATTERN, VARIABLE} from '../../../constant';
 import {Fonts} from '../../../utils/fonts';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import {useSelector, useDispatch} from 'react-redux';
+import {loginSave, setLoader} from '../../../redux/actions';
+import axiosInstance from '../../../axios';
+import {console_log} from '../../../utils/loggers';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // const screen_width = Dimensions.get('window').width;
 // const screen_height = Dimensions.get('window').height;
 const config = {
@@ -25,10 +36,10 @@ const config = {
   // gestureIsClickThreshold: 20,
 };
 const Login = ({navigation, route}) => {
-  //   const {dark, theme, toggle} = useContext(ThemeContext);
-
-  const [emailId, setEmailId] = useState('');
-  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+  const [emailId, setEmailId] = useState('pbvnetwork');
+  const [password, setPassword] = useState('Oqy6sCcFYB(UlDQ6%23x');
   const [emailIdErrorText, setEmailIdErrorText] = useState('');
   const [passwordErrorText, setPasswordErrorText] = useState('');
   const [screen_width, set_screen_width] = useState(
@@ -41,7 +52,7 @@ const Login = ({navigation, route}) => {
     Dimensions.addEventListener('change', ({window: {width, height}}) => {
       set_screen_width(width);
       set_screen_height(height);
-      console.log('device rotaated', width, height);
+      console_log('device rotaated', width, height);
     });
     return () => Dimensions.removeEventListener();
   }, []);
@@ -49,27 +60,65 @@ const Login = ({navigation, route}) => {
 
   const validate = () => {
     let error_flag = true;
-    if (emailId == '') {
-      setEmailIdErrorText('Please Enter Email or Username');
-      error_flag = false;
-    } else if (!validateEmail()) {
-      setEmailIdErrorText('Sorry, your email is invalid.');
-      error_flag = false;
-    }
+    // if (emailId == '') {
+    //   setEmailIdErrorText('Please Enter Email or Username');
+    //   error_flag = false;
+    // } else if (!validateEmail()) {
+    //   setEmailIdErrorText('Sorry, your email is invalid.');
+    //   error_flag = false;
+    // }
     if (password == '') {
       setPasswordErrorText('Please Enter Password');
       error_flag = false;
     }
     if (error_flag) {
-      navigation.navigate(NAVIGATION.DASHBOARD);
+      // navigation.navigate(NAVIGATION.DASHBOARD);
+      setIsLoading(true);
+      LoginRequest();
     }
+  };
+  const LoginRequest = async () => {
+    let url =
+      'jwt-auth/v1/token' + '?username=' + emailId + '&password=' + password;
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    axiosInstance
+      .post(url, config)
+      .then(async response => {
+        setIsLoading(false);
+        // console_log('login response: ', JSON.stringify(response.data, null, 2));
+        // handle success
+        await AsyncStorage.setItem(
+          VARIABLE.USER_INFO,
+          JSON.stringify(response.data),
+        );
+        dispatch(loginSave(response.data));
+        if (response.data && response.data.token) {
+          navigation.navigate(NAVIGATION.DASHBOARD);
+        }
+      })
+      .catch(function (error) {
+        setIsLoading(false);
+        let error_code = error.response.data.code;
+        // handle error
+        if (error_code == '[jwt_auth] invalid_username') {
+          setEmailIdErrorText('Invalid Username');
+        } else if (error_code == '[jwt_auth] incorrect_password') {
+          setPasswordErrorText('Incorrect Password');
+        }
+        console_log(JSON.stringify(error.response.data, null, 2));
+        // console_log('Error of config', error.config);
+      });
   };
   const validateEmail = () => {
     return EMAIL_PATTERN.test(emailId);
   };
   const onSwipeUp = gestureState => {
     navigation.navigate(NAVIGATION.SIGN_UP);
-    console.log('swiped up');
+    console_log('swiped up');
   };
   return (
     <>
@@ -82,6 +131,11 @@ const Login = ({navigation, route}) => {
           // height: screen_height,
           // width: screen_width,
         }}>
+        <CustomLoader
+          // errorMessage={'LoaderReducer.loading'}
+          // visible={LoaderReducer.loading}
+          visible={isLoading}
+        />
         <ScrollView
           // style={{flexGrow: 1}}
           showsVerticalScrollIndicator={false}

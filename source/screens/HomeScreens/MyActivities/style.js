@@ -11,12 +11,6 @@ export default StyleSheet.create({
     // paddingHorizontal: 100
   },
   ///////////////////////////////////////////////////////
-  DownArrowSymbol: {
-    height: 15,
-    width: 15,
-    marginRight: 7,
-  },
-  ///////////////////////////////////////////////////////
   TextInput: {
     flex: 1,
     height: 80,
@@ -28,34 +22,6 @@ export default StyleSheet.create({
     marginHorizontal: 20,
     padding: 7,
     textAlignVertical: 'top',
-  },
-  ///////////////////////////////////////////////////////
-  view_flatlist_main: {
-    flexDirection: 'row',
-    shadowColor: Colors.black,
-    shadowOffset: {width: 2, height: 2},
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
-    elevation: 4,
-    backgroundColor: Colors.white,
-    padding: 7,
-    borderRadius: 8,
-    marginHorizontal: 20,
-    marginVertical: 8,
-  },
-  view_flatlist_comment_favourite: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    borderRadius: 7,
-    // height: 15,
-    marginRight: 5,
-    paddingHorizontal: 10,
-  },
-  CommentsSymbol: {
-    height: 10,
-    width: 10,
-    marginRight: 5,
   },
   ///////////////////////////////////////////////////////
   view_whats_new: {
@@ -72,22 +38,6 @@ export default StyleSheet.create({
   },
   text_whats_new: {
     fontSize: 16,
-    fontFamily: Fonts.Regular_font,
-    fontWeight: '400',
-  },
-  ///////////////////////////////////////////////////////
-  view_post_in: {
-    borderRadius: 7,
-    borderWidth: 1,
-    borderColor: Colors.primary_color,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  text_post_in: {
-    color: Colors.primary_color,
-    fontSize: 12,
-    marginRight: 15,
-    marginLeft: 10,
     fontFamily: Fonts.Regular_font,
     fontWeight: '400',
   },
@@ -174,25 +124,25 @@ export default StyleSheet.create({
     color: Colors.primary_color,
   },
   ///////////////////////////////////////////////////////
-  DropDownPicker2: {
-    height: 30,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: Colors.primary_color,
-    marginVertical: 3,
-    width: '40%',
-    // padding: -10,
-    marginLeft: 20,
-    marginBottom: 10,
-  },
-  dropDownContainerStyle2: {
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: Colors.primary_color,
-    backgroundColor: Colors.white,
-    elevation: 1000,
-    zIndex: 10,
-    width: '40%',
-    marginLeft: 20,
-  },
+  // DropDownPicker2: {
+  //   height: 30,
+  //   borderRadius: 10,
+  //   borderWidth: 1,
+  //   borderColor: Colors.primary_color,
+  //   marginVertical: 3,
+  //   width: '40%',
+  //   // padding: -10,
+  //   marginLeft: 20,
+  //   marginBottom: 10,
+  // },
+  // dropDownContainerStyle2: {
+  //   borderRadius: 10,
+  //   borderWidth: 1,
+  //   borderColor: Colors.primary_color,
+  //   backgroundColor: Colors.white,
+  //   elevation: 1000,
+  //   zIndex: 10,
+  //   width: '40%',
+  //   marginLeft: 20,
+  // },
 });

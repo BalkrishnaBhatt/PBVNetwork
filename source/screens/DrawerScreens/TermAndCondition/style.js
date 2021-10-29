@@ -14,16 +14,15 @@ export default StyleSheet.create({
   text_home: {
     color: Colors.primary_color,
     fontSize: 20,
-    marginLeft: 20,
     marginBottom: 10,
     fontFamily: Fonts.Bold_font,
   },
-  text_term: {
-    marginBottom: 10,
-    fontSize: 12,
-    fontFamily: Fonts.Regular_font,
-    fontWeight: '400',
-    color: '#A5A5A5',
-    marginHorizontal: 20,
-  },
+  // text_term: {
+  //   marginBottom: 10,
+  //   fontSize: 12,
+  //   fontFamily: Fonts.Regular_font,
+  //   fontWeight: '400',
+  //   color: '#A5A5A5',
+  //   marginHorizontal: 20,
+  // },
 });

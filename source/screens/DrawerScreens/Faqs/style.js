@@ -20,7 +20,7 @@ export default StyleSheet.create({
   },
   ///////////////////////////////////////////////////////
   selected_header: {
-    // flex: 1,
+    flex: 1,
     borderBottomWidth: 2,
     alignItems: 'center',
     justifyContent: 'center',
@@ -31,7 +31,7 @@ export default StyleSheet.create({
     fontWeight: '500',
   },
   view_gap: {
-    width: 15,
+    width: 25,
   },
   ///////////////////////////////////////////////////////
   view_main_modal: {

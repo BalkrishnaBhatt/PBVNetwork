@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   ScrollView,
   Text,
@@ -8,16 +8,37 @@ import {
   Dimensions,
   FlatList,
 } from 'react-native';
-import CustomSafeAreaView from '../../../components/CustomSafeAreaView';
 import {Colors} from '../../../utils/colors';
 import {Fonts} from '../../../utils/fonts';
+import {useSelector, useDispatch} from 'react-redux';
+import {loginSave, getHomeNews} from '../../../redux/actions';
+import {
+  MyActivityView,
+  NewsView,
+  ContentLoader,
+  CustomSafeAreaView,
+  EmptyList,
+} from '../../../components';
 
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
 
 const LatestNews = ({navigation, route}) => {
-  //   const {dark, theme, toggle} = useContext(ThemeContext);
-
+  const dispatch = useDispatch();
+  let HomeReducer = useSelector(state => state.HomeReducer);
+  useEffect(() => {
+    if (HomeReducer) {
+      setNewsList(HomeReducer.homeNews);
+      setIsLoading(HomeReducer.isLoading);
+    }
+    // else {
+    //   setPosts([]);
+    // }
+  }, [HomeReducer]);
+  useEffect(() => {
+    dispatch(getHomeNews());
+  }, []);
+  const [isLoading, setIsLoading] = useState(true);
   const [newsList, setNewsList] = useState([
     {
       news_title:
@@ -46,36 +67,7 @@ const LatestNews = ({navigation, route}) => {
     },
   ]);
   const renderNews = ({item}) => {
-    return (
-      <TouchableOpacity
-        style={{
-          // borderBottomWidth: 1,
-          // borderColor: Colors.grey,
-          paddingVertical: 15,
-        }}
-        activeOpacity={0.8}
-        onPress={() => {}}>
-        <Text
-          style={{
-            fontSize: 14,
-            color: Colors.grey,
-            marginBottom: 5,
-            fontFamily: Fonts.Regular_font,
-            fontWeight: '300',
-          }}>
-          News
-        </Text>
-        <Text
-          style={{
-            fontSize: 14,
-            color: Colors.black,
-            fontFamily: Fonts.Regular_font,
-            fontWeight: '300',
-          }}>
-          {item.news_title}
-        </Text>
-      </TouchableOpacity>
-    );
+    return <NewsView item={item} />;
   };
   const renderNewsCategoy = ({item}) => {
     return (
@@ -111,8 +103,6 @@ const LatestNews = ({navigation, route}) => {
   };
   return (
     <>
-      <CustomSafeAreaView backgroundColor={'#000'} barStyle={'light-content'} />
-
       <View
         style={{
           backgroundColor: Colors.white,
@@ -120,48 +110,61 @@ const LatestNews = ({navigation, route}) => {
           // height: screen_height,
           // width: screen_width,
         }}>
-        <ScrollView>
-          {route.params.from_group ? (
-            <FlatList
-              style={{marginVertical: 5, marginLeft: 20}}
-              showsVerticalScrollIndicator={false}
-              data={newsCategory}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              renderItem={renderNewsCategoy}
-              keyExtractor={item => item.id}
-            />
-          ) : (
-            <View
-              style={{
-                borderBottomWidth: 1,
-                borderTopWidth: 1,
-                borderColor: Colors.border_color,
-                paddingHorizontal: 20,
-                paddingVertical: 10,
-              }}>
-              <Text
+        {isLoading ? (
+          <ContentLoader />
+        ) : (
+          <ScrollView>
+            {route.params.from_group ? (
+              <FlatList
+                style={{marginVertical: 5, marginLeft: 20}}
+                showsVerticalScrollIndicator={false}
+                data={newsCategory}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                renderItem={renderNewsCategoy}
+                keyExtractor={item => item.id}
+              />
+            ) : (
+              <View
                 style={{
-                  fontWeight: 'bold',
-                  fontSize: 16,
-                  fontFamily: Fonts.Regular_font,
+                  borderBottomWidth: 1,
+                  borderTopWidth: 1,
+                  borderColor: Colors.border_color,
+                  paddingHorizontal: 20,
+                  paddingVertical: 10,
                 }}>
-                Latest
-                <Text style={{color: Colors.primary_color}}> News</Text>
-              </Text>
-            </View>
-          )}
-          <FlatList
-            style={{marginVertical: 15, marginHorizontal: 20, marginBottom: 50}}
-            showsVerticalScrollIndicator={false}
-            data={newsList}
-            renderItem={renderNews}
-            ItemSeparatorComponent={() => (
-              <View style={{backgroundColor: Colors.border_color, height: 1}} />
+                <Text
+                  style={{
+                    fontWeight: 'bold',
+                    fontSize: 16,
+                    fontFamily: Fonts.Regular_font,
+                  }}>
+                  Latest
+                  <Text style={{color: Colors.primary_color}}> News</Text>
+                </Text>
+              </View>
             )}
-            keyExtractor={item => item.id}
-          />
-        </ScrollView>
+            <FlatList
+              style={{
+                marginVertical: 15,
+                marginHorizontal: 20,
+                marginBottom: 50,
+              }}
+              showsVerticalScrollIndicator={false}
+              data={newsList}
+              renderItem={renderNews}
+              ItemSeparatorComponent={() => (
+                <View
+                  style={{backgroundColor: Colors.border_color, height: 1}}
+                />
+              )}
+              keyExtractor={item => item.id}
+              ListEmptyComponent={() => {
+                return <EmptyList />;
+              }}
+            />
+          </ScrollView>
+        )}
       </View>
     </>
   );

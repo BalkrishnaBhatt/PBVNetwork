@@ -1,0 +1,1 @@
+export {setLoader} from './setLoader';

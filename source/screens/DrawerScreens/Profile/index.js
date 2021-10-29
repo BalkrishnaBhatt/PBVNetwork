@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   ScrollView,
   Text,
@@ -7,8 +7,13 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import CustomSafeAreaView from '../../../components/CustomSafeAreaView';
-import CustomHeader from '../../../components/CustomHeader';
+import {
+  MyActivityView,
+  NewsView,
+  ContentLoader,
+  CustomSafeAreaView,
+  OpportunityView,
+} from '../../../components';
 import {
   HomeTabSymbol,
   NewsTabSymbol,
@@ -26,18 +31,51 @@ import Styles from './style';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import Overview from '../../GroupScreens/Overview';
 import Manage from '../../GroupScreens/Manage';
-import MyActivities from '../../HomeScreens/MyActivities';
-import LatestNews from '../../HomeScreens/LatestNews';
-import OpportunityMatching from '../../HomeScreens/OpportunityMatching';
+import UserNews from '../../ProfileScreens/UserNews';
+import UserOpportunity from '../../ProfileScreens/UserOpportunity';
+import UserActivities from '../../ProfileScreens/UserActivities';
 import ProfileScreen from '../../ProfileScreens/ProfileScreen';
 import Notification from '../../ProfileScreens/Notification';
+import {useSelector, useDispatch} from 'react-redux';
+import {
+  getHomeActivities,
+  getHomeNews,
+  setLoader,
+  getUserOpportunity,
+  getUserProfile,
+} from '../../../redux/actions';
+import images from '../../../utils/images';
 const Tab = createMaterialTopTabNavigator();
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
 
 const Profile = ({navigation, route, ...props}) => {
-  //   const {dark, theme, toggle} = useContext(ThemeContext);
+  const dispatch = useDispatch();
+  let UserReducer = useSelector(state => state.UserReducer);
+  useEffect(() => {
+    dispatch(getUserProfile(navigation));
+  }, []);
+  useEffect(() => {
+    if (UserReducer) {
+      let data_to_set = UserReducer.userProfile;
 
+      setFullImage(
+        data_to_set.avatar_urls && data_to_set.avatar_urls.full
+          ? data_to_set.avatar_urls.full
+          : '',
+      );
+      setThumbImage(
+        data_to_set.avatar_urls && data_to_set.avatar_urls.thumb
+          ? data_to_set.avatar_urls.thumb
+          : '',
+      );
+      setIsLoading(UserReducer.isLoading);
+      // setNewsList(UserReducer.homeNews);
+    }
+  }, [UserReducer]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [fullImage, setFullImage] = useState('');
+  const [thumbImage, setThumbImage] = useState('');
   // useEffect(() => {
   //   const backHandler = BackHandler.addEventListener(
   //     'hardwareBackPress',
@@ -54,118 +92,134 @@ const Profile = ({navigation, route, ...props}) => {
       <CustomSafeAreaView backgroundColor={'#000'} barStyle={'light-content'} />
 
       <View style={Styles.View_Main}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <Image
-            style={{
-              height: 200,
-              width: '100%',
-              position: 'absolute',
-            }}
-            resizeMode="cover"
-            source={{uri: 'https://picsum.photos/200/300'}}
-          />
-          {/* <CustomHeader
+        {isLoading ? (
+          <ContentLoader />
+        ) : (
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <Image
+              style={{
+                height: 200,
+                width: '100%',
+                position: 'absolute',
+                shadowColor: Colors.black_opacity_25,
+                // shadowOffset: 2,
+              }}
+              resizeMode="cover"
+              source={{
+                uri:
+                  fullImage == '' || fullImage == undefined
+                    ? images.no_image_found
+                    : fullImage,
+              }}
+            />
+            {/* <CustomHeader
             navigation={navigation}
             headerSymbolColor={Colors.white}
             {...props}></CustomHeader> */}
-          <TouchableOpacity
-            activeOpacity={0.8}
-            style={{alignSelf: 'flex-end', margin: 20}}
-            onPress={() => navigation.goBack()}>
-            <PowerButtonSymbol
-              style={{
-                height: 30,
-                width: 30,
-              }}
-            />
-          </TouchableOpacity>
-          <View style={{flexDirection: 'row', marginTop: 80, marginLeft: 20}}>
-            <View
-              style={{
-                backgroundColor: Colors.white,
-                padding: 4,
-                borderRadius: 15,
-              }}>
-              <Image
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={{alignSelf: 'flex-end', margin: 20}}
+              onPress={() => navigation.goBack()}>
+              <PowerButtonSymbol
                 style={{
-                  height: 100,
-                  width: 100,
-                  borderRadius: 10,
+                  height: 30,
+                  width: 30,
                 }}
-                source={{uri: 'https://picsum.photos/200/300'}}
+                fill={Colors.black_opacity_40}
               />
-            </View>
-            <View style={{justifyContent: 'flex-end', marginLeft: 10}}>
-              <Text
-                style={{
-                  fontFamily: Fonts.Regular_font,
-                  fontSize: 14,
-                  fontWeight: '400',
-                }}>
-                @pbvnetwork
-              </Text>
-              <Text
-                style={{
-                  fontFamily: Fonts.Regular_font,
-                  fontSize: 12,
-                  fontWeight: '300',
-                  color: '#A5A5A5',
-                }}>
-                2 days ago
-              </Text>
-            </View>
-          </View>
-
-          <Tab.Navigator
-            // screenOptions={{lazy: true}}
-            // lazy={true}
-            initialRouteName={NAVIGATION.MY_ACTIVITIES}
-            tabBar={({state, descriptors, navigation}) => (
-              // <ScrollView
-              //   horizontal
-              //   showsHorizontalScrollIndicator={false}
-              //   style={{padding: 20, flexGrow: 1}}>
+            </TouchableOpacity>
+            <View style={{flexDirection: 'row', marginTop: 80, marginLeft: 20}}>
               <View
                 style={{
-                  flexDirection: 'row',
-                  marginHorizontal: 20,
-                  marginBottom: 20,
-                  borderBottomWidth: 1,
-                  borderColor: Colors.border_color,
-                  paddingBottom: 20,
+                  backgroundColor: Colors.white,
+                  padding: 4,
+                  borderRadius: 15,
                 }}>
-                {/* <View style={Styles.tab_back}>
+                <Image
+                  style={{
+                    height: 100,
+                    width: 100,
+                    borderRadius: 10,
+                  }}
+                  source={{
+                    uri:
+                      thumbImage == '' || thumbImage == undefined
+                        ? images.no_image_found
+                        : thumbImage,
+                  }}
+                />
+              </View>
+              <View style={{justifyContent: 'flex-end', marginLeft: 10}}>
+                <Text
+                  style={{
+                    fontFamily: Fonts.Regular_font,
+                    fontSize: 14,
+                    fontWeight: '400',
+                  }}>
+                  @pbvnetwork
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: Fonts.Regular_font,
+                    fontSize: 12,
+                    fontWeight: '300',
+                    color: '#A5A5A5',
+                  }}>
+                  2 days ago
+                </Text>
+              </View>
+            </View>
+
+            <Tab.Navigator
+              // screenOptions={{lazy: true}}
+              // lazy={true}
+              initialRouteName={NAVIGATION.MY_ACTIVITIES}
+              tabBar={({state, descriptors, navigation}) => (
+                // <ScrollView
+                //   horizontal
+                //   showsHorizontalScrollIndicator={false}
+                //   style={{padding: 20, flexGrow: 1}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginHorizontal: 20,
+                    marginBottom: 20,
+                    borderBottomWidth: 1,
+                    borderColor: Colors.border_color,
+                    paddingBottom: 20,
+                  }}>
+                  {/* <View style={Styles.tab_back}>
                   <ChartTabSymbol
                     style={Styles.HomeTabSymbol}
                     fill={Colors.inactive_tab}
                   />
                 </View> */}
-                {state.routes.map((route, index) => {
-                  const {options} = descriptors[route.key];
-                  const label =
-                    options.tabBarLabel !== undefined
-                      ? options.tabBarLabel
-                      : options.title !== undefined
-                      ? options.title
-                      : route.name;
+                  {state.routes.map((route, index) => {
+                    const {options} = descriptors[route.key];
+                    const label =
+                      options.tabBarLabel !== undefined
+                        ? options.tabBarLabel
+                        : options.title !== undefined
+                        ? options.title
+                        : route.name;
 
-                  const isFocused = state.index === index;
+                    const isFocused = state.index === index;
 
-                  return (
-                    <TouchableOpacity
-                      activeOpacity={0.8}
-                      onPress={() => {
-                        navigation.navigate(label);
-                      }}
-                      style={[
-                        Styles.tab_back,
-                        {
-                          backgroundColor: !isFocused
-                            ? Colors.white
-                            : '#FAEDB3',
-                        },
-                      ]}>
-                      {/* <Text
+                    return (
+                      <TouchableOpacity
+                        activeOpacity={0.8}
+                        onPress={() => {
+                          navigation.navigate(label);
+                        }}
+                        style={[
+                          Styles.tab_back,
+                          {
+                            backgroundColor: !isFocused
+                              ? Colors.white
+                              : '#FAEDB3',
+                          },
+                        ]}>
+                        {/* <Text
                         style={{
                           color: isFocused
                             ? Colors.white
@@ -177,100 +231,95 @@ const Profile = ({navigation, route, ...props}) => {
                         }}>
                         {label}
                       </Text> */}
-                      {label == NAVIGATION.MY_ACTIVITIES ? (
-                        <HomeTabSymbol
-                          style={Styles.HomeTabSymbol}
-                          fill={
-                            isFocused
-                              ? Colors.primary_color
-                              : Colors.inactive_tab
-                          }
-                        />
-                      ) : label == NAVIGATION.OPPORTUNITY_MATCHING ? (
-                        <OpportunityTabSymbol
-                          style={Styles.HomeTabSymbol}
-                          fill={
-                            isFocused
-                              ? Colors.primary_color
-                              : Colors.inactive_tab
-                          }
-                        />
-                      ) : label == NAVIGATION.NOTIFICATION ? (
-                        <NotificationTabSymbol
-                          style={Styles.HomeTabSymbol}
-                          fill={
-                            isFocused
-                              ? Colors.primary_color
-                              : Colors.inactive_tab
-                          }
-                        />
-                      ) : label == NAVIGATION.OVERVIEW ? (
-                        <ChartTabSymbol
-                          style={Styles.HomeTabSymbol}
-                          fill={
-                            isFocused
-                              ? Colors.primary_color
-                              : Colors.inactive_tab
-                          }
-                        />
-                      ) : label == NAVIGATION.PROFILE_SCREEN ? (
-                        <ManageTabSymbol
-                          style={Styles.HomeTabSymbol}
-                          fill={
-                            isFocused
-                              ? Colors.primary_color
-                              : Colors.inactive_tab
-                          }
-                        />
-                      ) : (
-                        <NewsTabSymbol
-                          style={Styles.HomeTabSymbol}
-                          fill={
-                            isFocused
-                              ? Colors.primary_color
-                              : Colors.inactive_tab
-                          }
-                        />
-                      )}
-                    </TouchableOpacity>
-                  );
-                })}
-                {/* <View style={Styles.tab_back}>
-                  <ManageTabSymbol
-                    style={Styles.HomeTabSymbol}
-                    fill={Colors.inactive_tab}
-                  />
-                </View> */}
-                {/* </ScrollView> */}
-              </View>
-            )}>
-            <Tab.Screen name={NAVIGATION.OVERVIEW} component={Overview} />
-            <Tab.Screen
-              name={NAVIGATION.LATEST_NEWS}
-              component={LatestNews}
-              initialParams={{from_group: true}}
-            />
-            <Tab.Screen
-              name={NAVIGATION.MY_ACTIVITIES}
-              component={MyActivities}
-              initialParams={{from_group: true}}
-            />
-            <Tab.Screen
-              name={NAVIGATION.OPPORTUNITY_MATCHING}
-              component={OpportunityMatching}
-              initialParams={{from_group: true}}
-            />
-            <Tab.Screen
-              name={NAVIGATION.PROFILE_SCREEN}
-              component={ProfileScreen}
-            />
-            <Tab.Screen
-              name={NAVIGATION.NOTIFICATION}
-              component={Notification}
-            />
-            {/* <Tab.Screen name={NAVIGATION.MANAGE} component={Manage} /> */}
-          </Tab.Navigator>
-        </ScrollView>
+                        {label == NAVIGATION.USER_ACTIVITIES ? (
+                          <HomeTabSymbol
+                            style={Styles.HomeTabSymbol}
+                            fill={
+                              isFocused
+                                ? Colors.primary_color
+                                : Colors.inactive_tab
+                            }
+                          />
+                        ) : label == NAVIGATION.USER_OPPORTUNITY ? (
+                          <OpportunityTabSymbol
+                            style={Styles.HomeTabSymbol}
+                            fill={
+                              isFocused
+                                ? Colors.primary_color
+                                : Colors.inactive_tab
+                            }
+                          />
+                        ) : label == NAVIGATION.NOTIFICATION ? (
+                          <NotificationTabSymbol
+                            style={Styles.HomeTabSymbol}
+                            fill={
+                              isFocused
+                                ? Colors.primary_color
+                                : Colors.inactive_tab
+                            }
+                          />
+                        ) : label == NAVIGATION.OVERVIEW ? (
+                          <ChartTabSymbol
+                            style={Styles.HomeTabSymbol}
+                            fill={
+                              isFocused
+                                ? Colors.primary_color
+                                : Colors.inactive_tab
+                            }
+                          />
+                        ) : label == NAVIGATION.PROFILE_SCREEN ? (
+                          <ManageTabSymbol
+                            style={Styles.HomeTabSymbol}
+                            fill={
+                              isFocused
+                                ? Colors.primary_color
+                                : Colors.inactive_tab
+                            }
+                          />
+                        ) : (
+                          <NewsTabSymbol
+                            style={Styles.HomeTabSymbol}
+                            fill={
+                              isFocused
+                                ? Colors.primary_color
+                                : Colors.inactive_tab
+                            }
+                          />
+                        )}
+                      </TouchableOpacity>
+                    );
+                  })}
+                  {/* </ScrollView> */}
+                </View>
+              )}>
+              <Tab.Screen name={NAVIGATION.OVERVIEW} component={Overview} />
+              <Tab.Screen
+                name={NAVIGATION.USER_NEWS}
+                component={UserNews}
+                initialParams={{from_group: true}}
+              />
+              <Tab.Screen
+                name={NAVIGATION.USER_ACTIVITIES}
+                component={UserActivities}
+                initialParams={{from_group: true}}
+              />
+              <Tab.Screen
+                name={NAVIGATION.USER_OPPORTUNITY}
+                component={UserOpportunity}
+                initialParams={{from_group: true}}
+              />
+              <Tab.Screen
+                name={NAVIGATION.PROFILE_SCREEN}
+                component={ProfileScreen}
+              />
+              <Tab.Screen
+                name={NAVIGATION.NOTIFICATION}
+                component={Notification}
+              />
+              {/* <Tab.Screen name={NAVIGATION.MANAGE} component={Manage} /> */}
+            </Tab.Navigator>
+          </ScrollView>
+        )}
       </View>
     </>
   );
