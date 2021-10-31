@@ -3,40 +3,16 @@ import {
   ScrollView,
   Text,
   View,
-  Image,
   TouchableOpacity,
   Dimensions,
   TextInput,
-  BackHandler,
 } from 'react-native';
-import {
-  MyActivityView,
-  NewsView,
-  ContentLoader,
-  CustomSafeAreaView,
-  OpportunityView,
-} from '../../../components';
-import {
-  HomeTabSymbol,
-  NewsTabSymbol,
-  MemberTabSymbol,
-  ChartTabSymbol,
-  ManageTabSymbol,
-  PowerButtonSymbol,
-} from '../../../utils/svg';
-import {Colors} from '../../../utils/colors';
+import {ContentLoader} from '../../../components';
 import Styles from './style';
 import {NAVIGATION} from '../../../constant';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {Fonts} from '../../../utils/fonts';
 import {useSelector, useDispatch} from 'react-redux';
-import {
-  getHomeActivities,
-  getHomeNews,
-  setLoader,
-  getUserOpportunity,
-  getUserProfile,
-} from '../../../redux/actions';
+import {setLoader, getUserProfile} from '../../../redux/actions';
 import {Store} from '../../../redux/store';
 import axiosInstance from '../../../axios';
 import {console_log} from '../../../utils/loggers';

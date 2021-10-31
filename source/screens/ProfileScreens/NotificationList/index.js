@@ -1,40 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {
-  ScrollView,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  Dimensions,
-  TextInput,
-  BackHandler,
-  ToastAndroid,
-  FlatList,
-} from 'react-native';
-import {
-  MyActivityView,
-  NewsView,
-  ContentLoader,
-  CustomSafeAreaView,
-  OpportunityView,
-} from '../../../components';
-import {CheckedSymbol, EditSymbol, UncheckedSymbol} from '../../../utils/svg';
+import {Text, View, Dimensions, FlatList} from 'react-native';
+import {ContentLoader} from '../../../components';
 import {Colors} from '../../../utils/colors';
 import Styles from './style';
-import {NAVIGATION} from '../../../constant';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {Fonts} from '../../../utils/fonts';
-import Common_styles from '../../../utils/commonStyle';
-import ImagePickerComponent from '../../../components/ImagePickerComponent';
 import {useSelector, useDispatch} from 'react-redux';
-import {
-  getHomeActivities,
-  getHomeNews,
-  setLoader,
-  getUserOpportunity,
-  getUserProfile,
-  getUserNotifications,
-} from '../../../redux/actions';
 const Tab = createMaterialTopTabNavigator();
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;

@@ -6,8 +6,6 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import CustomSafeAreaView from '../../../components/CustomSafeAreaView';
-import CustomHeader from '../../../components/CustomHeader';
 import {Colors} from '../../../utils/colors';
 import Styles from './style';
 import {NAVIGATION} from '../../../constant';
@@ -37,8 +35,6 @@ const Notification = ({navigation, route, ...props}) => {
   }, []);
   return (
     <>
-      <CustomSafeAreaView backgroundColor={'#000'} barStyle={'light-content'} />
-
       <View style={Styles.View_Main}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Tab.Navigator
