@@ -9,30 +9,14 @@ import {
   FlatList,
   TextInput,
 } from 'react-native';
-import {
-  FavouriteSymbol,
-  CommentsSymbol,
-  DeleteSymbol,
-} from '../../../utils/svg';
 import {Colors} from '../../../utils/colors';
 import Styles from './style';
 import {Fonts} from '../../../utils/fonts';
 import {useSelector, useDispatch} from 'react-redux';
-import {
-  getHomeActivities,
-  getHomeNews,
-  setLoader,
-  getUserActivity,
-} from '../../../redux/actions';
+import {getUserActivity} from '../../../redux/actions';
 
 import DropDownPicker from 'react-native-dropdown-picker';
-import {
-  MyActivityView,
-  NewsView,
-  ContentLoader,
-  CustomSafeAreaView,
-  EmptyList,
-} from '../../../components';
+import {MyActivityView, ContentLoader, EmptyList} from '../../../components';
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
 

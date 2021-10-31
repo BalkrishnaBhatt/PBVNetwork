@@ -1,37 +1,22 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
-  ScrollView,
   Text,
   View,
-  Image,
   TouchableOpacity,
   Dimensions,
   TextInput,
-  BackHandler,
-  ToastAndroid,
 } from 'react-native';
-import CustomSafeAreaView from '../../../components/CustomSafeAreaView';
-import {
-  HomeTabSymbol,
-  NewsTabSymbol,
-  MemberTabSymbol,
-  ChartTabSymbol,
-  ManageTabSymbol,
-  PowerButtonSymbol,
-} from '../../../utils/svg';
 import {Colors} from '../../../utils/colors';
 import Styles from './style';
-import {NAVIGATION} from '../../../constant';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {Fonts} from '../../../utils/fonts';
 const Tab = createMaterialTopTabNavigator();
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
-import {useSelector, useDispatch} from 'react-redux';
-import {loginSave, setLoader} from '../../../redux/actions';
+import {useDispatch} from 'react-redux';
+import {setLoader} from '../../../redux/actions';
 import axiosInstance from '../../../axios';
 import {console_log} from '../../../utils/loggers';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Store} from '../../../redux/store';
 
 const General = ({navigation, route, ...props}) => {

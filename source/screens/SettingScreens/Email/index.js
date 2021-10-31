@@ -1,43 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {
-  ScrollView,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  Dimensions,
-  TextInput,
-  BackHandler,
-  ToastAndroid,
-} from 'react-native';
-import {
-  HomeTabSymbol,
-  NewsTabSymbol,
-  MemberTabSymbol,
-  ChartTabSymbol,
-  ManageTabSymbol,
-  PowerButtonSymbol,
-  RadioNotSelectedSymbol,
-  RadioSelectedSymbol,
-} from '../../../utils/svg';
-import {Colors} from '../../../utils/colors';
+import {Text, View, TouchableOpacity, Dimensions} from 'react-native';
+import {RadioNotSelectedSymbol, RadioSelectedSymbol} from '../../../utils/svg';
 import Styles from './style';
 import {NAVIGATION} from '../../../constant';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {Fonts} from '../../../utils/fonts';
 import Common_styles from '../../../utils/commonStyle';
 import {useSelector, useDispatch} from 'react-redux';
 import {console_log} from '../../../utils/loggers';
 import {Store} from '../../../redux/store';
 import axiosInstance from '../../../axios';
-import {
-  getAllGroups,
-  getMyGroups,
-  getGroupDetails,
-  getUserSettings,
-  setLoader,
-} from '../../../redux/actions';
-import {ContentLoader, GroupListView, EmptyList} from '../../../components';
+import {getUserSettings, setLoader} from '../../../redux/actions';
 const Tab = createMaterialTopTabNavigator();
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;

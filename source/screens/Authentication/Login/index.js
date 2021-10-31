@@ -37,8 +37,8 @@ const Login = ({navigation, route}) => {
   const [isLoading, setIsLoading] = useState(false);
   // const [emailId, setEmailId] = useState('pbvnetwork');
   // const [password, setPassword] = useState('Oqy6sCcFYB(UlDQ6%23x');
-  const [emailId, setEmailId] = useState();
-  const [password, setPassword] = useState();
+  const [emailId, setEmailId] = useState('');
+  const [password, setPassword] = useState('');
   const [emailIdErrorText, setEmailIdErrorText] = useState('');
   const [passwordErrorText, setPasswordErrorText] = useState('');
   const [screen_width, set_screen_width] = useState(
