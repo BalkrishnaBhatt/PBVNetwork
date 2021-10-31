@@ -48,7 +48,7 @@ const UserActivities = ({navigation, route}) => {
     }
   }, [UserReducer]);
   useEffect(() => {
-    dispatch(getUserActivity(navigation));
+    dispatch(getUserActivity(navigation, value2));
   }, []);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -129,6 +129,10 @@ const UserActivities = ({navigation, route}) => {
               style={Styles.DropDownPicker2}
               dropDownContainerStyle={Styles.dropDownContainerStyle2}
               textStyle={Styles.textStyle}
+              onChangeValue={value => {
+                // console.log('dropdonvalw: ', value);
+                dispatch(getUserActivity(navigation, value));
+              }}
               // labelStyle={Styles.labelStyle}
               arrowIconStyle={{tintColor: Colors.primary_color}}
             />

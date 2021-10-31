@@ -8,12 +8,13 @@ const initialState = {
   userLatestNews: [],
   userOpportunity: [],
   userProfile: {},
+  userSettings: {},
   // homePBVGroupProfile: [],
   userNotificationUnread: [],
   userNotificationRead: [],
 };
 
-const HomeReducer = (state = initialState, action) => {
+const UserReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.GET_USER_ACTIVITIES:
       return {
@@ -51,6 +52,12 @@ const HomeReducer = (state = initialState, action) => {
         userNotificationUnread: action.list,
         isLoading: false,
       };
+    case actionTypes.GET_USER_SETTINGS:
+      return {
+        ...state,
+        userSettings: action.list,
+        isLoading: false,
+      };
     case actionTypes.GET_USER_PROFILE:
       // console.log('GET_USER_PROFILE: ', action.list);
       return {
@@ -74,4 +81,4 @@ const HomeReducer = (state = initialState, action) => {
   }
 };
 
-export default HomeReducer;
+export default UserReducer;

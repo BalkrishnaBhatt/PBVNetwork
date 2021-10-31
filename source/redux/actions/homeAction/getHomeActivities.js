@@ -6,13 +6,23 @@ import axiosInstance from '../../../axios';
 
 import {Store} from '../../store';
 import {useSelector, useDispatch} from 'react-redux';
+import {console_log} from '../../../utils/loggers';
+import {NAVIGATION} from '../../../constant';
 export const getHomeActivities = navigation => {
   // let AuthenticationReducer = useSelector(state => state.AuthenticationReducer);
   let url = 'buddypress/v1/activity';
+  console.log(
+    'Store.getState().AuthenticationReducer.token: ',
+    Store.getState().AuthenticationReducer.token,
+  );
   const config = {
     headers: {
       // 'Content-Type': 'application/json',
       Authorization: 'Bearer ' + Store.getState().AuthenticationReducer.token,
+
+      // Authorization:
+      //   'Bearer ' +
+      //   'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvd3d3LnBidm5ldHdvcmsuY29tIiwiaWF0IjoxNjMzMDcyNzU1LCJuYmYiOjE2MzMwNzI3NTUsImV4cCI6MTYzMzY3NzU1NSwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMSJ9fX0.UrDkEhv-0y_rk0aDZme64BeN1oSyAL3P0i8OyK0PMq4',
     },
   };
 
@@ -21,7 +31,7 @@ export const getHomeActivities = navigation => {
     axiosInstance
       .get(url + '?display_comments=stream', config)
       .then(function (response) {
-        console.log(
+        console_log(
           'getHomeActivities response: ',
           JSON.stringify(response.data, null, 2),
         );
@@ -36,12 +46,17 @@ export const getHomeActivities = navigation => {
       .catch(function (error) {
         dispatch(set_loader(false));
         // handle error
-        // if (error.response) {
-        //     console.log('Error in premium register', error.response.data)
-        //     dispatch(displayErrorModalFewSecs('Error while registering your account : ', error.response.data))
-        //     dispatch(premiumRegisterFailed(error.response.data))
-        // }
-        console.log('getHomeActivities', JSON.stringify(error, null, 2));
+        console_log(
+          'getHomeActivities error: ',
+          JSON.stringify(error.response.data, null, 2),
+        );
+        let error_code = error.response.data.code;
+        if (
+          error_code == 'jwt_auth_invalid_token' ||
+          error_code == 'rest_forbidden'
+        ) {
+          navigation.replace(NAVIGATION.LOGIN);
+        }
         // console.log('Error of config', error.config);
       });
   };

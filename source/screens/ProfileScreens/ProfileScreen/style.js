@@ -48,4 +48,19 @@ export default StyleSheet.create({
     fontWeight: '400',
     fontFamily: Fonts.Regular_font,
   },
+  ///////////////////////////////////////////////////////
+  view_load_more: {
+    borderRadius: 7,
+    backgroundColor: Colors.light_primary_color,
+    alignSelf: 'center',
+    margin: 15,
+  },
+  text_load_more: {
+    color: Colors.primary_color,
+    fontSize: 12,
+    margin: 5,
+    marginHorizontal: 20,
+    fontWeight: '600',
+    fontFamily: Fonts.Regular_font,
+  },
 });

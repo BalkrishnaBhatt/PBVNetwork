@@ -18,9 +18,9 @@ export default StyleSheet.create({
   tab_back: {
     flex: 1,
     height: 50,
-    width: 40,
+    width: 60,
     marginTop: 20,
-    marginRight: '8%',
+    marginRight: '5%',
     backgroundColor: Colors.white,
     borderRadius: 15,
     alignItems: 'center',

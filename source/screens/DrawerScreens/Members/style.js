@@ -118,4 +118,31 @@ export default StyleSheet.create({
     fontFamily: Fonts.Regular_font,
     color: Colors.primary_color,
   },
+  ///////////////////////////////////////////////////////
+  DropDownPicker2: {
+    height: 30,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: Colors.border_color,
+    marginVertical: 3,
+    // padding: -10,
+  },
+  placeholderStyle2: {
+    color: Colors.border_color,
+    fontSize: 14,
+    fontWeight: '300',
+  },
+  dropDownContainerStyle2: {
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: Colors.border_color,
+    backgroundColor: Colors.white,
+    elevation: 1000,
+    zIndex: 10,
+    height: 120,
+  },
+  textStyle2: {
+    fontSize: 14,
+    fontFamily: Fonts.Regular_font,
+  },
 });

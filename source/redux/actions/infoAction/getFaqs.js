@@ -2,7 +2,6 @@ import * as actionTypes from '../../actionTypes';
 // import axios from 'axios';
 import axiosInstance from '../../../axios';
 // import {displayErrorModalFewSecs} from '../../errorModal';
-
 import {Store} from '../../store';
 import {useSelector, useDispatch} from 'react-redux';
 import {NAVIGATION} from '../../../constant';
@@ -30,15 +29,18 @@ export const getFaqs = navigation => {
       })
       .catch(function (error) {
         // handle error
+        console_log(
+          'getFaqs error: ',
+          JSON.stringify(error.response.data, null, 2),
+        );
         let error_code = error.response.data.code;
         // handle error
         if (
           error_code == 'jwt_auth_invalid_token' ||
           error_code == 'rest_forbidden'
         ) {
-          navigation.navigate(NAVIGATION.LOGIN);
+          navigation.replace(NAVIGATION.LOGIN);
         }
-        console_log(JSON.stringify(error.response.data, null, 2));
         // console_log('Error of config', error.config);
       });
   };

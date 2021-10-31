@@ -49,9 +49,6 @@ const CreateOpportunity = ({navigation, route, ...props}) => {
       setItemsIndustry(InfoReducer.industryList);
       setIsLoading(InfoReducer.isLoading);
     }
-    // else {
-    //   setPosts([]);
-    // }
   }, [InfoReducer]);
   useEffect(() => {
     dispatch(getJurisdictionList(navigation));
@@ -86,6 +83,7 @@ const CreateOpportunity = ({navigation, route, ...props}) => {
     // {label: 'Life Science & Healt Care', value: 'Life Science & Healt Care'},
     // {label: 'Project', value: 'Project'},
   ]);
+  const [areaSelectedShow, setAreaSelectedShow] = useState('');
   const [itemsTown, setItemsTown] = useState([
     // {label: 'New Delhi', value: 'New Delhi'},
     // {label: 'Roma', value: 'Roma'},
@@ -99,6 +97,11 @@ const CreateOpportunity = ({navigation, route, ...props}) => {
     // {label: 'Manufacturing', value: 'Manufacturing'},
   ]);
   const PostOpportunity = async () => {
+    let area_to_pass = '';
+    valueAreaPractice.map(value => {
+      area_to_pass = area_to_pass + '&opportunity_areapractice[]=' + value;
+    });
+    // console.log('area_to_pass: ', area_to_pass);
     let url =
       'pbvnetwork/v1/createopportunity?pbvncust_create_opportunity=true' +
       '&opportunity_title=' +
@@ -111,27 +114,37 @@ const CreateOpportunity = ({navigation, route, ...props}) => {
       valueJurisdiction +
       '&opportunity_town=' +
       valueTown +
-      '&opportunity_areapractice[]=' +
-      valueAreaPractice +
+      area_to_pass +
       '&opportunity_industry[]=' +
       valueIndustry;
+    console.log(
+      'Store.getState().AuthenticationReducer.token: ',
+      Store.getState().AuthenticationReducer.token,
+    );
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        // 'Content-Type': 'application/json',
         Authorization: 'Bearer ' + Store.getState().AuthenticationReducer.token,
       },
     };
     axiosInstance
-      .post(url, config)
+      .post(url, {}, config)
       .then(async response => {
         console_log(
           'PostOpportunity response: ',
           JSON.stringify(response, null, 2),
         );
         if (response.status == 200) {
-          // setSearchText('');
+          setOpportunityTitle('');
+          setOpportunityDesc('');
+          setExpirationDate('');
+          setAreaSelectedShow('');
+          setValueIndustry(null);
+          setValueJurisdiction(null);
+          setValueTown(null);
+          setValueAreaPractice(null);
           dispatch(setLoader(false));
-          dispatch(getHomeActivities());
+          // dispatch(getHomeActivities());
         }
       })
       .catch(function (error) {
@@ -229,6 +242,24 @@ const CreateOpportunity = ({navigation, route, ...props}) => {
                     open={isOpen == 3}
                     value={valueAreaPractice}
                     items={itemsAreaPractice}
+                    onChangeValue={value => {
+                      let to_show = [];
+                      if (value !== null && value.length > 0) {
+                        itemsAreaPractice.map(element => {
+                          if (value.indexOf(element.value) > -1) {
+                            to_show.push(element.label);
+                          }
+                        });
+                      }
+                      // console.log(
+                      //   'valueAreaPractice: ',
+                      //   JSON.stringify(value, null, 2),
+                      // );
+                      setAreaSelectedShow(to_show.join(', '));
+                      // console.log('areaSelectedShow: ', to_show);
+                    }}
+                    multiple={true}
+                    multipleText={areaSelectedShow}
                     setOpen={value => setIsOpen(value ? 3 : 0)}
                     setValue={setValueAreaPractice}
                     placeholder={'Area practice'}
@@ -256,7 +287,12 @@ const CreateOpportunity = ({navigation, route, ...props}) => {
                       activeOpacity={0.8}
                       onPress={() => {
                         // navigation.navigate(label);
+                        dispatch(setLoader(true));
                         PostOpportunity();
+                        // console.log(
+                        //   'PostOpportunity',
+                        //   JSON.stringify(valueAreaPractice, null, 2),
+                        // );
                       }}
                       style={Styles.view_load_more}>
                       <Text style={Styles.text_load_more}>

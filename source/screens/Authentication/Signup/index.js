@@ -127,7 +127,17 @@ const Signup = ({navigation, route}) => {
         console_log('signup response: ', JSON.stringify(response, null, 2));
         // handle success
         if (response.data.user_id == false) {
-          setEmailIdErrorText('Email Already Exists');
+          if (
+            response.data.pbvncust_subscribe_error ==
+            '<li>Username already exist</li>'
+          ) {
+            setUserNameErrorText('Username Already Exists');
+          } else if (
+            response.data.pbvncust_subscribe_error ==
+            '<li>User email already exist</li>'
+          ) {
+            setEmailIdErrorText('Email Already Exists');
+          }
         } else {
           await AsyncStorage.setItem(
             VARIABLE.USER_INFO,
@@ -147,7 +157,10 @@ const Signup = ({navigation, route}) => {
         } else if (error_code == '[jwt_auth] incorrect_password') {
           setPasswordErrorText('Incorrect Password');
         }
-        console_log(JSON.stringify(error.response.data, null, 2));
+        console_log(
+          'signup error',
+          JSON.stringify(error.response.data, null, 2),
+        );
         // console_log('Error of config', error.config);
       });
   };

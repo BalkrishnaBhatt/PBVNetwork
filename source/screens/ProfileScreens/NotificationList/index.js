@@ -11,7 +11,13 @@ import {
   ToastAndroid,
   FlatList,
 } from 'react-native';
-import CustomSafeAreaView from '../../../components/CustomSafeAreaView';
+import {
+  MyActivityView,
+  NewsView,
+  ContentLoader,
+  CustomSafeAreaView,
+  OpportunityView,
+} from '../../../components';
 import {CheckedSymbol, EditSymbol, UncheckedSymbol} from '../../../utils/svg';
 import {Colors} from '../../../utils/colors';
 import Styles from './style';
@@ -47,11 +53,12 @@ const NotificationList = ({navigation, route, ...props}) => {
     }
   }, [UserReducer]);
   useEffect(() => {
-    dispatch(getUserNotifications(navigation, route.params.unread));
+    // dispatch(getUserNotifications(navigation, route.params.unread));
   }, []);
   const [isLoading, setIsLoading] = useState(true);
   const [notificationList, setNotificationList] = useState([
-    {name: 'gdhgsdgfsad'},
+    // {name: 'gdhgsdgfsad'},
+    // {name: 'gdhgsdgfsad'},
   ]);
 
   // useEffect(() => {
@@ -68,38 +75,57 @@ const NotificationList = ({navigation, route, ...props}) => {
 
   const renderPosts = ({item}) => {
     return (
-      <View>
-        <Text>{item.name}</Text>
+      <View
+        style={{
+          backgroundColor: Colors.light_primary_color,
+          borderRadius: 5,
+          padding: 10,
+          marginBottom: 5,
+        }}>
+        <Text
+          style={{
+            color: Colors.primary_color,
+            fontSize: 14,
+            fontWeight: '400',
+            fontFamily: Fonts.Regular_font,
+          }}>
+          {item.name}
+        </Text>
       </View>
     );
   };
   return (
     <>
       <View style={Styles.View_Main}>
-        <FlatList
-          style={{marginVertical: 15}}
-          showsVerticalScrollIndicator={false}
-          data={notificationList}
-          renderItem={renderPosts}
-          keyExtractor={item => item.id}
-          ListEmptyComponent={() => {
-            return (
-              <View
-                style={{
-                  backgroundColor: Colors.light_primary_color,
-                  borderColor: Colors.primary_color,
-                  borderRadius: 15,
-                  padding: 15,
-                  margin: 10,
-                  borderWidth: 1,
-                }}>
-                <Text style={{fontSize: 14, fontFamily: Fonts.Regular_font}}>
-                  You have no {route.params.unread ? 'Unread' : ''} Notification
-                </Text>
-              </View>
-            );
-          }}
-        />
+        {isLoading ? (
+          <ContentLoader />
+        ) : (
+          <FlatList
+            style={{marginVertical: 15}}
+            showsVerticalScrollIndicator={false}
+            data={notificationList}
+            renderItem={renderPosts}
+            keyExtractor={item => item.id}
+            ListEmptyComponent={() => {
+              return (
+                <View
+                  style={{
+                    backgroundColor: Colors.light_primary_color,
+                    borderColor: Colors.primary_color,
+                    borderRadius: 15,
+                    padding: 15,
+                    margin: 10,
+                    borderWidth: 1,
+                  }}>
+                  <Text style={{fontSize: 14, fontFamily: Fonts.Regular_font}}>
+                    You have no {route.params.unread ? 'Unread' : ''}{' '}
+                    Notification
+                  </Text>
+                </View>
+              );
+            }}
+          />
+        )}
       </View>
     </>
   );

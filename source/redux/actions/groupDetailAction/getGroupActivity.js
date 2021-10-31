@@ -3,6 +3,7 @@ import axiosInstance from '../../../axios';
 
 import {Store} from '../../store';
 import {console_log} from '../../../utils/loggers';
+import {NAVIGATION} from '../../../constant';
 export const getGroupActivity = (navigation, selected_value) => {
   let url = 'buddypress/v1/activity/?group_id=';
   const config = {
@@ -26,7 +27,10 @@ export const getGroupActivity = (navigation, selected_value) => {
         : '');
     // console.log('url: ', url + group_id + selected_value_to_pass);
     axiosInstance
-      .get(url + group_id + selected_value_to_pass, config)
+      .get(
+        url + group_id + selected_value_to_pass + '&display_comments=stream',
+        config,
+      )
       .then(function (response) {
         let data = response.data;
         console_log(
@@ -39,21 +43,24 @@ export const getGroupActivity = (navigation, selected_value) => {
       .catch(function (error) {
         // handle error
 
+        console_log(
+          'getGroupActivity error:',
+          JSON.stringify(error.response.data, null, 2),
+        );
         let error_code = error.response.data.code;
         if (
           error_code == 'jwt_auth_invalid_token' ||
           error_code == 'rest_forbidden'
         ) {
-          navigation.navigate(NAVIGATION.LOGIN);
+          navigation.replace(NAVIGATION.LOGIN);
         }
-        console_log(JSON.stringify(error.response.data, null, 2));
       });
   };
 };
 
 export const set_loader = loaderState => {
   return {
-    type: actionTypes.SET_GROUP_LOADING,
+    type: actionTypes.SET_GROUP_DETAILS_LOADING,
     loaderState: loaderState,
   };
 };

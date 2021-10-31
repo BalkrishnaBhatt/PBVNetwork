@@ -137,7 +137,7 @@ const GroupNews = ({navigation, route}) => {
           <ContentLoader />
         ) : (
           <ScrollView showsVerticalScrollIndicator={false}>
-            <FlatList
+            {/* <FlatList
               style={{marginVertical: 5, marginLeft: 20}}
               showsVerticalScrollIndicator={false}
               data={newsCategory}
@@ -145,7 +145,7 @@ const GroupNews = ({navigation, route}) => {
               showsHorizontalScrollIndicator={false}
               renderItem={renderNewsCategoy}
               keyExtractor={item => item.id}
-            />
+            /> */}
             <FlatList
               style={{
                 marginVertical: 15,

@@ -38,8 +38,10 @@ const config = {
 const Login = ({navigation, route}) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  const [emailId, setEmailId] = useState('pbvnetwork');
-  const [password, setPassword] = useState('Oqy6sCcFYB(UlDQ6%23x');
+  // const [emailId, setEmailId] = useState('pbvnetwork');
+  // const [password, setPassword] = useState('Oqy6sCcFYB(UlDQ6%23x');
+  const [emailId, setEmailId] = useState();
+  const [password, setPassword] = useState();
   const [emailIdErrorText, setEmailIdErrorText] = useState('');
   const [passwordErrorText, setPasswordErrorText] = useState('');
   const [screen_width, set_screen_width] = useState(
@@ -60,13 +62,13 @@ const Login = ({navigation, route}) => {
 
   const validate = () => {
     let error_flag = true;
-    // if (emailId == '') {
-    //   setEmailIdErrorText('Please Enter Email or Username');
-    //   error_flag = false;
-    // } else if (!validateEmail()) {
-    //   setEmailIdErrorText('Sorry, your email is invalid.');
-    //   error_flag = false;
-    // }
+    if (emailId == '') {
+      setEmailIdErrorText('Please Enter Email or Username');
+      error_flag = false;
+      // } else if (!validateEmail()) {
+      //   setEmailIdErrorText('Sorry, your email is invalid.');
+      //   error_flag = false;
+    }
     if (password == '') {
       setPasswordErrorText('Please Enter Password');
       error_flag = false;
@@ -91,25 +93,41 @@ const Login = ({navigation, route}) => {
         setIsLoading(false);
         // console_log('login response: ', JSON.stringify(response.data, null, 2));
         // handle success
-        await AsyncStorage.setItem(
-          VARIABLE.USER_INFO,
-          JSON.stringify(response.data),
-        );
-        dispatch(loginSave(response.data));
         if (response.data && response.data.token) {
           navigation.navigate(NAVIGATION.DASHBOARD);
+          await AsyncStorage.setItem(
+            VARIABLE.USER_INFO,
+            JSON.stringify(response.data),
+          );
+          dispatch(loginSave(response.data));
         }
+        // else if (
+        //   response.message ==
+        //   '<strong>ERROR</strong>: Invalid login credentials.'
+        // ) {
+        //   setPasswordErrorText('Invalid login credentials.');
+        // }
       })
       .catch(function (error) {
         setIsLoading(false);
+        console_log(
+          'LoginRequest error',
+          JSON.stringify(error.response.data, null, 2),
+        );
         let error_code = error.response.data.code;
         // handle error
-        if (error_code == '[jwt_auth] invalid_username') {
+        if (
+          error.response.data.message ==
+          '<strong>ERROR</strong>: Access from your IP address has been blocked for security reasons. Please contact the administrator.'
+        ) {
+          setPasswordErrorText(
+            'Access from your IP address has been blocked for security reasons. Please contact the administrator.',
+          );
+        } else if (error_code == '[jwt_auth] invalid_username') {
           setEmailIdErrorText('Invalid Username');
         } else if (error_code == '[jwt_auth] incorrect_password') {
           setPasswordErrorText('Incorrect Password');
         }
-        console_log(JSON.stringify(error.response.data, null, 2));
         // console_log('Error of config', error.config);
       });
   };

@@ -298,7 +298,7 @@ const MyActivities = ({navigation, route}) => {
               </Text>
             </TouchableOpacity>
           </View>
-          <DropDownPicker
+          {/* <DropDownPicker
             open={open}
             value={value}
             items={items}
@@ -312,7 +312,7 @@ const MyActivities = ({navigation, route}) => {
             textStyle={Styles.textStyle}
             // labelStyle={Styles.labelStyle}
             arrowIconStyle={{tintColor: Colors.primary_color}}
-          />
+          /> */}
           {isLoading ? (
             <ContentLoader />
           ) : (
@@ -341,7 +341,7 @@ const MyActivities = ({navigation, route}) => {
                 <View style={Styles.view_featured_news}>
                   <Text style={Styles.text_featured_news}>Featured News</Text>
                 </View>
-                <FlatList
+                {/* <FlatList
                   style={{marginVertical: 5, marginLeft: 20}}
                   showsVerticalScrollIndicator={false}
                   data={newsCategory}
@@ -349,7 +349,7 @@ const MyActivities = ({navigation, route}) => {
                   showsHorizontalScrollIndicator={false}
                   renderItem={renderNewsCategoy}
                   keyExtractor={item => item.id}
-                />
+                /> */}
                 <FlatList
                   style={{
                     marginVertical: 15,

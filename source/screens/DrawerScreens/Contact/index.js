@@ -103,13 +103,14 @@ const CreateOpportunity = ({navigation, route, ...props}) => {
     const config = {
       headers: {
         // 'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + Store.getState().AuthenticationReducer.token,
+        // Authorization: 'Bearer ' + Store.getState().AuthenticationReducer.token,
       },
     };
     const formData = new FormData();
     formData.append('your-name', yourName);
     formData.append('your-email', yourEmail);
     formData.append('subject', subject);
+    formData.append('message', yourMessage);
     // formData.append("subject", yourMessage);
     axiosInstance
       .post(url, formData, config)
@@ -121,14 +122,14 @@ const CreateOpportunity = ({navigation, route, ...props}) => {
           setYourMessage('');
           dispatch(setLoader(false));
         }
-        // console_log(
-        //   'PostComment response: ',
-        //   JSON.stringify(response, null, 2),
-        // );
+        console_log(
+          'PostComment response: ',
+          JSON.stringify(response, null, 2),
+        );
       })
       .catch(function (error) {
         dispatch(setLoader(false));
-        console_log(JSON.stringify(error, null, 2));
+        console_log(JSON.stringify('PostComment errror: ', error, null, 2));
         // let error_code = error.response.data.code;
         // handle error
       });

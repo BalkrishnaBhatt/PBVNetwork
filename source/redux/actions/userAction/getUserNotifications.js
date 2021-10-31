@@ -2,6 +2,8 @@ import * as actionTypes from '../../actionTypes';
 import axiosInstance from '../../../axios';
 
 import {Store} from '../../store';
+import {NAVIGATION} from '../../../constant';
+import {console_log} from '../../../utils/loggers';
 export const getUserNotifications = (navigation, is_new) => {
   let url = 'buddypress/v1/notifications';
   const config = {
@@ -14,7 +16,7 @@ export const getUserNotifications = (navigation, is_new) => {
     url = url + '?new=true';
   }
   let user_id = Store.getState().AuthenticationReducer.userId;
-  console.log('user_id: ', user_id);
+  // console.log('user_id: ', user_id);
   //   console.log('getUserNotificationsurl: ', url);
   return async dispatch => {
     dispatch(set_loader(true));
@@ -22,7 +24,7 @@ export const getUserNotifications = (navigation, is_new) => {
       .get(url, config)
       .then(function (response) {
         let data = response.data;
-        console.log(
+        console_log(
           'getUserNotifications response: ',
           JSON.stringify(data, null, 2),
         );
@@ -36,14 +38,17 @@ export const getUserNotifications = (navigation, is_new) => {
       .catch(function (error) {
         // handle error
 
+        console_log(
+          'getUserNotifications error:',
+          JSON.stringify(error.response.data, null, 2),
+        );
         let error_code = error.response.data.code;
         if (
           error_code == 'jwt_auth_invalid_token' ||
           error_code == 'rest_forbidden'
         ) {
-          navigation.navigate(NAVIGATION.LOGIN);
+          navigation.replace(NAVIGATION.LOGIN);
         }
-        console_log(JSON.stringify(error.response.data, null, 2));
       });
   };
 };

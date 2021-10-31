@@ -36,16 +36,18 @@ export const getAreaOfPracticeList = navigation => {
       })
       .catch(function (error) {
         // handle error
+        console_log(
+          'getAreaOfPracticeList error: ',
+          JSON.stringify(error.response.data, null, 2),
+        );
         let error_code = error.response.data.code;
         // handle error
         if (
           error_code == 'jwt_auth_invalid_token' ||
           error_code == 'rest_forbidden'
         ) {
-          navigation.navigate(NAVIGATION.LOGIN);
+          navigation.replace(NAVIGATION.LOGIN);
         }
-        console_log(JSON.stringify(error.response.data, null, 2));
-        // console_log('Error of config', error.config);
       });
   };
 };

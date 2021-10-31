@@ -39,17 +39,21 @@ const Faqs = ({navigation, route, ...props}) => {
   const dispatch = useDispatch();
   let InfoReducer = useSelector(state => state.InfoReducer);
   useEffect(() => {
-    if (InfoReducer !== undefined && InfoReducer.faqList !== undefined) {
+    if (
+      InfoReducer !== undefined &&
+      InfoReducer.faqList !== undefined &&
+      InfoReducer.faqList.length > 0
+    ) {
       let data_to_set = [];
       data_to_set = InfoReducer;
-      let obj = {
-        category_name: 'Leave a Reply',
-        faqs: [],
-      };
+      // let obj = {
+      //   category_name: 'Leave a Reply',
+      //   faqs: [],
+      // };
       data_to_set = InfoReducer.faqList;
-      data_to_set.push(obj);
+      // data_to_set.push(obj);
       setFaqList(data_to_set);
-      setSelected(InfoReducer.faqList[0].category_name);
+      // setSelected(InfoReducer.faqList[0].category_name);
       // console.log(
       //   'InfoReducer.faqList: ',
       //   JSON.stringify(data_to_set, null, 2),
@@ -63,7 +67,7 @@ const Faqs = ({navigation, route, ...props}) => {
     dispatch(getFaqs(navigation));
   }, []);
   const [isLoading, setIsLoading] = useState(true);
-  const [selected, setSelected] = useState('');
+  // const [selected, setSelected] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   // const [collapseOpen, setCollapseOpen] = useState(0);
   const [comment, setComment] = useState('');
@@ -107,7 +111,7 @@ const Faqs = ({navigation, route, ...props}) => {
         ]}
         onPress={() => {
           setSelectedIndex(index);
-          setSelected(item.category_name);
+          // setSelected(item.category_name);
           setQuestionList(item.faqs);
         }}>
         <Text
@@ -199,7 +203,7 @@ const Faqs = ({navigation, route, ...props}) => {
     }
   };
   const setDefaultTab = () => {
-    setSelected(faqList[0].category_name);
+    // setSelected(faqList[0].category_name);
     setQuestionList(faqList[0].faqs);
     setSelectedIndex(0);
   };
@@ -247,7 +251,8 @@ const Faqs = ({navigation, route, ...props}) => {
       <Modal
         animationType="fade"
         transparent={true}
-        visible={selected == 'Leave a Reply'}
+        // visible={selected == 'Leave a Reply'}
+        visible={false}
         onRequestClose={() => {
           setDefaultTab();
         }}>

@@ -21,8 +21,9 @@ import {
   getAllGroups,
   getMyGroups,
   getGroupDetails,
+  getUserSettings,
 } from '../../../redux/actions';
-import {ContentLoader, GroupListView} from '../../../components';
+import {ContentLoader, GroupListView, EmptyList} from '../../../components';
 import DropDownPicker from 'react-native-dropdown-picker';
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
@@ -44,8 +45,8 @@ const Groups = ({navigation, route, ...props}) => {
     // }
   }, [GroupReducer]);
   useEffect(() => {
-    dispatch(getAllGroups(navigation));
-    dispatch(getMyGroups(navigation));
+    dispatch(getAllGroups(navigation, value));
+    dispatch(getMyGroups(navigation, value));
   }, []);
   const [isLoading, setIsLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
@@ -97,7 +98,7 @@ const Groups = ({navigation, route, ...props}) => {
         }}
         activeOpacity={0.8}
         onPress={() => {
-          dispatch(getGroupDetails(item));
+          dispatch(getGroupDetails(navigation, item.id));
           navigation.navigate(NAVIGATION.GROUP_DETAIL);
         }}>
         <Image
@@ -171,7 +172,7 @@ const Groups = ({navigation, route, ...props}) => {
               activeOpacity={0.8}
               onPress={() => {
                 setAllGroupSelected(true);
-                dispatch(getAllGroups(navigation));
+                dispatch(getAllGroups(navigation, value));
               }}>
               <Text
                 style={[
@@ -197,7 +198,7 @@ const Groups = ({navigation, route, ...props}) => {
               activeOpacity={0.8}
               onPress={() => {
                 setAllGroupSelected(false);
-                dispatch(getMyGroups(navigation));
+                dispatch(getMyGroups(navigation, value));
               }}>
               <Text
                 style={[
@@ -230,6 +231,12 @@ const Groups = ({navigation, route, ...props}) => {
               placeholderStyle={Styles.placeholderStyle}
               style={Styles.DropDownPicker}
               dropDownContainerStyle={Styles.dropDownContainerStyle}
+              onChangeValue={value => {
+                // console.log('dropdonvalw: ', value);
+                allGroupSelected
+                  ? dispatch(getAllGroups(navigation, value))
+                  : dispatch(getMyGroups(navigation, value));
+              }}
               textStyle={Styles.textStyle}
               // labelStyle={Styles.labelStyle}
               arrowIconStyle={{tintColor: Colors.primary_color}}
@@ -250,6 +257,9 @@ const Groups = ({navigation, route, ...props}) => {
                 key={numberOfColumns}
                 renderItem={renderPersons}
                 keyExtractor={item => item.id}
+                ListEmptyComponent={() => {
+                  return <EmptyList />;
+                }}
               />
             )}
           </View>

@@ -86,7 +86,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 //   };
 // };
 export const loginSave = user_info => {
-  // console.log('loginSave called ');
+  // console.log('loginSave called ', JSON.stringify(user_info));
   return {
     type: actionTypes.LOGIN,
     user_info: user_info,

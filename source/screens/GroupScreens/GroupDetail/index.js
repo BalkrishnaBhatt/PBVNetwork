@@ -42,25 +42,19 @@ const GroupDetail = ({navigation, route, ...props}) => {
   const dispatch = useDispatch();
   let GroupDetailReducer = useSelector(state => state.GroupDetailReducer);
   useEffect(() => {
+    // dispatch(getGroupDetails(navigation));
     if (GroupDetailReducer) {
       setGroupDetails(GroupDetailReducer.groupDetails);
-      // console.log(
-      //   'GroupDetailReducer.groupDetails: ',
-      //   GroupDetailReducer.groupDetails,
-      // );
-      // setIsLoading(GroupDetailReducer.isLoading);
+      console_log(
+        'GroupDetailReducer.groupDetails: ',
+        JSON.stringify(GroupDetailReducer.groupDetails, null, 2),
+      );
     }
-    // else {
-    //   setPosts([]);
-    // }
-  }, [GroupDetailReducer]);
-  useEffect(() => {
-    // dispatch(getGroupDetails(navigation));
-    // setIsLoading(GroupDetailReducer.isLoading);
-    // setGroupDetails(GroupDetailReducer.groupDetails);
-  }, []);
+    setIsLoading(GroupDetailReducer.isLoading);
+  }, [GroupDetailReducer.groupDetails]);
+
   const [groupDetails, setGroupDetails] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   return (
     <>
       <CustomSafeAreaView backgroundColor={'#000'} barStyle={'light-content'} />
@@ -69,7 +63,7 @@ const GroupDetail = ({navigation, route, ...props}) => {
         {isLoading ? (
           <ContentLoader />
         ) : (
-          <ScrollView showsVerticalScrollIndicator={false}>
+          <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled>
             <Image
               style={{
                 height: 200,
@@ -145,8 +139,14 @@ const GroupDetail = ({navigation, route, ...props}) => {
                   height: 30,
                   width: 30,
                   borderRadius: 5,
+                  backgroundColor: 'grey',
                 }}
-                source={{uri: 'https://picsum.photos/200/300'}}
+                source={{
+                  uri:
+                    groupDetails.admins && groupDetails.admins[0].photo
+                      ? groupDetails.admins[0].photo
+                      : '',
+                }}
               />
               <View style={{marginLeft: 10}}>
                 <Text
@@ -155,7 +155,7 @@ const GroupDetail = ({navigation, route, ...props}) => {
                     fontSize: 12,
                     fontWeight: '500',
                   }}>
-                  Maria Rose
+                  {groupDetails.admins && groupDetails.admins[0].display_name}
                 </Text>
                 <Text
                   style={{
@@ -183,6 +183,7 @@ const GroupDetail = ({navigation, route, ...props}) => {
                     borderBottomWidth: 1,
                     borderColor: Colors.border_color,
                     paddingBottom: 20,
+                    paddingRight: -40,
                   }}>
                   {/* <View style={Styles.tab_back}>
                   <ChartTabSymbol
