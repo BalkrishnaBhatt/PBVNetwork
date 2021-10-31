@@ -20,15 +20,9 @@ import {
 } from 'accordion-collapse-react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {console_log} from '../../../utils/loggers';
-import {
-  getAllGroups,
-  getMyGroups,
-  getGroupDetails,
-  getFaqs,
-} from '../../../redux/actions';
+import {getFaqs} from '../../../redux/actions';
 import {
   ContentLoader,
-  GroupListView,
   CustomHeader,
   CustomSafeAreaView,
 } from '../../../components';
@@ -54,10 +48,10 @@ const Faqs = ({navigation, route, ...props}) => {
       // data_to_set.push(obj);
       setFaqList(data_to_set);
       // setSelected(InfoReducer.faqList[0].category_name);
-      // console.log(
-      //   'InfoReducer.faqList: ',
-      //   JSON.stringify(data_to_set, null, 2),
-      // );
+      console_log(
+        'InfoReducer.faqList: ',
+        JSON.stringify(data_to_set, null, 2),
+      );
       setSelectedIndex(0);
       setQuestionList(InfoReducer.faqList[0].faqs);
       setIsLoading(InfoReducer.isLoading);

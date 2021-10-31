@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import CustomSafeAreaView from '../../../components/CustomSafeAreaView';
 import CustomHeader from '../../../components/CustomHeader';
-import {DownArrowSymbol, SearchSymbol} from '../../../utils/svg';
+import {SearchSymbol} from '../../../utils/svg';
 import {Colors} from '../../../utils/colors';
 import Styles from './style';
 import {NAVIGATION} from '../../../constant';
@@ -21,9 +21,8 @@ import {
   getAllGroups,
   getMyGroups,
   getGroupDetails,
-  getUserSettings,
 } from '../../../redux/actions';
-import {ContentLoader, GroupListView, EmptyList} from '../../../components';
+import {ContentLoader, EmptyList} from '../../../components';
 import DropDownPicker from 'react-native-dropdown-picker';
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;

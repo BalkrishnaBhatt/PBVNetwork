@@ -3,21 +3,8 @@ import {ScrollView, Text, View, Dimensions} from 'react-native';
 import {Colors} from '../../../utils/colors';
 import Styles from './style';
 import {useSelector, useDispatch} from 'react-redux';
-import {console_log} from '../../../utils/loggers';
-import {
-  getAllGroups,
-  getMyGroups,
-  getGroupDetails,
-  getFaqs,
-  getPrivacyPolicy,
-  getUserAgreement,
-} from '../../../redux/actions';
-import {
-  ContentLoader,
-  GroupListView,
-  CustomHeader,
-  CustomSafeAreaView,
-} from '../../../components';
+import {getPrivacyPolicy, getUserAgreement} from '../../../redux/actions';
+import {CustomHeader, CustomSafeAreaView} from '../../../components';
 import HTML from 'react-native-render-html';
 import {Fonts} from '../../../utils/fonts';
 

@@ -1,28 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {
-  ScrollView,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  Dimensions,
-  TextInput,
-  BackHandler,
-} from 'react-native';
-import CustomSafeAreaView from '../../../components/CustomSafeAreaView';
-import {
-  HomeTabSymbol,
-  NewsTabSymbol,
-  MemberTabSymbol,
-  ChartTabSymbol,
-  ManageTabSymbol,
-  PowerButtonSymbol,
-} from '../../../utils/svg';
+import React, {useState} from 'react';
+import {View, Dimensions} from 'react-native';
 import {Colors} from '../../../utils/colors';
 import Styles from './style';
-import {NAVIGATION} from '../../../constant';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {Fonts} from '../../../utils/fonts';
 // import {PieChart} from 'react-native-svg-charts';
 // import {
 //   // LineChart,
@@ -36,9 +16,8 @@ const Tab = createMaterialTopTabNavigator();
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
 // import Popover from 'react-native-popover-view';
-import {WebView} from 'react-native-webview';
+// import {WebView} from 'react-native-webview';
 import AutoHeightWebView from 'react-native-autoheight-webview';
-import {Circle, G, Line} from 'react-native-svg';
 const commitsData = [
   {date: '2017-01-02', count: 1},
   {date: '2017-01-03', count: 2},

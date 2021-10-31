@@ -8,11 +8,8 @@ import {
   TextInput,
 } from 'react-native';
 import {
-  MyActivityView,
-  NewsView,
   ContentLoader,
   CustomSafeAreaView,
-  EmptyList,
   CustomHeader,
 } from '../../../components';
 import {ContactTopCurve} from '../../../utils/svg';
@@ -22,14 +19,10 @@ import {EMAIL_PATTERN} from '../../../constant';
 import {Fonts} from '../../../utils/fonts';
 import {Store} from '../../../redux/store';
 
-import {
-  getHomeActivities,
-  getHomeNews,
-  setLoader,
-} from '../../../redux/actions';
+import {setLoader} from '../../../redux/actions';
 import axiosInstance from '../../../axios';
 import {console_log} from '../../../utils/loggers';
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;

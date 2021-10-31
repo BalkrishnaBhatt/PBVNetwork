@@ -7,9 +7,6 @@ import {
   Dimensions,
 } from 'react-native';
 import {
-  MyActivityView,
-  NewsView,
-  ContentLoader,
   CustomSafeAreaView,
   CustomTextInput,
   CustomLoader,
@@ -22,9 +19,9 @@ import {
 import {Colors} from '../../../utils/colors';
 import {NAVIGATION, EMAIL_PATTERN, VARIABLE} from '../../../constant';
 import {Fonts} from '../../../utils/fonts';
-import GestureRecognizer from 'react-native-swipe-gestures';
-import {useSelector, useDispatch} from 'react-redux';
-import {loginSave, setLoader} from '../../../redux/actions';
+// import GestureRecognizer from 'react-native-swipe-gestures';
+import {useDispatch} from 'react-redux';
+import {loginSave} from '../../../redux/actions';
 import axiosInstance from '../../../axios';
 import {console_log} from '../../../utils/loggers';
 import AsyncStorage from '@react-native-async-storage/async-storage';

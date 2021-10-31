@@ -5884,7 +5884,7 @@
   "resolved" "https://registry.npmjs.org/react-native-tab-view/-/react-native-tab-view-2.16.0.tgz"
   "version" "2.16.0"
 
-"react-native-webview@^11.14.2", "react-native-webview@>= 10.9.0":
+"react-native-webview@>= 10.9.0":
   "integrity" "sha512-4pRLskbu98xmC8q+YY9cfshSxhywVran+tQ0ou7V6Js0ye2Zb33dDpe6d7QUWD39w5LbYSI3knpxLLVDAVm0hA=="
   "resolved" "https://registry.npmjs.org/react-native-webview/-/react-native-webview-11.14.2.tgz"
   "version" "11.14.2"

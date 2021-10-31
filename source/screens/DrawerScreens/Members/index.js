@@ -3,36 +3,22 @@ import {
   ScrollView,
   Text,
   View,
-  Image,
   TouchableOpacity,
   Dimensions,
   FlatList,
   TextInput,
 } from 'react-native';
-import {DownArrowSymbol, SearchSymbol} from '../../../utils/svg';
 import {Colors} from '../../../utils/colors';
 import Styles from './style';
-import {Fonts} from '../../../utils/fonts';
-import {NAVIGATION} from '../../../constant';
 import {useSelector, useDispatch} from 'react-redux';
 import {
-  getHomeActivities,
-  getHomeNews,
-  setLoader,
-  getGroupNews,
-  getGroupMembers,
   getAllMember,
   getJurisdictionList,
-  getAreaOfPracticeList,
   getTownList,
 } from '../../../redux/actions';
 import {
-  MyActivityView,
-  NewsView,
   ContentLoader,
   CustomSafeAreaView,
-  GroupNewsView,
-  EmptyList,
   MemberView,
   CustomHeader,
 } from '../../../components';

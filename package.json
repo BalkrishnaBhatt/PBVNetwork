@@ -32,7 +32,6 @@
     "react-native-svg": "^12.1.1",
     "react-native-swipe-gestures": "^1.0.5",
     "react-native-tab-view": "^2.x",
-    "react-native-webview": "^11.14.2",
     "react-redux": "^7.2.5",
     "redux": "^4.1.1",
     "redux-thunk": "^2.3.0"

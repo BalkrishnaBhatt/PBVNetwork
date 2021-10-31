@@ -7,24 +7,13 @@ import {
   Dimensions,
   TextInput,
 } from 'react-native';
-import {
-  MyActivityView,
-  NewsView,
-  ContentLoader,
-  CustomSafeAreaView,
-  CustomTextInput,
-  CustomLoader,
-  CustomHeader,
-} from '../../../components';
-import {DownArrowSymbol} from '../../../utils/svg';
+import {CustomSafeAreaView, CustomHeader} from '../../../components';
 import {Colors} from '../../../utils/colors';
 import Styles from './style';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {useSelector, useDispatch} from 'react-redux';
 import {
-  loginSave,
   setLoader,
-  getFaqs,
   getJurisdictionList,
   getAreaOfPracticeList,
   getTownList,
