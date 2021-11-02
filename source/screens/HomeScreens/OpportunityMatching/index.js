@@ -23,6 +23,7 @@ import {
   CustomSafeAreaView,
   OpportunityView,
   EmptyList,
+  MemberView,
 } from '../../../components';
 import {useSelector, useDispatch} from 'react-redux';
 import {
@@ -30,6 +31,7 @@ import {
   getHomeNews,
   setLoader,
   getUserOpportunity,
+  getAllMember,
 } from '../../../redux/actions';
 import DropDownPicker from 'react-native-dropdown-picker';
 const screen_width = Dimensions.get('window').width;
@@ -37,17 +39,25 @@ const screen_height = Dimensions.get('window').height;
 
 const OpportunityMatching = ({navigation, route}) => {
   const dispatch = useDispatch();
-  let UserReducer = useSelector(state => state.UserReducer);
+  // let UserReducer = useSelector(state => state.UserReducer);
+  // useEffect(() => {
+  //   if (UserReducer) {
+  //     setPeronsList(UserReducer.userOpportunity);
+  //     // console.log('UserReducer.userOpportunity: ', UserReducer.userOpportunity);
+  //     setIsLoading(UserReducer.isLoading);
+  //     // setNewsList(UserReducer.homeNews);
+  //   }
+  // }, [UserReducer]);
+  let MemberReducer = useSelector(state => state.MemberReducer);
   useEffect(() => {
-    if (UserReducer) {
-      setPeronsList(UserReducer.userOpportunity);
-      // console.log('UserReducer.userOpportunity: ', UserReducer.userOpportunity);
-      setIsLoading(UserReducer.isLoading);
-      // setNewsList(UserReducer.homeNews);
+    if (MemberReducer) {
+      setIsLoading(MemberReducer.isLoading);
+      setPeronsList(MemberReducer.allMembers);
     }
-  }, [UserReducer]);
+  }, [MemberReducer]);
   useEffect(() => {
-    dispatch(getUserOpportunity(navigation));
+    // dispatch(getUserOpportunity(navigation));
+    dispatch(getAllMember(navigation, null, '', null, null));
   }, []);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -71,56 +81,59 @@ const OpportunityMatching = ({navigation, route}) => {
     {label: 'POPULAR', value: 'POPULAR'},
     {label: 'ALPHABETICAL', value: 'ALPHABETICAL'},
   ]);
+  // const renderPersons = ({item}) => {
+  //   return (
+  //     <TouchableOpacity
+  //       style={{
+  //         // borderBottomWidth: 1,
+  //         // borderColor: Colors.grey,
+  //         // paddingVertical: 15,
+  //         flexDirection: 'row',
+  //         backgroundColor: Colors.light_primary_color,
+  //         borderRadius: 15,
+  //         paddingHorizontal: 10,
+  //         paddingTop: 10,
+  //         marginBottom: 10,
+  //       }}
+  //       activeOpacity={0.8}
+  //       onPress={() => {
+  //         // route.params.from_group
+  //         //   ? navigation.navigate(NAVIGATION.PROFILE_SCREEN)
+  //         //   : null;
+  //         navigation.navigate(NAVIGATION.PROFILE);
+  //       }}>
+  //       <Image
+  //         // source={{uri: item.profile_image}}
+  //         source={{uri: 'https://picsum.photos/200/300'}}
+  //         resizeMode="cover"
+  //         style={{height: 50, width: 50, borderRadius: 15}}
+  //       />
+  //       <View style={{padding: 10}}>
+  //         <Text
+  //           style={{
+  //             fontSize: 16,
+  //             color: Colors.black,
+  //             marginBottom: 5,
+  //             fontFamily: Fonts.Regular_font,
+  //             fontWeight: '300',
+  //           }}>
+  //           {item.title}
+  //         </Text>
+  //         <Text
+  //           style={{
+  //             fontSize: 8,
+  //             color: Colors.primary_color,
+  //             fontFamily: Fonts.Regular_font,
+  //             fontWeight: '300',
+  //           }}>
+  //           PVB Network
+  //         </Text>
+  //       </View>
+  //     </TouchableOpacity>
+  //   );
+  // };
   const renderPersons = ({item}) => {
-    return (
-      <TouchableOpacity
-        style={{
-          // borderBottomWidth: 1,
-          // borderColor: Colors.grey,
-          // paddingVertical: 15,
-          flexDirection: 'row',
-          backgroundColor: Colors.light_primary_color,
-          borderRadius: 15,
-          paddingHorizontal: 10,
-          paddingTop: 10,
-          marginBottom: 10,
-        }}
-        activeOpacity={0.8}
-        onPress={() => {
-          // route.params.from_group
-          //   ? navigation.navigate(NAVIGATION.PROFILE_SCREEN)
-          //   : null;
-          navigation.navigate(NAVIGATION.PROFILE);
-        }}>
-        <Image
-          // source={{uri: item.profile_image}}
-          source={{uri: 'https://picsum.photos/200/300'}}
-          resizeMode="cover"
-          style={{height: 50, width: 50, borderRadius: 15}}
-        />
-        <View style={{padding: 10}}>
-          <Text
-            style={{
-              fontSize: 16,
-              color: Colors.black,
-              marginBottom: 5,
-              fontFamily: Fonts.Regular_font,
-              fontWeight: '300',
-            }}>
-            {item.title}
-          </Text>
-          <Text
-            style={{
-              fontSize: 8,
-              color: Colors.primary_color,
-              fontFamily: Fonts.Regular_font,
-              fontWeight: '300',
-            }}>
-            PVB Network
-          </Text>
-        </View>
-      </TouchableOpacity>
-    );
+    return <MemberView item={item} />;
   };
   return (
     <>

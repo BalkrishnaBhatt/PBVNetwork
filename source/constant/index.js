@@ -44,6 +44,7 @@ export const NAVIGATION = {
   USER_ACTIVITIES: 'user_activities',
   USER_NEWS: 'user_news',
   USER_OPPORTUNITY: 'user_opportuniy',
+  USER_OVERVIEW: 'user_overview',
 };
 export const VARIABLE = {
   // IS_BACKGROUND_PROCESS_SETTED: 'is_background_process_setted',

@@ -18,6 +18,8 @@ const screen_height = Dimensions.get('window').height;
 // import Popover from 'react-native-popover-view';
 // import {WebView} from 'react-native-webview';
 import AutoHeightWebView from 'react-native-autoheight-webview';
+import {console_log} from '../../../utils/loggers';
+import {Store} from '../../../redux/store';
 const commitsData = [
   {date: '2017-01-02', count: 1},
   {date: '2017-01-03', count: 2},
@@ -32,6 +34,7 @@ const commitsData = [
   {date: '2017-02-30', count: 4},
 ];
 const ClientPortfolio = ({navigation, route, ...props}) => {
+  const group_id = Store.getState().GroupDetailReducer.groupDetails.id;
   //   const {dark, theme, toggle} = useContext(ThemeContext);
   const [selected, setSelected] = useState(1);
 
@@ -294,7 +297,9 @@ const ClientPortfolio = ({navigation, route, ...props}) => {
       <View style={Styles.View_Main}>
         <AutoHeightWebView
           source={{
-            uri: 'https://www.pbvnetwork.com/?group_overview=true&group_id=1842',
+            uri:
+              'https://www.pbvnetwork.com/?group_overview=true&group_id=' +
+              group_id,
           }}
           // style={{marginTop: 20, height: 500}}
           viewportContent={'width=device-width, user-scalable=no'}

@@ -34,6 +34,7 @@ import GroupOpportunity from '../../GroupScreens/GroupOpportunity';
 import {useSelector, useDispatch} from 'react-redux';
 import {console_log} from '../../../utils/loggers';
 import {getGroupDetails} from '../../../redux/actions';
+import GroupOverview from '../GroupOverview';
 const Tab = createMaterialTopTabNavigator();
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
@@ -286,7 +287,10 @@ const GroupDetail = ({navigation, route, ...props}) => {
                   {/* </ScrollView> */}
                 </View>
               )}>
-              <Tab.Screen name={NAVIGATION.OVERVIEW} component={Overview} />
+              <Tab.Screen
+                name={NAVIGATION.OVERVIEW}
+                component={GroupOverview}
+              />
               <Tab.Screen
                 name={NAVIGATION.GROUP_NEWS}
                 component={GroupNews}

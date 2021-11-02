@@ -31,6 +31,7 @@ import Notification from '../../ProfileScreens/Notification';
 import {useSelector, useDispatch} from 'react-redux';
 import {getUserProfile} from '../../../redux/actions';
 import images from '../../../utils/images';
+import UserOverview from '../../ProfileScreens/UserOverview';
 const Tab = createMaterialTopTabNavigator();
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
@@ -278,7 +279,10 @@ const Profile = ({navigation, route, ...props}) => {
                   {/* </ScrollView> */}
                 </View>
               )}>
-              <Tab.Screen name={NAVIGATION.OVERVIEW} component={Overview} />
+              <Tab.Screen
+                name={NAVIGATION.USER_OVERVIEW}
+                component={UserOverview}
+              />
               <Tab.Screen
                 name={NAVIGATION.USER_NEWS}
                 component={UserNews}

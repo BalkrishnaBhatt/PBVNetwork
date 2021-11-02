@@ -111,7 +111,7 @@ const Signup = ({navigation, route}) => {
     };
     let formData = {
       pbvncust_subscribe: true,
-      pbvncust_firstname: firmName,
+      pbvncust_firstname: firstName,
       pbvncust_lastname: lastName,
       pbvncust_firmname: firmName,
       pbvncust_email: emailId,
