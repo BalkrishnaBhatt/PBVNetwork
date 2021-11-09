@@ -3,6 +3,7 @@ import axiosInstance from '../../../axios';
 
 import {Store} from '../../store';
 import {console_log} from '../../../utils/loggers';
+import {NAVIGATION} from '../../../constant';
 export const getUserOpportunity = navigation => {
   let url = 'pbvnetwork/v1/useropportunities/';
   const config = {
@@ -28,14 +29,17 @@ export const getUserOpportunity = navigation => {
       .catch(function (error) {
         // handle error
 
+        console_log(
+          'getUserOpportunity error:',
+          JSON.stringify(error.response.data, null, 2),
+        );
         let error_code = error.response.data.code;
         if (
           error_code == 'jwt_auth_invalid_token' ||
           error_code == 'rest_forbidden'
         ) {
-          navigation.navigate(NAVIGATION.LOGIN);
+          navigation.replace(NAVIGATION.LOGIN);
         }
-        console_log(JSON.stringify(error.response.data, null, 2));
       });
   };
 };

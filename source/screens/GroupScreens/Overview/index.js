@@ -49,7 +49,9 @@ const Overview = ({navigation, route, ...props}) => {
   return (
     <>
       <View style={Styles.View_Main}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          nestedScrollEnabled={true}>
           <Tab.Navigator
             tabBar={({state, descriptors, navigation}) => (
               <ScrollView
@@ -105,11 +107,11 @@ const Overview = ({navigation, route, ...props}) => {
                 })}
               </ScrollView>
             )}>
-            {/* <Tab.Screen
+            <Tab.Screen
               name={NAVIGATION.CLIENT_PORTFOLIO}
               component={ClientPortfolio}
               initialParams={{from_group: false}}
-            /> */}
+            />
             <Tab.Screen
               name={NAVIGATION.PBV_RATING}
               component={PBVRating}

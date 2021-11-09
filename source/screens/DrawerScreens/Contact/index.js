@@ -8,11 +8,8 @@ import {
   TextInput,
 } from 'react-native';
 import {
-  MyActivityView,
-  NewsView,
   ContentLoader,
   CustomSafeAreaView,
-  EmptyList,
   CustomHeader,
 } from '../../../components';
 import {ContactTopCurve} from '../../../utils/svg';
@@ -22,14 +19,10 @@ import {EMAIL_PATTERN} from '../../../constant';
 import {Fonts} from '../../../utils/fonts';
 import {Store} from '../../../redux/store';
 
-import {
-  getHomeActivities,
-  getHomeNews,
-  setLoader,
-} from '../../../redux/actions';
+import {setLoader} from '../../../redux/actions';
 import axiosInstance from '../../../axios';
 import {console_log} from '../../../utils/loggers';
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
@@ -103,13 +96,14 @@ const CreateOpportunity = ({navigation, route, ...props}) => {
     const config = {
       headers: {
         // 'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + Store.getState().AuthenticationReducer.token,
+        // Authorization: 'Bearer ' + Store.getState().AuthenticationReducer.token,
       },
     };
     const formData = new FormData();
     formData.append('your-name', yourName);
     formData.append('your-email', yourEmail);
     formData.append('subject', subject);
+    formData.append('message', yourMessage);
     // formData.append("subject", yourMessage);
     axiosInstance
       .post(url, formData, config)
@@ -121,14 +115,14 @@ const CreateOpportunity = ({navigation, route, ...props}) => {
           setYourMessage('');
           dispatch(setLoader(false));
         }
-        // console_log(
-        //   'PostComment response: ',
-        //   JSON.stringify(response, null, 2),
-        // );
+        console_log(
+          'PostComment response: ',
+          JSON.stringify(response, null, 2),
+        );
       })
       .catch(function (error) {
         dispatch(setLoader(false));
-        console_log(JSON.stringify(error, null, 2));
+        console_log(JSON.stringify('PostComment errror: ', error, null, 2));
         // let error_code = error.response.data.code;
         // handle error
       });

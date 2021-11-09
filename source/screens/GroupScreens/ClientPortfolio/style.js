@@ -10,6 +10,7 @@ export default StyleSheet.create({
     // alignItems: 'center',
     // justifyContent: 'center',
     paddingHorizontal: 20,
+    // height: 600,
   },
   /////////////////////////////
   touchable_header_selected: {

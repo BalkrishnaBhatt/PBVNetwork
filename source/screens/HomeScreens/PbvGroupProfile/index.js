@@ -183,6 +183,10 @@ const PbvGroupProfile = ({navigation, route}) => {
               style={Styles.DropDownPicker}
               dropDownContainerStyle={Styles.dropDownContainerStyle}
               textStyle={Styles.textStyle}
+              onChangeValue={value => {
+                // console.log('dropdonvalw: ', value);
+                dispatch(getMyGroups(navigation, value));
+              }}
               // labelStyle={Styles.labelStyle}
               arrowIconStyle={{tintColor: Colors.primary_color}}
             />

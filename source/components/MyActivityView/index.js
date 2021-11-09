@@ -49,9 +49,12 @@ const MyActivityView = ({item}) => {
           flex: 1,
         }}>
         <View
-          style={{
-            flexDirection: 'row',
-          }}>
+          style={
+            {
+              // flexDirection: 'row',
+              // justifyContent: 'center',
+            }
+          }>
           <HTML
             source={{
               html:
@@ -75,7 +78,7 @@ const MyActivityView = ({item}) => {
           />
           <Text
             style={{
-              flex: 1,
+              // flex: 1,
               fontSize: 13,
               fontWeight: 'bold',
               fontFamily: Fonts.Regular_font,
@@ -129,7 +132,7 @@ const MyActivityView = ({item}) => {
             fontSize: 8,
             fontFamily: Fonts.Regular_font,
             color: Colors.border_color,
-            marginVertical: 15,
+            marginBottom: 15,
           }}>
           {/* 3 hours, 39 minutes ago */}
           {moment(item.date).fromNow()}
@@ -149,10 +152,10 @@ const MyActivityView = ({item}) => {
                 fontFamily: Fonts.Regular_font,
                 marginVertical: 5,
               }}>
-              Comment({item.number_of_comments})
+              Comment({item.comment_count ? item.comment_count : 0})
             </Text>
           </View>
-          <View
+          {/* <View
             style={[
               view_flatlist_comment_favourite,
               {
@@ -168,8 +171,8 @@ const MyActivityView = ({item}) => {
               }}>
               Favourite
             </Text>
-          </View>
-          <View
+          </View> */}
+          {/* <View
             style={[
               view_flatlist_comment_favourite,
               {
@@ -185,7 +188,7 @@ const MyActivityView = ({item}) => {
               }}>
               Delete
             </Text>
-          </View>
+          </View> */}
         </View>
       </View>
     </TouchableOpacity>

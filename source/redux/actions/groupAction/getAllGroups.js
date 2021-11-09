@@ -8,29 +8,35 @@ import {useSelector, useDispatch} from 'react-redux';
 import {NAVIGATION} from '../../../constant';
 import {console_log} from '../../../utils/loggers';
 export const getAllGroups = (navigation, selected_value) => {
-  let url = 'buddypress/v1/groups?orderby=';
+  // let url = 'buddypress/v1/groups?orderby=';
+  let url = 'buddypress/v1/groups?type=';
   const config = {
     headers: {
       // 'Content-Type': 'application/json',
       Authorization: 'Bearer ' + Store.getState().AuthenticationReducer.token,
     },
   };
+  // let selected_value_to_pass =
+  //   selected_value == 'Last Active'
+  //     ? 'last_activity'
+  //     : selected_value == 'Most Members'
+  //     ? 'total_member_count'
+  //     : selected_value == 'Alphabetical'
+  //     ? 'name'
+  //     : 'date_created';
   let selected_value_to_pass =
     selected_value == 'Last Active'
-      ? 'last_activity'
+      ? 'active'
       : selected_value == 'Most Members'
-      ? 'total_member_count'
+      ? 'popular'
       : selected_value == 'Alphabetical'
-      ? 'name'
-      : 'date_created';
+      ? 'alphabetical'
+      : 'newest';
   return async dispatch => {
     dispatch(set_loader(true));
+    console.log('selected_value_to_pass: ', selected_value_to_pass);
     axiosInstance
-      .get(
-        url + selected_value_to_pass,
-
-        config,
-      )
+      .get(url + selected_value_to_pass, config)
       .then(function (response) {
         console_log(
           'getAllGroups response: ',
@@ -42,7 +48,7 @@ export const getAllGroups = (navigation, selected_value) => {
       })
       .catch(function (error) {
         dispatch(set_loader(false));
-        console_log(JSON.stringify(error, null, 2));
+        console_log('getAllGroups error', JSON.stringify(error, null, 2));
         // handle error
         let error_code = error.response.data.code;
         // handle error
@@ -50,7 +56,7 @@ export const getAllGroups = (navigation, selected_value) => {
           error_code == 'jwt_auth_invalid_token' ||
           error_code == 'rest_forbidden'
         ) {
-          navigation.navigate(NAVIGATION.LOGIN);
+          navigation.replace(NAVIGATION.LOGIN);
         }
         // console_log('Error of config', error.config);
       });

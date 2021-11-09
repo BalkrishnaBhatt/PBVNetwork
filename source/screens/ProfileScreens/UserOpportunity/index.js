@@ -1,35 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {
-  ScrollView,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  Dimensions,
-  FlatList,
-  TextInput,
-} from 'react-native';
-import {DownArrowSymbol, SearchSymbol} from '../../../utils/svg';
+import {ScrollView, View, Dimensions, FlatList, TextInput} from 'react-native';
+import {SearchSymbol} from '../../../utils/svg';
 import {Colors} from '../../../utils/colors';
 import Styles from './style';
-import {NAVIGATION} from '../../../constant';
-import {Fonts} from '../../../utils/fonts';
-import {
-  MyActivityView,
-  NewsView,
-  ContentLoader,
-  OpportunityView,
-  EmptyList,
-} from '../../../components';
+import {ContentLoader, OpportunityView, EmptyList} from '../../../components';
 import {useSelector, useDispatch} from 'react-redux';
-import {
-  getHomeActivities,
-  getHomeNews,
-  setLoader,
-  getUserOpportunity,
-} from '../../../redux/actions';
+import {getUserOpportunity} from '../../../redux/actions';
 
-import DropDownPicker from 'react-native-dropdown-picker';
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
 

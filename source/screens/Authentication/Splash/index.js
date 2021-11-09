@@ -1,13 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {View, Dimensions} from 'react-native';
 import CustomSafeAreaView from '../../../components/CustomSafeAreaView';
 import {SplashLogo} from '../../../utils/svg';
 import {Colors} from '../../../utils/colors';
 import {NAVIGATION, VARIABLE} from '../../../constant';
-import {useSelector, useDispatch} from 'react-redux';
-import {loginSave, setLoader} from '../../../redux/actions';
-import axiosInstance from '../../../axios';
-import {console_log} from '../../../utils/loggers';
+import {useDispatch} from 'react-redux';
+import {loginSave} from '../../../redux/actions';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const screen_width = Dimensions.get('window').width;

@@ -4,36 +4,16 @@ import {
   Text,
   View,
   Image,
-  TouchableOpacity,
   Dimensions,
   FlatList,
-  TextInput,
 } from 'react-native';
-import {
-  FavouriteSymbol,
-  CommentsSymbol,
-  DeleteSymbol,
-} from '../../../utils/svg';
 import {Colors} from '../../../utils/colors';
 import Styles from './style';
 import {Fonts} from '../../../utils/fonts';
 import {useSelector, useDispatch} from 'react-redux';
-import {
-  getHomeActivities,
-  getHomeNews,
-  setLoader,
-  getUserNews,
-} from '../../../redux/actions';
+import {getUserNews} from '../../../redux/actions';
 
-import DropDownPicker from 'react-native-dropdown-picker';
-import {
-  MyActivityView,
-  NewsView,
-  ContentLoader,
-  CustomSafeAreaView,
-  EmptyList,
-  GroupNewsView,
-} from '../../../components';
+import {ContentLoader, EmptyList, GroupNewsView} from '../../../components';
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
 
@@ -133,7 +113,7 @@ const UserNews = ({navigation, route}) => {
           <ContentLoader />
         ) : (
           <ScrollView showsVerticalScrollIndicator={false}>
-            <FlatList
+            {/* <FlatList
               style={{marginVertical: 5, marginLeft: 20}}
               showsVerticalScrollIndicator={false}
               data={newsCategory}
@@ -141,7 +121,7 @@ const UserNews = ({navigation, route}) => {
               showsHorizontalScrollIndicator={false}
               renderItem={renderNewsCategoy}
               keyExtractor={item => item.id}
-            />
+            /> */}
             <FlatList
               style={{
                 marginVertical: 15,

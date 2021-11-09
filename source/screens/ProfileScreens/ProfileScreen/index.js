@@ -3,40 +3,19 @@ import {
   ScrollView,
   Text,
   View,
-  Image,
   TouchableOpacity,
   Dimensions,
   TextInput,
-  BackHandler,
 } from 'react-native';
-import {
-  MyActivityView,
-  NewsView,
-  ContentLoader,
-  CustomSafeAreaView,
-  OpportunityView,
-} from '../../../components';
-import {
-  HomeTabSymbol,
-  NewsTabSymbol,
-  MemberTabSymbol,
-  ChartTabSymbol,
-  ManageTabSymbol,
-  PowerButtonSymbol,
-} from '../../../utils/svg';
-import {Colors} from '../../../utils/colors';
+import {ContentLoader} from '../../../components';
 import Styles from './style';
 import {NAVIGATION} from '../../../constant';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {Fonts} from '../../../utils/fonts';
 import {useSelector, useDispatch} from 'react-redux';
-import {
-  getHomeActivities,
-  getHomeNews,
-  setLoader,
-  getUserOpportunity,
-  getUserProfile,
-} from '../../../redux/actions';
+import {setLoader, getUserProfile} from '../../../redux/actions';
+import {Store} from '../../../redux/store';
+import axiosInstance from '../../../axios';
+import {console_log} from '../../../utils/loggers';
 const Tab = createMaterialTopTabNavigator();
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
@@ -58,13 +37,19 @@ const ProfileScreen = ({navigation, route, ...props}) => {
       setAboutMe(data_to_set.aboutMe);
       setJobOpportunities(data_to_set.jobOpportunities);
       setBusinessOpportunities(data_to_set.businessOpportunities);
+      setLanguageName(data_to_set.languageName);
+      setCommandOnLanguage(data_to_set.commandOnLanguage);
+      setInstituteSchool(data_to_set.instituteSchool);
+      setDegreeProgram(data_to_set.degreeProgram);
+      setStartYear(data_to_set.startYear);
+      setEndYear(data_to_set.endYear);
       // setPeronsList(UserReducer.userOpportunity);
       setIsLoading(UserReducer.isLoading);
       // setNewsList(UserReducer.homeNews);
     }
   }, [UserReducer]);
   useEffect(() => {
-    // dispatch(getUserProfile(navigation));
+    dispatch(getUserProfile(navigation));
   }, []);
   const [isLoading, setIsLoading] = useState(true);
   const [name, setName] = useState('');
@@ -94,6 +79,67 @@ const ProfileScreen = ({navigation, route, ...props}) => {
   //   // navigation.navigate(NAVIGATION.GROUP_DETAIL);
   //   navigation.goBack();
   // };
+  const UpdateUserInfo = async () => {
+    let url =
+      'pbvnetwork/v1/updateuserfield/' +
+      Store.getState().AuthenticationReducer.userId;
+    const config = {
+      headers: {
+        // 'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + Store.getState().AuthenticationReducer.token,
+      },
+    };
+    url =
+      url +
+      '?name=' +
+      name +
+      '&firm_name=' +
+      firmName +
+      '&jurisdiction=' +
+      jurisdiction +
+      '&town=' +
+      town +
+      '&mobile_number=' +
+      mobileNumber +
+      '&phone_number=' +
+      phoneNumber +
+      '&about_me=' +
+      aboutMe +
+      '&job_opportunities=' +
+      jobOpportunities +
+      '&business_opportunities=' +
+      businessOpportunities;
+    // '&job_opportunities=' +
+    // jobOpportunities+
+    // '&job_opportunities=' +
+    // jobOpportunities;
+    // console.log('UpdateUserInfourl', url);
+    axiosInstance
+      .post(url, {}, config)
+      .then(async response => {
+        dispatch(setLoader(false));
+        console_log(
+          'UpdateUserInfo response: ',
+          JSON.stringify(response, null, 2),
+        );
+      })
+      .catch(function (error) {
+        console_log(
+          'UpdateUserInfo error',
+          JSON.stringify(error.response, null, 2),
+        );
+        dispatch(setLoader(false));
+        // handle error
+        let error_code = error.response.data.code;
+        if (
+          error_code == 'jwt_auth_invalid_token' ||
+          error_code == 'rest_forbidden'
+        ) {
+          navigation.replace(NAVIGATION.LOGIN);
+        }
+        // console_log('Error of config', error.config);
+      });
+  };
   return (
     <>
       <View style={Styles.View_Main}>
@@ -242,11 +288,7 @@ const ProfileScreen = ({navigation, route, ...props}) => {
                 onChangeText={value => setStartYear(value)}
               />
             </View>
-            <View
-              style={[
-                Styles.view_field_main,
-                {borderBottomWidth: 0, marginBottom: 100},
-              ]}>
+            <View style={[Styles.view_field_main, {borderBottomWidth: 0}]}>
               <Text style={Styles.text_field_title}>End Year</Text>
               <TextInput
                 placeholder="EndYear"
@@ -255,6 +297,15 @@ const ProfileScreen = ({navigation, route, ...props}) => {
                 onChangeText={value => setEndYear(value)}
               />
             </View>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => {
+                dispatch(setLoader(true));
+                UpdateUserInfo();
+              }}
+              style={Styles.view_load_more}>
+              <Text style={Styles.text_load_more}>UPDATE</Text>
+            </TouchableOpacity>
           </ScrollView>
         )}
       </View>

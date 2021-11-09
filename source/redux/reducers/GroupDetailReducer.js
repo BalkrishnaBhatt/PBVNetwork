@@ -47,8 +47,9 @@ const GroupDetailReducer = (state = initialState, action) => {
       // console_log('get group details called');
       return {
         ...state,
-        groupDetails: action.group_info,
-        // isLoading: false,
+        // groupDetails: action.group_info,
+        groupDetails: action.list,
+        isLoading: false,
       };
     case actionTypes.SET_GROUP_DETAILS_LOADING:
       return {

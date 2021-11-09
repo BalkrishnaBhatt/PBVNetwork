@@ -7,17 +7,10 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import {
-  MyActivityView,
-  NewsView,
-  ContentLoader,
-  CustomSafeAreaView,
-  OpportunityView,
-} from '../../../components';
+import {ContentLoader, CustomSafeAreaView} from '../../../components';
 import {
   HomeTabSymbol,
   NewsTabSymbol,
-  MemberTabSymbol,
   ChartTabSymbol,
   ManageTabSymbol,
   PowerButtonSymbol,
@@ -30,21 +23,15 @@ import {Fonts} from '../../../utils/fonts';
 import Styles from './style';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import Overview from '../../GroupScreens/Overview';
-import Manage from '../../GroupScreens/Manage';
 import UserNews from '../../ProfileScreens/UserNews';
 import UserOpportunity from '../../ProfileScreens/UserOpportunity';
 import UserActivities from '../../ProfileScreens/UserActivities';
 import ProfileScreen from '../../ProfileScreens/ProfileScreen';
 import Notification from '../../ProfileScreens/Notification';
 import {useSelector, useDispatch} from 'react-redux';
-import {
-  getHomeActivities,
-  getHomeNews,
-  setLoader,
-  getUserOpportunity,
-  getUserProfile,
-} from '../../../redux/actions';
+import {getUserProfile} from '../../../redux/actions';
 import images from '../../../utils/images';
+import UserOverview from '../../ProfileScreens/UserOverview';
 const Tab = createMaterialTopTabNavigator();
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
@@ -292,7 +279,10 @@ const Profile = ({navigation, route, ...props}) => {
                   {/* </ScrollView> */}
                 </View>
               )}>
-              <Tab.Screen name={NAVIGATION.OVERVIEW} component={Overview} />
+              <Tab.Screen
+                name={NAVIGATION.USER_OVERVIEW}
+                component={UserOverview}
+              />
               <Tab.Screen
                 name={NAVIGATION.USER_NEWS}
                 component={UserNews}

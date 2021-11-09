@@ -3,6 +3,7 @@ import axiosInstance from '../../../axios';
 
 import {Store} from '../../store';
 import {console_log} from '../../../utils/loggers';
+import {NAVIGATION} from '../../../constant';
 export const getUserProfile = navigation => {
   let url = 'buddypress/v1/members/';
   const config = {
@@ -18,8 +19,29 @@ export const getUserProfile = navigation => {
       .get(url + user_id, config)
       .then(function (response) {
         let data = response.data.xprofile.groups[0].fields;
+        let other_data = response.data.extended_fields;
         // console.log('datagetUserProfile: ', data);
         let raw_data = {};
+        raw_data = {
+          languageName: other_data.language_known[0]
+            ? other_data.language_known[0].lang_name
+            : '',
+          commandOnLanguage: other_data.language_known[0]
+            ? other_data.language_known[0].lang_commant
+            : '',
+          instituteSchool: other_data.educations[0]
+            ? other_data.educations[0].institute
+            : '',
+          degreeProgram: other_data.educations[0]
+            ? other_data.educations[0].degree
+            : '',
+          startYear: other_data.educations[0]
+            ? other_data.educations[0].start_year
+            : '',
+          endYear: other_data.educations[0]
+            ? other_data.educations[0].end_year
+            : '',
+        };
         // raw_data['avatar_urls'] = response.data.avatar_urls;
         data.map(element => {
           if (element.name == 'Name') {
@@ -53,13 +75,16 @@ export const getUserProfile = navigation => {
       .catch(function (error) {
         // handle error
 
-        console_log(JSON.stringify(error.response, null, 2));
+        console_log(
+          'getUserProfile error: ',
+          JSON.stringify(error.response, null, 2),
+        );
         let error_code = error.response.data.code;
         if (
           error_code == 'jwt_auth_invalid_token' ||
           error_code == 'rest_forbidden'
         ) {
-          navigation.navigate(NAVIGATION.LOGIN);
+          navigation.replace(NAVIGATION.LOGIN);
         }
       });
   };

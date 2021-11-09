@@ -1,43 +1,25 @@
-import React, {useEffect, useState} from 'react';
-import {
-  ScrollView,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  Dimensions,
-  TextInput,
-  BackHandler,
-} from 'react-native';
-import CustomSafeAreaView from '../../../components/CustomSafeAreaView';
-import {
-  HomeTabSymbol,
-  NewsTabSymbol,
-  MemberTabSymbol,
-  ChartTabSymbol,
-  ManageTabSymbol,
-  PowerButtonSymbol,
-} from '../../../utils/svg';
+import React, {useState} from 'react';
+import {View, Dimensions} from 'react-native';
 import {Colors} from '../../../utils/colors';
 import Styles from './style';
-import {NAVIGATION} from '../../../constant';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {Fonts} from '../../../utils/fonts';
-import {PieChart} from 'react-native-svg-charts';
-import {
-  // LineChart,
-  // BarChart,
-  // PieChart,
-  // ProgressChart,
-  ContributionGraph,
-  // StackedBarChart,
-} from 'react-native-chart-kit';
+// import {PieChart} from 'react-native-svg-charts';
+// import {
+//   // LineChart,
+//   // BarChart,
+//   // PieChart,
+//   // ProgressChart,
+//   ContributionGraph,
+//   // StackedBarChart,
+// } from 'react-native-chart-kit';
 const Tab = createMaterialTopTabNavigator();
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
-import Popover from 'react-native-popover-view';
-
-import {Circle, G, Line} from 'react-native-svg';
+// import Popover from 'react-native-popover-view';
+// import {WebView} from 'react-native-webview';
+import AutoHeightWebView from 'react-native-autoheight-webview';
+import {console_log} from '../../../utils/loggers';
+import {Store} from '../../../redux/store';
 const commitsData = [
   {date: '2017-01-02', count: 1},
   {date: '2017-01-03', count: 2},
@@ -52,6 +34,7 @@ const commitsData = [
   {date: '2017-02-30', count: 4},
 ];
 const ClientPortfolio = ({navigation, route, ...props}) => {
+  const group_id = Store.getState().GroupDetailReducer.groupDetails.id;
   //   const {dark, theme, toggle} = useContext(ThemeContext);
   const [selected, setSelected] = useState(1);
 
@@ -201,25 +184,25 @@ const ClientPortfolio = ({navigation, route, ...props}) => {
       svg: {fill: Colors.primary_color},
     },
   ];
-  function shuffle(array) {
-    let currentIndex = array.length,
-      randomIndex;
+  // function shuffle(array) {
+  //   let currentIndex = array.length,
+  //     randomIndex;
 
-    // While there remain elements to shuffle...
-    while (currentIndex != 0) {
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
+  //   // While there remain elements to shuffle...
+  //   while (currentIndex != 0) {
+  //     // Pick a remaining element...
+  //     randomIndex = Math.floor(Math.random() * currentIndex);
+  //     currentIndex--;
 
-      // And swap it with the current element.
-      [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex],
-        array[currentIndex],
-      ];
-    }
+  //     // And swap it with the current element.
+  //     [array[currentIndex], array[randomIndex]] = [
+  //       array[randomIndex],
+  //       array[currentIndex],
+  //     ];
+  //   }
 
-    return array;
-  }
+  //   return array;
+  // }
 
   // const Labels = ({slices, height, width}) => {
   //   console.log('slices', JSON.stringify(slices, null, 2));
@@ -262,42 +245,42 @@ const ClientPortfolio = ({navigation, route, ...props}) => {
   //     );
   //   });
   // };
-  const Labels = ({slices}) => {
-    return slices.map((slice, index) => {
-      const {labelCentroid, pieCentroid, data} = slice;
-      return (
-        <G key={index}>
-          <Line
-            x1={labelCentroid[0]}
-            y1={labelCentroid[1]}
-            x2={pieCentroid[0]}
-            y2={pieCentroid[1]}
-            stroke={data.svg.fill}
-          />
-          {/* <Text
-            key={index}
-            x={pieCentroid[0]}
-            y={pieCentroid[1]}
-            fill={'white'}
-            textAnchor={'middle'}
-            alignmentBaseline={'middle'}
-            fontSize={24}
-            stroke={'black'}
-            strokeWidth={0.2}>
-            {data.amount}
-          </Text> */}
-          <Circle
-            cx={labelCentroid[0]}
-            cy={labelCentroid[1]}
-            r={15}
-            data={'10'}
-            fill={data.svg.fill}>
-            {/* <Text>10</Text> */}
-          </Circle>
-        </G>
-      );
-    });
-  };
+  // const Labels = ({slices}) => {
+  //   return slices.map((slice, index) => {
+  //     const {labelCentroid, pieCentroid, data} = slice;
+  //     return (
+  //       <G key={index}>
+  //         <Line
+  //           x1={labelCentroid[0]}
+  //           y1={labelCentroid[1]}
+  //           x2={pieCentroid[0]}
+  //           y2={pieCentroid[1]}
+  //           stroke={data.svg.fill}
+  //         />
+  //         {/* <Text
+  //           key={index}
+  //           x={pieCentroid[0]}
+  //           y={pieCentroid[1]}
+  //           fill={'white'}
+  //           textAnchor={'middle'}
+  //           alignmentBaseline={'middle'}
+  //           fontSize={24}
+  //           stroke={'black'}
+  //           strokeWidth={0.2}>
+  //           {data.amount}
+  //         </Text> */}
+  //         <Circle
+  //           cx={labelCentroid[0]}
+  //           cy={labelCentroid[1]}
+  //           r={15}
+  //           data={'10'}
+  //           fill={data.svg.fill}>
+  //           {/* <Text>10</Text> */}
+  //         </Circle>
+  //       </G>
+  //     );
+  //   });
+  // };
   // useEffect(() => {
   //   const backHandler = BackHandler.addEventListener(
   //     'hardwareBackPress',
@@ -312,8 +295,22 @@ const ClientPortfolio = ({navigation, route, ...props}) => {
   return (
     <>
       <View style={Styles.View_Main}>
-        <View style={{height: 300, width: 300, alignSelf: 'center'}}>
-          {/* <PieChart
+        <AutoHeightWebView
+          source={{
+            uri:
+              'https://www.pbvnetwork.com/?group_overview=true&group_id=' +
+              group_id,
+          }}
+          // style={{marginTop: 20, height: 500}}
+          viewportContent={'width=device-width, user-scalable=no'}
+          scalesPageToFit={true}
+          customStyle={{marginTop: 20, height: 500}}
+          // javaScriptEnabled={true}
+          // domStorageEnabled={true}
+          // startInLoadingState={true}
+        />
+        {/* <View style={{height: 300, width: 300, alignSelf: 'center'}}> */}
+        {/* <PieChart
             style={{
               height: 300,
               position: 'absolute',
@@ -326,7 +323,7 @@ const ClientPortfolio = ({navigation, route, ...props}) => {
             padAngle={0}
             outerRadius={'30%'}
             innerRadius={'0%'}></PieChart> */}
-          <PieChart
+        {/* <PieChart
             style={{
               height: 300,
               backgroundColor: Colors.transparant,
@@ -338,9 +335,9 @@ const ClientPortfolio = ({navigation, route, ...props}) => {
             padAngle={0}
             outerRadius={'95%'}
             innerRadius={'50%'}>
-            {/* <Labels /> */}
-          </PieChart>
-          {/* <PieChart
+            <Labels />
+          </PieChart> */}
+        {/* <PieChart
             style={{
               height: 300,
               marginTop: 150,
@@ -354,8 +351,8 @@ const ClientPortfolio = ({navigation, route, ...props}) => {
             padAngle={0}
             outerRadius={'60%'}
             innerRadius={'30%'}></PieChart> */}
-        </View>
-        <View
+      </View>
+      {/* <View
           style={{
             flexDirection: 'row',
             //  marginHorizontal:50
@@ -390,9 +387,9 @@ const ClientPortfolio = ({navigation, route, ...props}) => {
             }>
             <Text style={Styles.header_text}>Counterparts</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
 
-        <View style={{marginTop: 50}}>
+      {/* <View style={{marginTop: 50}}>
           <ContributionGraph
             values={commitsData}
             endDate={new Date('2017-04-01')}
@@ -417,8 +414,8 @@ const ClientPortfolio = ({navigation, route, ...props}) => {
               },
             }}
           />
-        </View>
-      </View>
+        </View> */}
+      {/* </View> */}
     </>
   );
 };
