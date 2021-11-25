@@ -45,7 +45,7 @@ const PbvGroupProfile = ({navigation, route}) => {
   }, [GroupReducer]);
   useEffect(() => {
     dispatch(getAllGroups(navigation, value));
-    dispatch(getMyGroups(navigation));
+    // dispatch(getMyGroups(navigation, value));
   }, []);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -185,7 +185,8 @@ const PbvGroupProfile = ({navigation, route}) => {
               textStyle={Styles.textStyle}
               onChangeValue={value => {
                 // console.log('dropdonvalw: ', value);
-                dispatch(getMyGroups(navigation, value));
+                dispatch(getAllGroups(navigation, value));
+                // dispatch(getMyGroups(navigation, value));
               }}
               // labelStyle={Styles.labelStyle}
               arrowIconStyle={{tintColor: Colors.primary_color}}
@@ -197,7 +198,7 @@ const PbvGroupProfile = ({navigation, route}) => {
                 style={{
                   marginVertical: 15,
                   marginHorizontal: 20,
-                  marginBottom: 50,
+                  marginBottom: 140,
                   // marginTop: 70,
                 }}
                 showsVerticalScrollIndicator={false}

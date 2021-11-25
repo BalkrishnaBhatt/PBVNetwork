@@ -21,6 +21,7 @@ import {
   CustomSafeAreaView,
   MemberView,
   CustomHeader,
+  EmptyList,
 } from '../../../components';
 
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -95,7 +96,7 @@ const Members = ({navigation, route, ...props}) => {
           // height: screen_height,
           // width: screen_width,
         }}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false} style={{zIndex: 0}}>
           <CustomHeader navigation={navigation} {...props}></CustomHeader>
           <Text style={Styles.text_home}>Members</Text>
           {/* <View style={Styles.view_search}>
@@ -141,37 +142,42 @@ const Members = ({navigation, route, ...props}) => {
               placeholder="Town contains"
               style={Styles.TextInput_search_member}
             /> */}
-            <View style={{zIndex: 4, flex: 1}}>
-              <DropDownPicker
-                open={isOpen == 1}
-                value={valueJurisdiction}
-                items={itemsJurisdiction}
-                setOpen={value => setIsOpen(value ? 1 : 0)}
-                setValue={setValueJurisdiction}
-                placeholder={'Jurisdiction'}
-                placeholderStyle={Styles.placeholderStyle2}
-                style={Styles.DropDownPicker2}
-                dropDownContainerStyle={Styles.dropDownContainerStyle2}
-                textStyle={Styles.textStyle2}
-                // labelStyle={Styles.labelStyle}
-                arrowIconStyle={{tintColor: Colors.border_color}}
-              />
-              <View style={{zIndex: 3}}>
-                <DropDownPicker
-                  open={isOpen == 2}
-                  value={valueTown}
-                  items={itemsTown}
-                  setOpen={value => setIsOpen(value ? 2 : 0)}
-                  setValue={setValueTown}
-                  placeholder={'Town'}
-                  placeholderStyle={Styles.placeholderStyle2}
-                  style={Styles.DropDownPicker2}
-                  dropDownContainerStyle={Styles.dropDownContainerStyle2}
-                  textStyle={Styles.textStyle2}
-                  arrowIconStyle={{tintColor: Colors.border_color}}
-                />
-              </View>
-            </View>
+            {/* <View style={{zIndex: 4, flex: 1}}> */}
+            <DropDownPicker
+              open={isOpen == 1}
+              value={valueJurisdiction}
+              items={itemsJurisdiction}
+              setOpen={value => setIsOpen(value ? 1 : 0)}
+              setValue={setValueJurisdiction}
+              placeholder={'Jurisdiction'}
+              listMode={'SCROLLVIEW'}
+              placeholderStyle={Styles.placeholderStyle2}
+              style={Styles.DropDownPicker2}
+              dropDownContainerStyle={[
+                Styles.dropDownContainerStyle2,
+                {zindex: 3},
+              ]}
+              textStyle={Styles.textStyle2}
+              // labelStyle={Styles.labelStyle}
+              arrowIconStyle={{tintColor: Colors.border_color}}
+            />
+            {/* <View style={{zIndex: 3}}> */}
+            <DropDownPicker
+              open={isOpen == 2}
+              value={valueTown}
+              items={itemsTown}
+              setOpen={value => setIsOpen(value ? 2 : 0)}
+              setValue={setValueTown}
+              placeholder={'Town'}
+              listMode={'SCROLLVIEW'}
+              placeholderStyle={[Styles.placeholderStyle2, {zIndex: 1}]}
+              style={Styles.DropDownPicker2}
+              dropDownContainerStyle={Styles.dropDownContainerStyle2}
+              textStyle={Styles.textStyle2}
+              arrowIconStyle={{tintColor: Colors.border_color}}
+            />
+            {/* </View> */}
+            {/* </View> */}
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => {
@@ -256,12 +262,15 @@ const Members = ({navigation, route, ...props}) => {
               style={{
                 marginVertical: 15,
                 marginHorizontal: 20,
-                marginBottom: 50,
+                marginBottom: 100,
               }}
               showsVerticalScrollIndicator={false}
               data={peronsList}
               renderItem={renderPersons}
               keyExtractor={item => item.id}
+              ListEmptyComponent={() => {
+                return <EmptyList />;
+              }}
             />
           )}
         </ScrollView>

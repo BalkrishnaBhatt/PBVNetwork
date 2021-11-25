@@ -9,8 +9,9 @@ export default StyleSheet.create({
     backgroundColor: Colors.white,
     // alignItems: 'center',
     // justifyContent: 'center',
-    paddingHorizontal: 20,
+    // paddingHorizontal: 20,
     // height: 600,
+    // marginHorizontal: -20,
   },
   /////////////////////////////
   touchable_header_selected: {

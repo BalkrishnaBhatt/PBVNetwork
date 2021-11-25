@@ -34,7 +34,7 @@ export const getAllGroups = (navigation, selected_value) => {
       : 'newest';
   return async dispatch => {
     dispatch(set_loader(true));
-    console.log('selected_value_to_pass: ', selected_value_to_pass);
+    // console.log('selected_value_to_pass: ', selected_value_to_pass);
     axiosInstance
       .get(url + selected_value_to_pass, config)
       .then(function (response) {

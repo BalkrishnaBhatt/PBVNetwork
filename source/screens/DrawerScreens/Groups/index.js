@@ -35,17 +35,31 @@ const Groups = ({navigation, route, ...props}) => {
   useEffect(() => {
     if (GroupReducer) {
       setAllGroups(GroupReducer.allGroups);
+      // console.log('GroupReducer.allGroups: ', GroupReducer.allGroups.length);
       setMyGroups(GroupReducer.myGroups);
-      // console.log('GroupReducer.myGroups: ', GroupReducer.myGroups);
+      // console.log('GroupReducer.myGroups: ', GroupReducer.myGroups.length);
       setIsLoading(GroupReducer.isLoading);
     }
-    // else {
-    //   setPosts([]);
-    // }
   }, [GroupReducer]);
+  // useEffect(() => {
+  //   if (GroupReducer) {
+  //     setAllGroups(GroupReducer.allGroups);
+  //     console.log('GroupReducer.allGroups: ', GroupReducer.allGroups.length);
+  //     setIsLoading(GroupReducer.isLoading);
+  //   }
+  // }, [GroupReducer.allGroups]);
+  // useEffect(() => {
+  //   if (GroupReducer) {
+  //     setMyGroups(GroupReducer.myGroups);
+  //     console.log('GroupReducer.myGroups: ', GroupReducer.myGroups.length);
+  //     setIsLoading(GroupReducer.isLoading);
+  //   }
+  // }, [GroupReducer.myGroups]);
   useEffect(() => {
-    dispatch(getAllGroups(navigation, value));
     dispatch(getMyGroups(navigation, value));
+    setTimeout(() => {
+      dispatch(getAllGroups(navigation, value));
+    }, 500);
   }, []);
   const [isLoading, setIsLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
@@ -198,6 +212,9 @@ const Groups = ({navigation, route, ...props}) => {
               onPress={() => {
                 setAllGroupSelected(false);
                 dispatch(getMyGroups(navigation, value));
+                setTimeout(() => {
+                  dispatch(getAllGroups(navigation, value));
+                }, 500);
               }}>
               <Text
                 style={[
@@ -247,7 +264,7 @@ const Groups = ({navigation, route, ...props}) => {
                 style={{
                   marginVertical: 15,
                   marginHorizontal: 16,
-                  marginBottom: 50,
+                  marginBottom: 150,
                   elevation: 0,
                 }}
                 showsVerticalScrollIndicator={false}

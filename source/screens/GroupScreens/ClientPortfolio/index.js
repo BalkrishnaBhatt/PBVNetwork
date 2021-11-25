@@ -304,7 +304,12 @@ const ClientPortfolio = ({navigation, route, ...props}) => {
           // style={{marginTop: 20, height: 500}}
           viewportContent={'width=device-width, user-scalable=no'}
           scalesPageToFit={true}
-          customStyle={{marginTop: 20, height: 500}}
+          customStyle={{
+            marginTop: 20,
+            height: 500,
+            // width: '100%',
+            // height: '100%',
+          }}
           // javaScriptEnabled={true}
           // domStorageEnabled={true}
           // startInLoadingState={true}

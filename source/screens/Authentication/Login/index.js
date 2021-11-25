@@ -71,6 +71,8 @@ const Login = ({navigation, route}) => {
       error_flag = false;
     }
     if (error_flag) {
+      // console.log('emailId: ', emailId);
+      // console.log('password: ', password);
       // navigation.navigate(NAVIGATION.DASHBOARD);
       setIsLoading(true);
       LoginRequest();
@@ -79,6 +81,8 @@ const Login = ({navigation, route}) => {
   const LoginRequest = async () => {
     let url =
       'jwt-auth/v1/token' + '?username=' + emailId + '&password=' + password;
+
+    // console.log('url: ', url);
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -91,12 +95,12 @@ const Login = ({navigation, route}) => {
         // console_log('login response: ', JSON.stringify(response.data, null, 2));
         // handle success
         if (response.data && response.data.token) {
-          navigation.navigate(NAVIGATION.DASHBOARD);
           await AsyncStorage.setItem(
             VARIABLE.USER_INFO,
             JSON.stringify(response.data),
           );
           dispatch(loginSave(response.data));
+          setTimeout(() => navigation.navigate(NAVIGATION.DASHBOARD), 500);
         }
         // else if (
         //   response.message ==
@@ -120,6 +124,11 @@ const Login = ({navigation, route}) => {
           setPasswordErrorText(
             'Access from your IP address has been blocked for security reasons. Please contact the administrator.',
           );
+        } else if (
+          error.response.data.message ==
+          '<strong>ERROR</strong>: Invalid login credentials.'
+        ) {
+          setPasswordErrorText('Invalid login credentials.');
         } else if (error_code == '[jwt_auth] invalid_username') {
           setEmailIdErrorText('Invalid Username');
         } else if (error_code == '[jwt_auth] incorrect_password') {
@@ -249,7 +258,7 @@ const Login = ({navigation, route}) => {
             }}
           /> */}
 
-            <Text
+            {/* <Text
               style={{
                 color: Colors.grey,
                 fontSize: 16,
@@ -257,7 +266,7 @@ const Login = ({navigation, route}) => {
                 alignSelf: 'flex-end',
               }}>
               Forget Password
-            </Text>
+            </Text> */}
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => {
@@ -289,13 +298,13 @@ const Login = ({navigation, route}) => {
                 flex: 1,
                 // marginHorizontal: 0,
                 // width: screen_width,
-                marginTop: -(screen_height / 3),
+                marginTop: -(screen_height / 3.3),
                 zIndex: 0,
                 // position: 'absolute',
                 // alignSelf: 'flex-end',
                 // alignSelf: 'flex-end',
                 // height: screen_width,
-                marginBottom: -(screen_height / 2.8),
+                marginBottom: -(screen_height / 2.9),
               }}
             />
             <TouchableOpacity

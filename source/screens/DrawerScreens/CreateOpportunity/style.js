@@ -68,6 +68,9 @@ export default StyleSheet.create({
     backgroundColor: Colors.white,
     elevation: 1000,
     zIndex: 10,
+    // height: 150,
+    position: 'relative',
+    marginTop: -45,
   },
   textStyle: {
     fontSize: 14,
@@ -78,7 +81,8 @@ export default StyleSheet.create({
     borderRadius: 7,
     backgroundColor: Colors.light_primary_color,
     alignSelf: 'center',
-    margin: 15,
+    marginTop: 50,
+    marginBottom: 20,
   },
   text_load_more: {
     color: Colors.primary_color,

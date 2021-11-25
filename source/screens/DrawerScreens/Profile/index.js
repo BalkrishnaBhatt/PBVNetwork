@@ -245,7 +245,7 @@ const Profile = ({navigation, route, ...props}) => {
                                 : Colors.inactive_tab
                             }
                           />
-                        ) : label == NAVIGATION.OVERVIEW ? (
+                        ) : label == NAVIGATION.USER_OVERVIEW ? (
                           <ChartTabSymbol
                             style={Styles.HomeTabSymbol}
                             fill={

@@ -156,6 +156,7 @@ const CreateOpportunity = ({navigation, route, ...props}) => {
           zIndex: 0,
         }}>
         <ScrollView
+          nestedScrollEnabled
           showsVerticalScrollIndicator={false}
           style={{zIndex: 0}}
           // style={{
@@ -207,6 +208,7 @@ const CreateOpportunity = ({navigation, route, ...props}) => {
                 placeholder={'Jurisdiction'}
                 placeholderStyle={Styles.placeholderStyle}
                 style={Styles.DropDownPicker}
+                listMode={'SCROLLVIEW'}
                 dropDownContainerStyle={Styles.dropDownContainerStyle}
                 textStyle={Styles.textStyle}
                 // labelStyle={Styles.labelStyle}
@@ -220,6 +222,7 @@ const CreateOpportunity = ({navigation, route, ...props}) => {
                   setOpen={value => setIsOpen(value ? 2 : 0)}
                   setValue={setValueTown}
                   placeholder={'Town'}
+                  listMode={'SCROLLVIEW'}
                   placeholderStyle={Styles.placeholderStyle}
                   style={Styles.DropDownPicker}
                   dropDownContainerStyle={Styles.dropDownContainerStyle}
@@ -247,6 +250,7 @@ const CreateOpportunity = ({navigation, route, ...props}) => {
                       setAreaSelectedShow(to_show.join(', '));
                       // console.log('areaSelectedShow: ', to_show);
                     }}
+                    listMode={'SCROLLVIEW'}
                     multiple={true}
                     multipleText={areaSelectedShow}
                     setOpen={value => setIsOpen(value ? 3 : 0)}
@@ -263,12 +267,17 @@ const CreateOpportunity = ({navigation, route, ...props}) => {
                       open={isOpen == 4}
                       value={valueIndustry}
                       items={itemsIndustry}
+                      listMode={'SCROLLVIEW'}
                       setOpen={value => setIsOpen(value ? 4 : 0)}
                       setValue={setValueIndustry}
                       placeholder={'Industry'}
                       placeholderStyle={Styles.placeholderStyle}
                       style={Styles.DropDownPicker}
-                      dropDownContainerStyle={Styles.dropDownContainerStyle}
+                      // dropDownContainerStyle={Styles.dropDownContainerStyle}
+                      dropDownContainerStyle={[
+                        Styles.dropDownContainerStyle,
+                        {zindex: 1, position: 'relative', marginTop: -45},
+                      ]}
                       textStyle={Styles.textStyle}
                       arrowIconStyle={{tintColor: Colors.border_color}}
                     />

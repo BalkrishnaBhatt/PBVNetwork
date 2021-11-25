@@ -120,7 +120,7 @@ export default StyleSheet.create({
   },
   ///////////////////////////////////////////////////////
   DropDownPicker2: {
-    height: 30,
+    height: 40,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: Colors.border_color,
@@ -139,7 +139,9 @@ export default StyleSheet.create({
     backgroundColor: Colors.white,
     elevation: 1000,
     zIndex: 10,
-    height: 120,
+    // height: 120,
+    position: 'relative',
+    marginTop: -45,
   },
   textStyle2: {
     fontSize: 14,

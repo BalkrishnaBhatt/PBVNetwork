@@ -46,6 +46,7 @@ const MyActivities = ({navigation, route}) => {
   useEffect(() => {
     if (HomeReducer) {
       setPosts(HomeReducer.homeActivities);
+      // console.log('HomeReducer.homeNews: ', HomeReducer.homeNews.length);
       setIsLoading(HomeReducer.isLoading);
       setNewsList(HomeReducer.homeNews);
     }
@@ -330,14 +331,14 @@ const MyActivities = ({navigation, route}) => {
               })}
             </View> */}
               <>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   activeOpacity={0.8}
                   onPress={() => {
                     // navigation.navigate(label);
                   }}
                   style={Styles.view_load_more}>
                   <Text style={Styles.text_load_more}>LOAD MORE</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <View style={Styles.view_featured_news}>
                   <Text style={Styles.text_featured_news}>Featured News</Text>
                 </View>

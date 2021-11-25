@@ -12,6 +12,7 @@ import {CloseSymbol} from '../../utils/svg';
 import {Colors} from '../../utils/colors';
 import Styles from './style';
 import {NAVIGATION} from '../../constant';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const screen_height = Dimensions.get('window').height;
 const CustomDrawer = ({...props}) => {
@@ -88,10 +89,19 @@ const CustomDrawer = ({...props}) => {
         <Text style={Styles.text_button}>Contact</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={[Styles.view_button, {borderBottomWidth: 0}]}
+        style={Styles.view_button}
         activeOpacity={0.8}
         onPress={() => props.navigation.navigate(NAVIGATION.SETTINGS)}>
         <Text style={Styles.text_button}>Setting</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[Styles.view_button, {borderBottomWidth: 0}]}
+        activeOpacity={0.8}
+        onPress={() => {
+          props.navigation.replace(NAVIGATION.LOGIN);
+          AsyncStorage.clear();
+        }}>
+        <Text style={Styles.text_button}>Log out</Text>
       </TouchableOpacity>
       <View style={{flex: 1}}></View>
       <Text
