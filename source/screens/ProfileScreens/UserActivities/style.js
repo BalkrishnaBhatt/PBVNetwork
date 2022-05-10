@@ -22,6 +22,7 @@ export default StyleSheet.create({
     marginHorizontal: 20,
     padding: 7,
     textAlignVertical: 'top',
+    color: 'black',
   },
   ///////////////////////////////////////////////////////
   view_whats_new: {

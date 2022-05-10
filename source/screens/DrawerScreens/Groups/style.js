@@ -45,6 +45,7 @@ export default StyleSheet.create({
     // marginVertical: 10,
     // marginHorizontal: 20,
     // padding: 7,
+    color: Colors.black,
   },
   ///////////////////////////////////////////////////////
   view_selected_header: {

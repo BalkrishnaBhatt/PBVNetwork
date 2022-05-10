@@ -74,6 +74,7 @@ export default StyleSheet.create({
     borderRadius: 15,
     marginVertical: 15,
     padding: 10,
+    color: Colors.black,
   },
   ///////////////////////////////////////////////////////
   view_load_more: {

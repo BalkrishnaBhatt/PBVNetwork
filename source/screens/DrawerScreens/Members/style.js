@@ -54,6 +54,7 @@ export default StyleSheet.create({
     marginVertical: 5,
     // marginHorizontal: 20,
     padding: 7,
+    color: Colors.black,
   },
   ///////////////////////////////////////////////////////
   view_load_more: {
