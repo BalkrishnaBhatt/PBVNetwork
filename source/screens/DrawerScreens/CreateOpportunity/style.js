@@ -38,6 +38,7 @@ export default StyleSheet.create({
     marginBottom: 5,
     marginTop: 10,
     fontFamily: Fonts.Regular_font,
+    color: Colors.black,
   },
   TextInput_search_member: {
     borderWidth: 1,
@@ -76,6 +77,7 @@ export default StyleSheet.create({
   textStyle: {
     fontSize: 14,
     fontFamily: Fonts.Regular_font,
+    color: Colors.black,
   },
   ///////////////////////////////////////////////////////
   view_load_more: {

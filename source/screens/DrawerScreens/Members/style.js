@@ -46,6 +46,7 @@ export default StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     marginBottom: 5,
+    color: Colors.black,
   },
   TextInput_search_member: {
     borderWidth: 1,
@@ -147,5 +148,6 @@ export default StyleSheet.create({
   textStyle2: {
     fontSize: 14,
     fontFamily: Fonts.Regular_font,
+    color: Colors.black,
   },
 });

@@ -222,7 +222,8 @@ const Members = ({navigation, route, ...props}) => {
               alignItems: 'center',
               height: 45,
             }}>
-            <Text style={{fontWeight: 'bold', fontSize: 16}}>
+            <Text
+              style={{fontWeight: 'bold', fontSize: 16, color: Colors.black}}>
               All
               <Text style={{color: Colors.primary_color}}> Members</Text>
             </Text>

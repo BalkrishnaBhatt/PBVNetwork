@@ -255,6 +255,7 @@ const Signup = ({navigation, route}) => {
                 fontWeight: 'bold',
                 fontSize: 20,
                 fontFamily: Fonts.Regular_font,
+                color: Colors.black,
               }}>
               Lawyer's
               <Text style={{color: Colors.primary_color}}> Registration</Text>

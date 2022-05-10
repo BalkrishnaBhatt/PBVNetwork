@@ -29,6 +29,7 @@ export default StyleSheet.create({
   selected_header_text: {
     fontSize: 12,
     fontWeight: '500',
+    color: Colors.black,
   },
   view_gap: {
     width: 25,
@@ -55,6 +56,7 @@ export default StyleSheet.create({
     alignSelf: 'center',
     marginTop: -15,
     marginBottom: 25,
+    color: Colors.black,
   },
   view_close: {
     backgroundColor: '#F5F5F5',

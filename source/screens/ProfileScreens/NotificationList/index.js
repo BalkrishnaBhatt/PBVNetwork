@@ -88,7 +88,12 @@ const NotificationList = ({navigation, route, ...props}) => {
                     margin: 10,
                     borderWidth: 1,
                   }}>
-                  <Text style={{fontSize: 14, fontFamily: Fonts.Regular_font}}>
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      fontFamily: Fonts.Regular_font,
+                      color: Colors.black,
+                    }}>
                     You have no {route.params.unread ? 'Unread' : ''}{' '}
                     Notification
                   </Text>

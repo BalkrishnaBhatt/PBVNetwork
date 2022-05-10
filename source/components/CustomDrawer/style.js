@@ -12,5 +12,6 @@ export default StyleSheet.create({
   text_button: {
     fontSize: 18,
     fontFamily: Fonts.Regular_font,
+    color: Colors.black,
   },
 });

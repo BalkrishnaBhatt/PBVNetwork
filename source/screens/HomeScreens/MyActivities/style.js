@@ -41,6 +41,7 @@ export default StyleSheet.create({
     fontSize: 16,
     fontFamily: Fonts.Regular_font,
     fontWeight: '400',
+    color: Colors.black,
   },
   ///////////////////////////////////////////////////////
   view_load_more: {

@@ -60,6 +60,7 @@ export default StyleSheet.create({
   text_header_selected: {
     fontSize: 14,
     fontWeight: '500',
+    color: Colors.black,
   },
   ///////////////////////////////////////////////////////
   header_symbol: {

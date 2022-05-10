@@ -166,6 +166,7 @@ const PbvGroupProfile = ({navigation, route}) => {
                   fontWeight: 'bold',
                   fontSize: 16,
                   fontFamily: Fonts.Regular_font,
+                  color: Colors.black,
                 }}>
                 PBV Group
                 <Text style={{color: Colors.primary_color}}> Profile</Text>

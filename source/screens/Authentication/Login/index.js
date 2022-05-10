@@ -195,6 +195,7 @@ const Login = ({navigation, route}) => {
                 fontWeight: 'bold',
                 fontSize: 20,
                 fontFamily: Fonts.Regular_font,
+                color: Colors.black,
               }}>
               Login To
               <Text style={{color: Colors.primary_color}}> Account</Text>

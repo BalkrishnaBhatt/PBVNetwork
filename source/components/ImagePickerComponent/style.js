@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontFamily: Fonts.Regular_font,
     marginBottom: 10,
+    color: Colors.black,
   },
 });
 export default styles;

@@ -28,6 +28,7 @@ export default StyleSheet.create({
     marginBottom: 5,
     marginTop: 10,
     fontFamily: Fonts.Regular_font,
+    color: Colors.black,
   },
   text_sub: {
     fontSize: 14,

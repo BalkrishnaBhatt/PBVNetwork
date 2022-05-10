@@ -16,12 +16,14 @@ export default StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     fontFamily: Fonts.Regular_font,
+    color: Colors.black,
   },
   text_activity: {
     fontSize: 16,
     fontWeight: 'bold',
     fontFamily: Fonts.Regular_font,
     marginTop: 10,
+    color: Colors.black,
   },
   view_field_main: {
     borderBottomWidth: 1,
@@ -34,6 +36,7 @@ export default StyleSheet.create({
     fontFamily: Fonts.Regular_font,
     marginTop: 10,
     fontWeight: '300',
+    color: Colors.black,
   },
   text_yes_no: {
     fontSize: 14,
@@ -41,6 +44,7 @@ export default StyleSheet.create({
     fontWeight: '300',
     marginRight: 15,
     marginLeft: 5,
+    color: Colors.black,
   },
   RadioSelectedSymbol: {
     height: 15,

@@ -68,6 +68,7 @@ const MyActivityView = ({item}) => {
                 fontSize: 13,
                 fontWeight: 'bold',
                 fontFamily: Fonts.Regular_font,
+                color: Colors.black,
               },
               li: {
                 // fontSize: Dimens.dimen_16,
@@ -82,6 +83,7 @@ const MyActivityView = ({item}) => {
               fontSize: 13,
               fontWeight: 'bold',
               fontFamily: Fonts.Regular_font,
+              color: Colors.black,
             }}>
             {' '}
             {item.content &&
@@ -151,6 +153,7 @@ const MyActivityView = ({item}) => {
                 fontSize: 8,
                 fontFamily: Fonts.Regular_font,
                 marginVertical: 5,
+                color: Colors.black,
               }}>
               Comment({item.comment_count ? item.comment_count : 0})
             </Text>

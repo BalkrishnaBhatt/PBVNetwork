@@ -147,6 +147,7 @@ const Faqs = ({navigation, route, ...props}) => {
                 fontSize: 14,
                 fontFamily: Fonts.Regular_font,
                 fontWeight: '400',
+                color: Colors.black,
               }}>
               {item.title}
             </Text>
@@ -268,7 +269,8 @@ const Faqs = ({navigation, route, ...props}) => {
               <CloseSymbol style={{height: 10, width: 10}}></CloseSymbol>
             </TouchableOpacity>
             <Text style={Styles.text_modal_title}>Leave a Reply</Text>
-            <Text style={{fontWeight: '300', fontSize: 14}}>
+            <Text
+              style={{fontWeight: '300', fontSize: 14, color: Colors.black}}>
               Logged in as{' '}
               <Text style={{color: Colors.primary_color}}>
                 {' '}

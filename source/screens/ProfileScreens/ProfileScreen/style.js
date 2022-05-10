@@ -25,6 +25,7 @@ export default StyleSheet.create({
     fontFamily: Fonts.Regular_font,
     fontSize: 14,
     fontWeight: '500',
+    color: Colors.black,
   },
   //////////////////////////////////////////
   view_field_main: {
@@ -40,6 +41,7 @@ export default StyleSheet.create({
     fontSize: 14,
     fontWeight: '500',
     fontFamily: Fonts.Regular_font,
+    color: Colors.black,
   },
   textinput_field: {
     flex: 1,

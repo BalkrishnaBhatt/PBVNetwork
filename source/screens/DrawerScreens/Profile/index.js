@@ -142,6 +142,7 @@ const Profile = ({navigation, route, ...props}) => {
                     fontFamily: Fonts.Regular_font,
                     fontSize: 14,
                     fontWeight: '400',
+                    color: Colors.black,
                   }}>
                   @pbvnetwork
                 </Text>

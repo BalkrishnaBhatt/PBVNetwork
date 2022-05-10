@@ -39,6 +39,7 @@ const TermAndCondition = ({navigation, route, ...props}) => {
       fontSize: 13,
       fontWeight: 'bold',
       fontFamily: Fonts.Regular_font,
+      color: Colors.black,
     },
     h2: {
       fontSize: 20,

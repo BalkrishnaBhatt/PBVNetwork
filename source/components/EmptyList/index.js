@@ -22,6 +22,7 @@ const EmptyList = ({item, numberOfColumns, navigation, ...props}) => {
         fontSize: 16,
         fontWeight: '600',
         alignSelf: 'center',
+        color: Colors.black,
       }}>
       No Data Found
     </Text>

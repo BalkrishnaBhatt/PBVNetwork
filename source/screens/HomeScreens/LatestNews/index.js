@@ -138,6 +138,7 @@ const LatestNews = ({navigation, route}) => {
                     fontWeight: 'bold',
                     fontSize: 16,
                     fontFamily: Fonts.Regular_font,
+                    color: Colors.black,
                   }}>
                   Latest
                   <Text style={{color: Colors.primary_color}}> News</Text>

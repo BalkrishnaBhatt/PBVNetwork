@@ -110,6 +110,7 @@ const GroupDetail = ({navigation, route, ...props}) => {
                     fontFamily: Fonts.Regular_font,
                     fontSize: 14,
                     fontWeight: '400',
+                    color: Colors.black,
                   }}>
                   {groupDetails.name}
                 </Text>
@@ -155,6 +156,7 @@ const GroupDetail = ({navigation, route, ...props}) => {
                     fontFamily: Fonts.Regular_font,
                     fontSize: 12,
                     fontWeight: '500',
+                    color: Colors.black,
                   }}>
                   {groupDetails.admins && groupDetails.admins[0].display_name}
                 </Text>

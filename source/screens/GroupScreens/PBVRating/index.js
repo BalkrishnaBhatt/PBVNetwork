@@ -89,6 +89,7 @@ const PBVRating = ({navigation, route, ...props}) => {
             fontFamily: Fonts.Regular_font,
             fontSize: 16,
             fontWeight: '700',
+            color: Colors.black,
           }}>
           {item.name}
         </Text>
@@ -98,6 +99,7 @@ const PBVRating = ({navigation, route, ...props}) => {
             fontSize: 12,
             fontWeight: '300',
             marginTop: 10,
+            color: Colors.black,
           }}>
           {item.description}
         </Text>
