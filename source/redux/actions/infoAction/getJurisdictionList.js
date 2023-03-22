@@ -29,7 +29,7 @@ export const getJurisdictionList = navigation => {
         });
         console_log(
           'getJurisdictionList response: ',
-          JSON.stringify(response.data, null, 2),
+          JSON.stringify(response, null, 2),
         );
         // handle success
         dispatch(get_jurisdiction(data_set));

@@ -45,6 +45,13 @@ export const NAVIGATION = {
   USER_NEWS: 'user_news',
   USER_OPPORTUNITY: 'user_opportuniy',
   USER_OVERVIEW: 'user_overview',
+  ///////////new
+  MY_OPPORTUNITIES: 'My Opportunities',
+  SEARCH_OPPORTUNITIES: 'Search Opportunities',
+  NEW_OPPORTUNITIES: 'New Opportunities',
+  SAVED_OPPORTUNITIES: 'Saved Opportunities',
+  APPLIED_OPPORTUNITIES: 'Applied Opportunities',
+  MY_JOB_OPENINGS: 'My Job Openings',
 };
 export const VARIABLE = {
   // IS_BACKGROUND_PROCESS_SETTED: 'is_background_process_setted',

@@ -32,6 +32,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {getUserProfile} from '../../../redux/actions';
 import images from '../../../utils/images';
 import UserOverview from '../../ProfileScreens/UserOverview';
+import MyOpportunities from '../../ProfileScreens/MyOpportunities';
 const Tab = createMaterialTopTabNavigator();
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
@@ -228,7 +229,7 @@ const Profile = ({navigation, route, ...props}) => {
                                 : Colors.inactive_tab
                             }
                           />
-                        ) : label == NAVIGATION.USER_OPPORTUNITY ? (
+                        ) : label == NAVIGATION.MY_OPPORTUNITIES ? (
                           <OpportunityTabSymbol
                             style={Styles.HomeTabSymbol}
                             fill={
@@ -294,9 +295,14 @@ const Profile = ({navigation, route, ...props}) => {
                 component={UserActivities}
                 initialParams={{from_group: true}}
               />
-              <Tab.Screen
+              {/* <Tab.Screen
                 name={NAVIGATION.USER_OPPORTUNITY}
                 component={UserOpportunity}
+                initialParams={{from_group: true}}
+              /> */}
+              <Tab.Screen
+                name={NAVIGATION.MY_OPPORTUNITIES}
+                component={MyOpportunities}
                 initialParams={{from_group: true}}
               />
               <Tab.Screen

@@ -21,7 +21,7 @@ const Splash = ({navigation, route}) => {
   //   {name: 'Light', id: 2},
   //   {name: 'Dark', id: 3},
   // ]);
-  useEffect(async () => {
+  const getUserInfo = async () => {
     await AsyncStorage.getItem(VARIABLE.USER_INFO).then(async response => {
       // console.log('response: ', response);
       if (response != null) {
@@ -39,6 +39,9 @@ const Splash = ({navigation, route}) => {
         }, 500);
       }
     });
+  };
+  useEffect(() => {
+    getUserInfo();
     // setTimeout(async () => {
     //   // this.props.navigation.navigate(NAVIGATION.HOME);
     //   navigation.navigate(NAVIGATION.LOGIN);

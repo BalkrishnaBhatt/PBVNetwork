@@ -5,7 +5,7 @@ import images from '../../utils/images';
 const CustomLoader = props => {
   const {visible} = props;
 
-  // useEffect(async () => {
+  // useEffect(() => {
   //   // console.log('loader called : ');
   // }, []);
   return (

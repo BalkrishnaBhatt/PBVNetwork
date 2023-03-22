@@ -7,7 +7,7 @@ import {console_log} from '../../../utils/loggers';
 import {Store} from '../../../redux/store';
 const UserOverview = ({navigation, route, ...props}) => {
   const group_id = Store.getState().AuthenticationReducer.userId;
-  useEffect(async () => {
+  useEffect(() => {
     console_log(
       'overview_url: ',
       'https://www.pbvnetwork.com/?lawyer_overview=true&lawyer_id=' + group_id,

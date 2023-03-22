@@ -72,19 +72,23 @@ export default StyleSheet.create({
     zIndex: 10,
     // height: 150,
     position: 'relative',
-    marginTop: -45,
+    marginTop: -55,
   },
   textStyle: {
     fontSize: 14,
     fontFamily: Fonts.Regular_font,
     color: Colors.black,
   },
+  errorText: {
+    fontSize: 14,
+    fontFamily: Fonts.Regular_font,
+    color: Colors.red,
+  },
   ///////////////////////////////////////////////////////
   view_load_more: {
     borderRadius: 7,
     backgroundColor: Colors.light_primary_color,
     alignSelf: 'center',
-    marginTop: 50,
     marginBottom: 20,
   },
   text_load_more: {
@@ -92,6 +96,13 @@ export default StyleSheet.create({
     fontSize: 12,
     margin: 5,
     marginHorizontal: 20,
+    fontWeight: '600',
+    fontFamily: Fonts.Regular_font,
+  },
+  title_text: {
+    color: Colors.black,
+    fontSize: 14,
+    marginTop: 15,
     fontWeight: '600',
     fontFamily: Fonts.Regular_font,
   },

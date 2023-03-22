@@ -7,7 +7,7 @@ import {console_log} from '../../../utils/loggers';
 import {Store} from '../../../redux/store';
 const GroupOverview = ({navigation, route, ...props}) => {
   const group_id = Store.getState().GroupDetailReducer.groupDetails.id;
-  useEffect(async () => {
+  useEffect(() => {
     console_log(
       'overview_url: ',
       'https://www.pbvnetwork.com/?group_overview=true&group_id=' + group_id,

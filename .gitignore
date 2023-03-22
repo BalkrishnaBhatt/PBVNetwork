@@ -23,6 +23,8 @@ DerivedData
 
 # Android/IntelliJ
 #
+*.apk
+*.aab
 build/
 .idea
 .gradle
@@ -58,3 +60,9 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+# .lock file
+yarn.lock
+package-lock.json
+Podfile.lock
+

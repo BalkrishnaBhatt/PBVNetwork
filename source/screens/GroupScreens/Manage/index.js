@@ -22,7 +22,7 @@ const screen_height = Dimensions.get('window').height;
 const Manage = ({navigation, route, ...props}) => {
   //   const {dark, theme, toggle} = useContext(ThemeContext);
 
-  useEffect(async () => {
+  useEffect(() => {
     // let reminder_time = await AsyncStorage.getItem(VARIABLE.REMINDER_TIME);
     // let is_reminder_on = await AsyncStorage.getItem(VARIABLE.IS_REMINDER_ON);
     // if (reminder_time == null) {

@@ -76,7 +76,7 @@ const Groups = ({navigation, route, ...props}) => {
     {label: 'Newly Created', value: 'Newly Created'},
     {label: 'Alphabetical', value: 'Alphabetical'},
   ]);
-  useEffect(async () => {
+  useEffect(() => {
     decideNumberOfColumns(screen_width);
     Dimensions.addEventListener('change', ({window: {width, height}}) => {
       console_log('device rotaated', width, height);

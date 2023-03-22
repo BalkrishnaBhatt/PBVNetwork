@@ -53,7 +53,7 @@ const Signup = ({navigation, route}) => {
   const [screen_height, set_screen_height] = useState(
     Dimensions.get('window').height,
   );
-  useEffect(async () => {
+  useEffect(() => {
     Dimensions.addEventListener('change', ({window: {width, height}}) => {
       set_screen_width(width);
       set_screen_height(height);

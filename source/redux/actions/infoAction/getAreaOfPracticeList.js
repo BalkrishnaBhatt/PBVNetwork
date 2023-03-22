@@ -8,7 +8,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {NAVIGATION} from '../../../constant';
 import {console_log} from '../../../utils/loggers';
 export const getAreaOfPracticeList = navigation => {
-  let url = 'pbvnetwork/v1/groupbytype/areapractice';
+  let url = 'pbv/v1/areapractice';
   const config = {
     headers: {
       // 'Content-Type': 'application/json',
@@ -21,16 +21,19 @@ export const getAreaOfPracticeList = navigation => {
     axiosInstance
       .get(url, config)
       .then(function (response) {
-        let raw_data = response.data;
-        let data_set = [];
-        raw_data.map((element, index) => {
-          let obj = {label: element.name, value: element.id};
-          data_set[index] = obj;
-        });
         console_log(
           'getAreaOfPracticeList response: ',
-          JSON.stringify(response.data, null, 2),
+          JSON.stringify(response, null, 2),
         );
+        let raw_data = response.data.data;
+        let data_set = [];
+        raw_data.map((element, index) => {
+          let obj = {
+            label: element.nome_tbl_areapractice,
+            value: element.ID_tbl_areapractice,
+          };
+          data_set[index] = obj;
+        });
         // handle success
         dispatch(get_jurisdiction(data_set));
       })
@@ -38,7 +41,7 @@ export const getAreaOfPracticeList = navigation => {
         // handle error
         console_log(
           'getAreaOfPracticeList error: ',
-          JSON.stringify(error.response.data, null, 2),
+          JSON.stringify(error, null, 2),
         );
         let error_code = error.response.data.code;
         // handle error

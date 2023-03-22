@@ -102,6 +102,7 @@ const DrawerNavigator = () => {
         <Drawer.Screen
           name={NAVIGATION.CREATE_OPPORTUNITY}
           component={CreateOpportunity}
+          initialParams={{createOpportunity: true}}
         />
         <Drawer.Screen name={NAVIGATION.CONTACT} component={Contact} />
         <Drawer.Screen
