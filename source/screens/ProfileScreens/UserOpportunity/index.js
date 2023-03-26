@@ -9,6 +9,7 @@ import {getUserOpportunity} from '../../../redux/actions';
 import axiosInstance from '../../../axios';
 import {console_log} from '../../../utils/loggers';
 import {Store} from '../../../redux/store';
+import {NAVIGATION} from '../../../constant';
 
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
@@ -42,7 +43,7 @@ const UserOpportunity = ({navigation, route}) => {
   // ]);
 
   const user_id = Store.getState().AuthenticationReducer.userId;
-  const currentTab = route.params.currentTab;
+  const currentTab = route.name;
   const getNewOpportunities = async () => {
     const config = {
       headers: {
@@ -51,11 +52,11 @@ const UserOpportunity = ({navigation, route}) => {
       },
     };
     let url =
-      currentTab == 1
+      currentTab == NAVIGATION.NEW_OPPORTUNITIES
         ? 'new_opportunities'
-        : currentTab == 2
+        : currentTab == NAVIGATION.MY_JOB_OPENINGS
         ? 'my_job_openings'
-        : currentTab == 3
+        : currentTab == NAVIGATION.SAVED_OPPORTUNITIES
         ? 'saved_opportunities'
         : 'applied_opportunities';
     let url_2 = '?userid=' + user_id;

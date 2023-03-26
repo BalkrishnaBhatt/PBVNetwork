@@ -103,22 +103,18 @@ const MyOpportunities = ({navigation, route, ...props}) => {
             <Tab.Screen
               name={NAVIGATION.NEW_OPPORTUNITIES}
               component={UserOpportunity}
-              initialParams={{currentTab: 1}}
             />
             <Tab.Screen
               name={NAVIGATION.MY_JOB_OPENINGS}
               component={UserOpportunity}
-              initialParams={{currentTab: 2}}
             />
             <Tab.Screen
               name={NAVIGATION.SAVED_OPPORTUNITIES}
               component={UserOpportunity}
-              initialParams={{currentTab: 3}}
             />
             <Tab.Screen
               name={NAVIGATION.APPLIED_OPPORTUNITIES}
               component={UserOpportunity}
-              initialParams={{currentTab: 4}}
             />
           </Tab.Navigator>
         </ScrollView>

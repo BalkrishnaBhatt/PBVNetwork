@@ -275,7 +275,7 @@ const CreateOpportunity = props => {
       });
   };
   const PostOpportunity = async () => {
-    let area_to_pass = '';
+    // let area_to_pass = '';
     // valueAreaPractice.map(value => {
     //   area_to_pass = area_to_pass + '&opportunity_areapractice[]=' + value;
     // });

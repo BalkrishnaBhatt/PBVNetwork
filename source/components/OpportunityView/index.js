@@ -27,7 +27,7 @@ import {
   SaveSymbol,
   CloseSymbol,
 } from '../../utils/svg';
-import {EMAIL_PATTERN} from '../../constant';
+import {EMAIL_PATTERN, NAVIGATION} from '../../constant';
 import ImagePickerComponent from '../ImagePickerComponent';
 const OpportunityView = ({
   item,
@@ -203,7 +203,7 @@ const OpportunityView = ({
       '&user_id' +
       user_id;
     axiosInstance
-      .post(currentTab == 2 ? url1 : url2, {}, config)
+      .post(currentTab == NAVIGATION.MY_JOB_OPENINGS ? url1 : url2, {}, config)
       .then(async response => {
         console_log(
           `removeOpportunityApi response :`,
@@ -242,7 +242,8 @@ const OpportunityView = ({
             paddingHorizontal: 10,
             flex: 1,
           }}>
-          {currentTab == 2 || currentTab == 4 ? (
+          {currentTab == NAVIGATION.MY_JOB_OPENINGS ||
+          currentTab == NAVIGATION.APPLIED_OPPORTUNITIES ? (
             <Text
               style={{
                 fontSize: 14,
@@ -306,7 +307,11 @@ const OpportunityView = ({
               {typeof item.town == 'object' ? item.town.toString() : item.town}
             </Text>
           </Text>
-          {[2, 3, 4].includes(currentTab) && !modalOpen ? (
+          {[
+            NAVIGATION.MY_JOB_OPENINGS,
+            NAVIGATION.SAVED_OPPORTUNITIES,
+            NAVIGATION.APPLIED_OPPORTUNITIES,
+          ].includes(currentTab) && !modalOpen ? (
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => {
@@ -326,7 +331,10 @@ const OpportunityView = ({
               </Text>
             </TouchableOpacity>
           ) : null}
-          {[3, 4].includes(currentTab) ? (
+          {[
+            NAVIGATION.SAVED_OPPORTUNITIES,
+            NAVIGATION.APPLIED_OPPORTUNITIES,
+          ].includes(currentTab) ? (
             <View style={Styles.view_detail}>
               <SaveSymbol fill={Colors.primary_color} />
               <Text
@@ -340,7 +348,10 @@ const OpportunityView = ({
               </Text>
             </View>
           ) : null}
-          {[3, 4].includes(currentTab) ? (
+          {[
+            NAVIGATION.SAVED_OPPORTUNITIES,
+            NAVIGATION.APPLIED_OPPORTUNITIES,
+          ].includes(currentTab) ? (
             <View style={Styles.view_detail}>
               <SaveSymbol fill={Colors.primary_color} />
               <Text
@@ -354,7 +365,11 @@ const OpportunityView = ({
               </Text>
             </View>
           ) : null}
-          {[2, 3, 4].includes(currentTab) ? (
+          {[
+            NAVIGATION.MY_JOB_OPENINGS,
+            NAVIGATION.SAVED_OPPORTUNITIES,
+            NAVIGATION.APPLIED_OPPORTUNITIES,
+          ].includes(currentTab) ? (
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => {
@@ -373,7 +388,7 @@ const OpportunityView = ({
               </Text>
             </TouchableOpacity>
           ) : null}
-          {[2].includes(currentTab) ? (
+          {[NAVIGATION.MY_JOB_OPENINGS].includes(currentTab) ? (
             <TouchableOpacity
               activeOpacity={0.8}
               style={Styles.view_detail}
