@@ -87,6 +87,7 @@ const UserOpportunity = ({navigation, route}) => {
         refreshOpportunity={() => {
           getNewOpportunities();
         }}
+        navigation={navigation}
       />
     );
   };

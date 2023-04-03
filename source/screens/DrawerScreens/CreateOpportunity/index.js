@@ -27,6 +27,7 @@ import {
 import axiosInstance from '../../../axios';
 import {console_log} from '../../../utils/loggers';
 import {Store} from '../../../redux/store';
+import {NAVIGATION} from '../../../constant';
 
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
@@ -52,11 +53,128 @@ const CreateOpportunity = props => {
     dispatch(getClientDimensionList(props.navigation));
     dispatch(getDealCaseDimensionList(props.navigation));
     getJuriList();
+
+    if (is_edit) {
+      console_log(
+        'opportunityData: ',
+        JSON.stringify(opportunityData, null, 2),
+      );
+      // setValueJurisdiction(opportunityData.jurisdiction);
+      // setValueTown(opportunityData.town);
+      setExpirationDate(opportunityData.expire_date);
+      setOpportunityDesc(opportunityData.description);
+      setOpportunityTitle(opportunityData.opportunity_name);
+      setTimeout(() => {
+        getOpportunityDetails();
+      }, 2000);
+    }
   }, []);
+  const getOpportunityDetails = async () => {
+    setIsLoading(true);
+    const config = {
+      headers: {
+        // 'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + Store.getState().AuthenticationReducer.token,
+      },
+    };
+    let url =
+      'pbv/v1/opportunity_detail?opportunity_id=' +
+      opportunityData.opportunity_id;
+    axiosInstance
+      .get(url, {}, config)
+      .then(async response => {
+        console_log(
+          `getOpportunityDetails response :`,
+          JSON.stringify(response, null, 2),
+        );
+        let data = response.data.data;
+
+        if (data.jurisdiction.length > 0) {
+          let to_show = [];
+          let to_set = [];
+          itemsJurisdiction.map(element => {
+            if (data.jurisdiction.indexOf(element.label) > -1) {
+              to_show.push(element.label);
+              to_set.push(element.value);
+            }
+          });
+          setJurisdictionSelectedShow(to_show.join(', '));
+          // console.log('to_show: ', to_show);
+          setValueJurisdiction(to_set);
+          // console.log('to_set: ', to_set);
+        }
+        if (data.areapractice.length > 0) {
+          let to_show = [];
+          let to_set = [];
+          props.areaPracticeList.map(element => {
+            if (data.areapractice.indexOf(element.label) > -1) {
+              to_show.push(element.label);
+              to_set.push(element.value);
+            }
+          });
+          setAreaSelectedShow(to_show.join(', '));
+          setValueAreaPractice(to_set);
+        }
+        if (data.industry_sector.length > 0) {
+          let to_show = [];
+          let to_set = [];
+          props.industrySectorList.map(element => {
+            if (data.industry_sector.indexOf(element.label) > -1) {
+              to_show.push(element.label);
+              to_set.push(element.value);
+            }
+          });
+          setIndustrySectorSelectedShow(to_show.join(', '));
+          setValueIndustrySector(to_set);
+        }
+        if (data.client_dimension.length > 0) {
+          let to_show = [];
+          let to_set = [];
+          props.clientDimensionList.map(element => {
+            if (data.client_dimension.indexOf(element.label) > -1) {
+              to_show.push(element.label);
+              to_set.push(element.value);
+            }
+          });
+          setAreaSelectedShow(to_show.join(', '));
+          setValueAreaPractice(to_set);
+        }
+        if (data.deal_dimension.length > 0) {
+          let to_show = [];
+          let to_set = [];
+          props.dealCaseDimensionList.map(element => {
+            if (data.deal_dimension.indexOf(element.label) > -1) {
+              to_show.push(element.label);
+              to_set.push(element.value);
+            }
+          });
+          setDealCaseDimensionSelectedShow(to_show.join(', '));
+          setValueDealCaseDimension(to_set);
+        }
+        // setValueServiceLine(data.service_line);
+        // setValueIndustrySector(data.service_line);
+        // setValueIndustrySegment(data.service_line);
+        // setValueDealCaseDimension(data.service_line);
+        setIsLoading(false);
+      })
+      .catch(function (error) {
+        console_log(
+          'getOpportunityDetails error: ',
+          JSON.stringify(error, null, 2),
+        );
+        // setIsLoading(false);
+      });
+  };
   const [isLoading, setIsLoading] = useState(true);
 
   const user_id = Store.getState().AuthenticationReducer.userId;
   let is_create_opportunity = props.route.params.createOpportunity;
+  let is_edit = props.route.params.isEdit;
+  // let opportunityData = props?.route?.params?.opportunityData;
+
+  const [opportunityData, setOpportunityData] = useState(
+    props?.route?.params?.opportunityData,
+  );
 
   const [opportunityTitle, setOpportunityTitle] = useState('');
   const [opportunityDesc, setOpportunityDesc] = useState('');
@@ -105,6 +223,7 @@ const CreateOpportunity = props => {
 
   useEffect(() => {
     if (valueJurisdiction != []) {
+      // console.log('valueJurisdiction: ', valueJurisdiction);
       getJuriTowns();
     }
   }, [valueJurisdiction]);
@@ -139,7 +258,7 @@ const CreateOpportunity = props => {
 
           raw_data.map((element, index) => {
             let obj = {
-              value: element.id,
+              value: element.country_code,
               label: element.country_name,
             };
             data_set[index] = obj;
@@ -178,8 +297,8 @@ const CreateOpportunity = props => {
 
           raw_data.map((element, index) => {
             let obj = {
-              value: element.ID_tbl_town,
-              label: element.location_tbl_town,
+              value: element.id,
+              label: element.state_name,
             };
             if (
               element.location_tbl_town !== '' &&
@@ -280,10 +399,15 @@ const CreateOpportunity = props => {
     //   area_to_pass = area_to_pass + '&opportunity_areapractice[]=' + value;
     // });
     // console.log('area_to_pass: ', area_to_pass);
+    let opportunity_id = '';
+    if (is_edit) {
+      opportunity_id = opportunityData.opportunity_id;
+    }
     let url =
       'pbv/v1/create_new_opportunity' +
       '?opportunity_title=' +
       opportunityTitle +
+      opportunity_id +
       '&opportunity_desc=' +
       opportunityDesc +
       '&opportunity_expire_date=' +
@@ -308,12 +432,12 @@ const CreateOpportunity = props => {
       valueJurisdiction.toString() +
       '&opportunity_town=' +
       valueTown.toString() +
-      '&opportunity_industry[]=' +
+      '&opportunity_industry=' +
       // va+
       // +
       '&user_id=' +
       user_id;
-    // console.log('url: ', url);
+    console.log('url: ', url);
     const config = {
       headers: {
         // 'Content-Type': 'application/json',
@@ -480,17 +604,32 @@ const CreateOpportunity = props => {
           style={{zIndex: 0}}>
           {is_create_opportunity ? (
             <>
-              <CustomHeader
-                navigation={props.navigation}
-                {...props}></CustomHeader>
-              <Text style={Styles.text_home}>Opportunity</Text>
+              {is_edit ? (
+                <>
+                  <Text
+                    style={{marginLeft: 20, marginBottom: 10}}
+                    onPress={() => {
+                      props.navigation.navigate(NAVIGATION.PROFILE);
+                    }}>
+                    Back
+                  </Text>
+                  <Text style={Styles.text_home}>Edit Opportunity</Text>
+                </>
+              ) : (
+                <>
+                  <CustomHeader
+                    navigation={props.navigation}
+                    {...props}></CustomHeader>
+                  <Text style={Styles.text_home}>Opportunity</Text>
+                </>
+              )}
             </>
           ) : null}
           <View style={Styles.view_search_member}>
             {is_create_opportunity ? (
               <>
                 <Text style={Styles.text_search_member}>
-                  Create Opportunity
+                  {is_edit ? '' : 'Create Opportunity'}
                 </Text>
                 <Text style={Styles.title_text}>Opportunity Title*</Text>
                 <TextInput
@@ -561,6 +700,8 @@ const CreateOpportunity = props => {
                       Jurisdiction{is_create_opportunity ? '*' : ''}
                     </Text>
                     <DropDownPicker
+                      searchable
+                      searchPlaceholder="Type a search text"
                       open={isOpen == 8}
                       value={valueJurisdiction}
                       items={itemsJurisdiction}
@@ -596,6 +737,8 @@ const CreateOpportunity = props => {
                     <>
                       <Text style={Styles.title_text}>Town</Text>
                       <DropDownPicker
+                        searchable
+                        searchPlaceholder="Type a search text"
                         open={isOpen == 7}
                         value={valueTown}
                         items={itemsTown}
@@ -631,6 +774,8 @@ const CreateOpportunity = props => {
                       Practice{is_create_opportunity ? '*' : ''}
                     </Text>
                     <DropDownPicker
+                      searchable
+                      searchPlaceholder="Type a search text"
                       open={isOpen == 6}
                       setOpen={value => setIsOpen(value ? 6 : 0)}
                       value={valueAreaPractice}
@@ -663,6 +808,8 @@ const CreateOpportunity = props => {
                         <>
                           <Text style={Styles.title_text}>Service Line</Text>
                           <DropDownPicker
+                            searchable
+                            searchPlaceholder="Type a search text"
                             open={isOpen == 5}
                             setOpen={value => setIsOpen(value ? 5 : 0)}
                             value={valueServiceLine}
@@ -702,17 +849,24 @@ const CreateOpportunity = props => {
                           Industry Sector{is_create_opportunity ? '*' : ''}
                         </Text>
                         <DropDownPicker
+                          searchable
+                          searchPlaceholder="Type a search text"
                           open={isOpen == 4}
                           setOpen={value => setIsOpen(value ? 4 : 0)}
                           value={valueIndustrySector}
-                          items={props.industryList}
+                          items={props.industrySectorList}
                           setValue={setValueIndustrySector}
                           multiple={true}
                           multipleText={industrySectorSelectedShow}
                           onChangeValue={value => {
+                            console.log('value: ', value);
+                            console.log(
+                              'valueIndustrySector: ',
+                              valueIndustrySector,
+                            );
                             let to_show = [];
                             if (value !== null && value.length > 0) {
-                              props.industryList.map(element => {
+                              props.industrySectorList.map(element => {
                                 if (value.indexOf(element.value) > -1) {
                                   to_show.push(element.label);
                                 }
@@ -736,6 +890,8 @@ const CreateOpportunity = props => {
                                 {is_create_opportunity ? '*' : ''}
                               </Text>
                               <DropDownPicker
+                                searchable
+                                searchPlaceholder="Type a search text"
                                 open={isOpen == 3}
                                 setOpen={value => setIsOpen(value ? 3 : 0)}
                                 value={valueIndustrySegment}
@@ -876,7 +1032,9 @@ const CreateOpportunity = props => {
                                   },
                                 ]}>
                                 <Text style={Styles.text_load_more}>
-                                  {is_create_opportunity
+                                  {is_edit
+                                    ? 'EDIT OPPORTUNITY'
+                                    : is_create_opportunity
                                     ? 'CREATE OPPORTUNITY'
                                     : 'SEARCH OPPORTUNITY'}
                                 </Text>
@@ -900,7 +1058,7 @@ const mapStateToProps = state => ({
   // jurisdictionList: state.InfoReducer.jurisdictionList,
   areaPracticeList: state.InfoReducer.areaPracticeList,
   // townList: state.InfoReducer.townList,
-  industryList: state.InfoReducer.industryList,
+  industrySectorList: state.InfoReducer.industryList,
   ////////////////////////////////
   lawyerRoleList: state.InfoReducer.lawyerRoleList,
   clientDimensionList: state.InfoReducer.clientDimensionList,

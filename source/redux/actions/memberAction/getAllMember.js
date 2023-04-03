@@ -41,7 +41,7 @@ export const getAllMember = (
     town_to_pass;
   return async dispatch => {
     dispatch(set_loader(true));
-    console.log('selected_value_to_pass: ', url);
+    // console.log('selected_value_to_pass: ', url);
     axiosInstance
       .get(url, config)
       .then(function (response) {

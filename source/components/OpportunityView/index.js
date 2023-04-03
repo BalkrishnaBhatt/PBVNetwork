@@ -9,6 +9,8 @@ import {
   StyleSheet,
   Modal,
   Alert,
+  FlatList,
+  Linking,
 } from 'react-native';
 import {Colors} from '../../utils/colors';
 import {Fonts} from '../../utils/fonts';
@@ -26,13 +28,17 @@ import {
   DeleteSymbol,
   SaveSymbol,
   CloseSymbol,
+  EditSymbol,
 } from '../../utils/svg';
 import {EMAIL_PATTERN, NAVIGATION} from '../../constant';
 import ImagePickerComponent from '../ImagePickerComponent';
+import ContentLoader from '../ContentLoader';
+import EmptyList from '../EmptyList';
 const OpportunityView = ({
   item,
   currentTab = 0,
   refreshOpportunity = () => null,
+  navigation,
 }) => {
   const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = useState(false);
@@ -59,7 +65,7 @@ const OpportunityView = ({
         Authorization: 'Bearer ' + Store.getState().AuthenticationReducer.token,
       },
     };
-    let url = 'pbv/v1/opportunity_detail?opportunity_id=';
+    let url = 'pbv/v1/opportunity_detail?opportunity_id=' + item.opportunity_id;
     axiosInstance
       .get(url, {}, config)
       .then(async response => {
@@ -95,13 +101,13 @@ const OpportunityView = ({
           `getAppliedList response:`,
           JSON.stringify(response, null, 2),
         );
-        // let data = response.data.data;
-        // setAppliedList(data);
-        // setIsLoading(false);
+        let data = response.data.data;
+        setAppliedList(data);
+        setIsLoading(false);
       })
       .catch(function (error) {
         console_log('getAppliedList error: ', JSON.stringify(error, null, 2));
-        // setIsLoading(false);
+        setIsLoading(false);
       });
   };
   const applyForOpportunity = async () => {
@@ -393,7 +399,9 @@ const OpportunityView = ({
               activeOpacity={0.8}
               style={Styles.view_detail}
               onPress={() => {
-                // getAppliedList(item.opportunity_id);
+                setIsLoading(true);
+                setShowAppliedList(true);
+                getAppliedList(item.opportunity_id);
               }}>
               <SaveSymbol fill={Colors.primary_color} />
               <Text
@@ -407,8 +415,66 @@ const OpportunityView = ({
               </Text>
             </TouchableOpacity>
           ) : null}
+          {[NAVIGATION.MY_JOB_OPENINGS].includes(currentTab) ? (
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={Styles.view_detail}
+              onPress={() => {
+                navigation.navigate(NAVIGATION.CREATE_OPPORTUNITY, {
+                  isEdit: true,
+                  opportunityData: item,
+                });
+              }}>
+              <EditSymbol
+                fill={Colors.primary_color}
+                style={Styles.EditSymbol}
+              />
+              <Text style={[Styles.text_detail]}>Edit Opportunity</Text>
+            </TouchableOpacity>
+          ) : null}
         </View>
       </TouchableOpacity>
+    );
+  };
+
+  const renderAppliedList = ({item}) => {
+    const text_style = {color: 'white', fontSize: 14, marginBottom: 10};
+    return (
+      <View
+        style={{
+          backgroundColor: Colors.primary_color,
+          borderRadius: 5,
+          padding: 10,
+          paddingBottom: 0,
+          width: '100%',
+          marginBottom: 10,
+          flexDirection: 'row',
+        }}>
+        <View style={{flex: 1}}>
+          <Text style={text_style}>Email: {item.email}</Text>
+          <Text style={text_style}>Message: {item.email}</Text>
+          <Text style={[text_style]}>
+            Profile Link:{' '}
+            <Text
+              onPress={() => {
+                Linking.openURL(item.user_profile);
+              }}
+              style={[{textDecorationLine: 'underline'}]}>
+              Profile Url
+            </Text>
+          </Text>
+        </View>
+        <View>
+          <Text style={text_style}>Uploaded File:{'    '}</Text>
+          <Text
+            onPress={() => {
+              Linking.openURL(item.attachment[0]);
+            }}
+            style={[text_style, {textDecorationLine: 'underline'}]}>
+            Open File {'    '}
+          </Text>
+        </View>
+      </View>
     );
   };
   return (
@@ -596,6 +662,56 @@ const OpportunityView = ({
           </View>
         </View>
       </Modal>
+      <Modal animationType="slide" transparent={true} visible={showAppliedList}>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: Colors.black_opacity_25,
+            // alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <View
+            style={{
+              backgroundColor: Colors.white,
+              // alignItems: 'center',
+              justifyContent: 'center',
+              padding: 20,
+            }}>
+            <TouchableOpacity
+              style={{
+                alignSelf: 'flex-end',
+                //  marginBottom: 15
+              }}
+              activeOpacity={0.8}
+              onPress={() => {
+                setShowAppliedList(false);
+              }}>
+              <CloseSymbol height={20} width={20} />
+            </TouchableOpacity>
+            <Text style={Styles.text_search_member}>User Applied</Text>
+            {isLoading ? (
+              <ContentLoader />
+            ) : (
+              <FlatList
+                style={{
+                  // marginVertical: 15,
+                  // marginHorizontal: 20,
+                  // marginBottom: 50,
+                  borderTopWidth: 0.5,
+                  paddingTop: 20,
+                }}
+                showsVerticalScrollIndicator={false}
+                data={appliedList}
+                renderItem={renderAppliedList}
+                // keyExtractor={item => item.id}
+                ListEmptyComponent={() => {
+                  return <EmptyList />;
+                }}
+              />
+            )}
+          </View>
+        </View>
+      </Modal>
     </>
   );
 };
@@ -634,5 +750,9 @@ const Styles = StyleSheet.create({
     marginTop: 15,
     fontWeight: '600',
     fontFamily: Fonts.Regular_font,
+  },
+  EditSymbol: {
+    height: 15,
+    width: 15,
   },
 });

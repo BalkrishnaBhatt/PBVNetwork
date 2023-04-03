@@ -48,6 +48,7 @@ export const NAVIGATION = {
   ///////////new
   MY_OPPORTUNITIES: 'My Opportunities',
   SEARCH_OPPORTUNITIES: 'Search Opportunities',
+  EDIT_OPPORTUNITY: 'edit_opportunity',
   NEW_OPPORTUNITIES: 'New Opportunities',
   SAVED_OPPORTUNITIES: 'Saved Opportunities',
   APPLIED_OPPORTUNITIES: 'Applied Opportunities',

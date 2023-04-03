@@ -98,7 +98,7 @@ const MyOpportunities = ({navigation, route, ...props}) => {
             <Tab.Screen
               name={NAVIGATION.SEARCH_OPPORTUNITIES}
               component={CreateOpportunity}
-              initialParams={{createOpportunity: false}}
+              initialParams={{createOpportunity: false, isEdit: false}}
             />
             <Tab.Screen
               name={NAVIGATION.NEW_OPPORTUNITIES}

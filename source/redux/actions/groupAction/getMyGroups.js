@@ -34,7 +34,7 @@ export const getMyGroups = (navigation, selected_value) => {
   let user_id = Store.getState().AuthenticationReducer.userId;
   // url = url + user_id + '&orderby=' + selected_value_to_pass;
   url = url + user_id + '&type=' + selected_value_to_pass;
-  console.log('getMyGroupsurl: ', url);
+  // console.log('getMyGroupsurl: ', url);
   return async dispatch => {
     dispatch(set_loader(true));
     axiosInstance
