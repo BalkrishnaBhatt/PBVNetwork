@@ -8,8 +8,14 @@ import {
   TextInput,
   ActivityIndicator,
   Alert,
+  FlatList,
 } from 'react-native';
-import {CustomSafeAreaView, CustomHeader} from '../../../components';
+import {
+  CustomSafeAreaView,
+  CustomHeader,
+  OpportunityView,
+  EmptyList,
+} from '../../../components';
 import {Colors} from '../../../utils/colors';
 import Styles from './style';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -176,6 +182,7 @@ const CreateOpportunity = props => {
     props?.route?.params?.opportunityData,
   );
 
+  const [searchedList, setSearchedList] = useState([]);
   const [opportunityTitle, setOpportunityTitle] = useState('');
   const [opportunityDesc, setOpportunityDesc] = useState('');
   const [expirationDate, setExpirationDate] = useState('');
@@ -487,7 +494,7 @@ const CreateOpportunity = props => {
   const searchOpportunities = async () => {
     let url =
       'pbv/v1/search_opportunities' +
-      '&opportunity_lawyer_role=' +
+      '?opportunity_lawyer_role=' +
       valueLawyerRole +
       '&opportunity_jurisdiction=' +
       valueJurisdiction +
@@ -516,29 +523,9 @@ const CreateOpportunity = props => {
           JSON.stringify(response, null, 2),
         );
         if (response.status == 200) {
-          // setOpportunityTitle('');
-          // setOpportunityDesc('');
-          // setExpirationDate('');
-          // setAreaSelectedShow('');
-          // setTownSelectedShow('');
-          // setJurisdictionSelectedShow('');
-          // setServiceLineSelectedShow('');
-          // setIndustrySectorSelectedShow('');
-          // setIndustrySegmentSelectedShow('');
-          // setClientDimensionSelectedShow('');
-          // setDealCaseDimensionSelectedShow('');
-
-          // setValueJurisdiction(null);
-          // setValueTown(null);
-          // setValueAreaPractice(null);
-          // setValueLawyerRole(null);
-          // setValueServiceLine(null);
-          // setValueIndustrySector(null);
-          // setValueIndustrySegment(null);
-          // setValueClientDimension(null);
-          // setValueDealCaseDimension(null);
-
-          dispatch(setLoader(false));
+          let raw_data = response.data.data;
+          setSearchedList(raw_data);
+          // dispatch(setLoader(false));
         }
       })
       .catch(function (error) {
@@ -588,6 +575,18 @@ const CreateOpportunity = props => {
     } else {
       is_create_opportunity ? PostOpportunity() : searchOpportunities();
     }
+  };
+  const renderOpportunity = ({item}) => {
+    return (
+      <OpportunityView
+        item={item}
+        currentTab={NAVIGATION.SEARCH_OPPORTUNITIES}
+        refreshOpportunity={() => {
+          // getNewOpportunities();
+        }}
+        navigation={props.navigation}
+      />
+    );
   };
   return (
     <>
@@ -1048,6 +1047,22 @@ const CreateOpportunity = props => {
                 </View>
               </View>
             </View>
+            {!is_edit && !is_create_opportunity ? (
+              <FlatList
+                // style={{
+                //   marginVertical: 15,
+                //   marginHorizontal: 20,
+                //   marginBottom: 50,
+                // }}
+                showsVerticalScrollIndicator={false}
+                data={searchedList}
+                renderItem={renderOpportunity}
+                keyExtractor={item => item.id}
+                // ListEmptyComponent={() => {
+                //   return <EmptyList />;
+                // }}
+              />
+            ) : null}
           </View>
         </ScrollView>
       </View>

@@ -225,6 +225,7 @@ const OpportunityView = ({
       });
   };
   const MainView = () => {
+    // console.log('MainView: ', JSON.stringify(item, null, 2));
     return (
       <TouchableOpacity
         style={{
@@ -317,6 +318,7 @@ const OpportunityView = ({
             NAVIGATION.MY_JOB_OPENINGS,
             NAVIGATION.SAVED_OPPORTUNITIES,
             NAVIGATION.APPLIED_OPPORTUNITIES,
+            NAVIGATION.SEARCH_OPPORTUNITIES,
           ].includes(currentTab) && !modalOpen ? (
             <TouchableOpacity
               activeOpacity={0.8}
