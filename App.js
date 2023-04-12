@@ -183,6 +183,11 @@ export default function App() {
               name={NAVIGATION.DASHBOARD}
               component={DrawerNavigator}
             />
+            <Stack.Screen
+              name={NAVIGATION.EDIT_OPPORTUNITY}
+              component={CreateOpportunity}
+              initialParams={{createOpportunity: true, isEdit: true}}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </>

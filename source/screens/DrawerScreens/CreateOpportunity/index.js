@@ -20,6 +20,7 @@ import {Colors} from '../../../utils/colors';
 import Styles from './style';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {connect, useSelector, useDispatch} from 'react-redux';
+import DocumentPicker from 'react-native-document-picker';
 import {
   setLoader,
   // getJurisdictionList,
@@ -35,21 +36,14 @@ import {console_log} from '../../../utils/loggers';
 import {Store} from '../../../redux/store';
 import {NAVIGATION} from '../../../constant';
 
+import DatePicker from 'react-native-date-picker';
+import moment from 'moment';
+
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
 
 const CreateOpportunity = props => {
   const dispatch = useDispatch();
-  // let InfoReducer = useSelector(state => state.InfoReducer);
-  // useEffect(() => {
-  //   if (InfoReducer !== undefined) {
-  //     setItemsJurisdiction(InfoReducer.jurisdictionList);
-  //     setItemsAreaPractice(InfoReducer.areaPractice);
-  //     setItemsTown(InfoReducer.townList);
-  //     setItemsIndustry(InfoReducer.industryList);
-  //     setIsLoading(InfoReducer.isLoading);
-  //   }
-  // }, [InfoReducer]);
   useEffect(() => {
     // dispatch(getJurisdictionList(props.navigation));
     dispatch(getAreaOfPracticeList(props.navigation));
@@ -61,20 +55,20 @@ const CreateOpportunity = props => {
     getJuriList();
 
     if (is_edit) {
-      console_log(
-        'opportunityData: ',
-        JSON.stringify(opportunityData, null, 2),
-      );
-      // setValueJurisdiction(opportunityData.jurisdiction);
-      // setValueTown(opportunityData.town);
+      dispatch(setLoader(true));
+      // console_log(
+      //   'opportunityData: ',
+      //   JSON.stringify(opportunityData, null, 2),
+      // );
       setExpirationDate(opportunityData.expire_date);
       setOpportunityDesc(opportunityData.description);
       setOpportunityTitle(opportunityData.opportunity_name);
       setTimeout(() => {
         getOpportunityDetails();
-      }, 2000);
+      }, 6000);
     }
   }, []);
+
   const getOpportunityDetails = async () => {
     setIsLoading(true);
     const config = {
@@ -95,9 +89,10 @@ const CreateOpportunity = props => {
         );
         let data = response.data.data;
 
-        if (data.jurisdiction.length > 0) {
+        if (data.jurisdiction.length > 0 && itemsJurisdiction.length > 0) {
           let to_show = [];
           let to_set = [];
+          // console.log('itemsJurisdiction: ', itemsJurisdiction);
           itemsJurisdiction.map(element => {
             if (data.jurisdiction.indexOf(element.label) > -1) {
               to_show.push(element.label);
@@ -109,7 +104,19 @@ const CreateOpportunity = props => {
           setValueJurisdiction(to_set);
           // console.log('to_set: ', to_set);
         }
-        if (data.areapractice.length > 0) {
+        if (data.lawyer_role.length > 0 && props.lawyerRoleList.length > 0) {
+          let to_show = [];
+          let to_set = [];
+          props.lawyerRoleList.map(element => {
+            if (data.lawyer_role.indexOf(element.value) > -1) {
+              to_show.push(element.label);
+              to_set.push(element.value);
+            }
+          });
+          setLawyerRoleSelectedShow(to_show.join(', '));
+          setValueLawyerRole(to_set);
+        }
+        if (data.areapractice.length > 0 && props.areaPracticeList.length > 0) {
           let to_show = [];
           let to_set = [];
           props.areaPracticeList.map(element => {
@@ -121,7 +128,10 @@ const CreateOpportunity = props => {
           setAreaSelectedShow(to_show.join(', '));
           setValueAreaPractice(to_set);
         }
-        if (data.industry_sector.length > 0) {
+        if (
+          data.industry_sector.length > 0 &&
+          props.industrySectorList.length > 0
+        ) {
           let to_show = [];
           let to_set = [];
           props.industrySectorList.map(element => {
@@ -133,7 +143,10 @@ const CreateOpportunity = props => {
           setIndustrySectorSelectedShow(to_show.join(', '));
           setValueIndustrySector(to_set);
         }
-        if (data.client_dimension.length > 0) {
+        if (
+          data.client_dimension.length > 0 &&
+          props.clientDimensionList.length > 0
+        ) {
           let to_show = [];
           let to_set = [];
           props.clientDimensionList.map(element => {
@@ -142,10 +155,13 @@ const CreateOpportunity = props => {
               to_set.push(element.value);
             }
           });
-          setAreaSelectedShow(to_show.join(', '));
-          setValueAreaPractice(to_set);
+          setClientDimensionSelectedShow(to_show.join(', '));
+          setValueClientDimension(to_set);
         }
-        if (data.deal_dimension.length > 0) {
+        if (
+          data.deal_dimension.length > 0 &&
+          props.dealCaseDimensionList.length > 0
+        ) {
           let to_show = [];
           let to_set = [];
           props.dealCaseDimensionList.map(element => {
@@ -157,11 +173,50 @@ const CreateOpportunity = props => {
           setDealCaseDimensionSelectedShow(to_show.join(', '));
           setValueDealCaseDimension(to_set);
         }
-        // setValueServiceLine(data.service_line);
-        // setValueIndustrySector(data.service_line);
-        // setValueIndustrySegment(data.service_line);
-        // setValueDealCaseDimension(data.service_line);
+        setTimeout(() => {
+          if (data.town.length > 0 && itemsTown.length > 0) {
+            let to_show = [];
+            let to_set = [];
+            itemsTown.map(element => {
+              if (data.town.indexOf(element.label) > -1) {
+                to_show.push(element.label);
+                to_set.push(element.value);
+              }
+            });
+            setTownSelectedShow(to_show.join(', '));
+            setValueTown(to_set);
+          }
+          if (
+            data.industry_segment.length > 0 &&
+            itemsIndustrySegment.length > 0
+          ) {
+            let to_show = [];
+            let to_set = [];
+            itemsIndustrySegment.map(element => {
+              if (data.industry_segment.indexOf(element.label) > -1) {
+                to_show.push(element.label);
+                to_set.push(element.value);
+              }
+            });
+            setIndustrySegmentSelectedShow(to_show.join(', '));
+            setValueIndustrySegment(to_set);
+          }
+          if (data.service_line.length > 0 && itemsServiceLine.length > 0) {
+            let to_show = [];
+            let to_set = [];
+            itemsServiceLine.map(element => {
+              if (data.service_line.indexOf(element.label) > -1) {
+                to_show.push(element.label);
+                to_set.push(element.value);
+              }
+            });
+            setServiceLineSelectedShow(to_show.join(', '));
+            setValueServiceLine(to_set);
+          }
+        }, 6000);
+
         setIsLoading(false);
+        dispatch(setLoader(false));
       })
       .catch(function (error) {
         console_log(
@@ -186,6 +241,7 @@ const CreateOpportunity = props => {
   const [opportunityTitle, setOpportunityTitle] = useState('');
   const [opportunityDesc, setOpportunityDesc] = useState('');
   const [expirationDate, setExpirationDate] = useState('');
+  const [cvSelected, setCvSelected] = useState({name: ''});
 
   const [isOpen, setIsOpen] = useState(0);
 
@@ -410,8 +466,11 @@ const CreateOpportunity = props => {
     if (is_edit) {
       opportunity_id = opportunityData.opportunity_id;
     }
+    let url_to_pass = is_edit
+      ? 'pbv/v1/update_opportunity'
+      : 'pbv/v1/create_new_opportunity';
     let url =
-      'pbv/v1/create_new_opportunity' +
+      url_to_pass +
       '?opportunity_title=' +
       opportunityTitle +
       opportunity_id +
@@ -482,6 +541,9 @@ const CreateOpportunity = props => {
           setValueDealCaseDimension(null);
 
           dispatch(setLoader(false));
+          Alert.alert(
+            `Opportunity ${is_edit ? 'updated' : 'created'} successfully.`,
+          );
         }
       })
       .catch(function (error) {
@@ -616,9 +678,7 @@ const CreateOpportunity = props => {
                 </>
               ) : (
                 <>
-                  <CustomHeader
-                    navigation={props.navigation}
-                    {...props}></CustomHeader>
+                  <CustomHeader navigation={props.navigation} {...props} />
                   <Text style={Styles.text_home}>Opportunity</Text>
                 </>
               )}
@@ -653,10 +713,13 @@ const CreateOpportunity = props => {
                 <Text style={Styles.title_text}>Expiration Date*</Text>
                 <TextInput
                   value={expirationDate}
-                  onChangeText={text => {
-                    setExpirationDate(text);
+                  onFocus={() => {
+                    setIsOpen(11);
                   }}
-                  placeholder="Expiration Date"
+                  onChangeText={text => {
+                    // setExpirationDate(text);
+                  }}
+                  placeholder="DD-MM-YYYY"
                   placeholderTextColor={Colors.border_color}
                   style={Styles.TextInput_search_member}
                 />
@@ -858,11 +921,6 @@ const CreateOpportunity = props => {
                           multiple={true}
                           multipleText={industrySectorSelectedShow}
                           onChangeValue={value => {
-                            console.log('value: ', value);
-                            console.log(
-                              'valueIndustrySector: ',
-                              valueIndustrySector,
-                            );
                             let to_show = [];
                             if (value !== null && value.length > 0) {
                               props.industrySectorList.map(element => {
@@ -1019,6 +1077,68 @@ const CreateOpportunity = props => {
                                 }}
                               />
 
+                              {is_create_opportunity ? (
+                                <>
+                                  <Text style={Styles.title_text}>
+                                    Attach here your file
+                                  </Text>
+                                  <View
+                                    style={{
+                                      // backgroundColor: '#e3e3e3',
+                                      borderWidth: 1,
+                                      borderColor: '#d3d3d3',
+                                      flexDirection: 'row',
+                                      alignItems: 'center',
+                                      padding: 10,
+                                      borderRadius: 5,
+                                    }}>
+                                    <TouchableOpacity
+                                      style={{
+                                        borderWidth: 1,
+                                        borderColor: Colors.black,
+                                        backgroundColor: Colors.grey,
+                                        paddingHorizontal: 20,
+                                        borderRadius: 5,
+                                        paddingVertical: 5,
+                                      }}
+                                      activeOpacity={0.8}
+                                      onPress={async () => {
+                                        let response =
+                                          await DocumentPicker.pick({
+                                            allowMultiSelection: false,
+                                            // type: [DocumentPicker.types.pdf],
+                                          });
+                                        // console.log(
+                                        //   'DocumentPicker response: ',
+                                        //   JSON.stringify(response, null, 2),
+                                        // );
+                                        setCvSelected(response[0]);
+                                      }}>
+                                      <Text
+                                        style={[
+                                          {
+                                            color: Colors.black,
+                                            fontSize: 12,
+                                          },
+                                        ]}>
+                                        {'Choose File'}
+                                      </Text>
+                                    </TouchableOpacity>
+                                    <Text
+                                      style={[
+                                        {
+                                          color: Colors.black,
+                                          fontSize: 12,
+                                          marginLeft: 10,
+                                        },
+                                      ]}>
+                                      {cvSelected.name !== ''
+                                        ? cvSelected.name
+                                        : 'No file chooen'}
+                                    </Text>
+                                  </View>
+                                </>
+                              ) : null}
                               <TouchableOpacity
                                 activeOpacity={0.8}
                                 onPress={() => {
@@ -1049,11 +1169,6 @@ const CreateOpportunity = props => {
             </View>
             {!is_edit && !is_create_opportunity ? (
               <FlatList
-                // style={{
-                //   marginVertical: 15,
-                //   marginHorizontal: 20,
-                //   marginBottom: 50,
-                // }}
                 showsVerticalScrollIndicator={false}
                 data={searchedList}
                 renderItem={renderOpportunity}
@@ -1064,6 +1179,23 @@ const CreateOpportunity = props => {
               />
             ) : null}
           </View>
+          <DatePicker
+            modal
+            mode="date"
+            open={isOpen == 11}
+            date={
+              expirationDate == ''
+                ? new Date()
+                : new Date(moment(expirationDate, 'DD-MM-YYYY'))
+            }
+            onConfirm={date => {
+              setIsOpen(0);
+              setExpirationDate(moment(date).format('DD-MM-YYYY'));
+            }}
+            onCancel={() => {
+              setIsOpen(0);
+            }}
+          />
         </ScrollView>
       </View>
     </>

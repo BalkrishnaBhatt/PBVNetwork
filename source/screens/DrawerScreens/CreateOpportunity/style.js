@@ -105,5 +105,6 @@ export default StyleSheet.create({
     marginTop: 15,
     fontWeight: '600',
     fontFamily: Fonts.Regular_font,
+    marginBottom: 5,
   },
 });

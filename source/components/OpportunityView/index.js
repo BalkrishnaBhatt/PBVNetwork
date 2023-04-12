@@ -215,7 +215,7 @@ const OpportunityView = ({
           `removeOpportunityApi response :`,
           JSON.stringify(response, null, 2),
         );
-        let data = response.data.data;
+        // let data = response.data.data;
       })
       .catch(function (error) {
         console_log(
@@ -422,7 +422,7 @@ const OpportunityView = ({
               activeOpacity={0.8}
               style={Styles.view_detail}
               onPress={() => {
-                navigation.navigate(NAVIGATION.CREATE_OPPORTUNITY, {
+                navigation.push(NAVIGATION.EDIT_OPPORTUNITY, {
                   isEdit: true,
                   opportunityData: item,
                 });
@@ -594,6 +594,7 @@ const OpportunityView = ({
                   flexDirection: 'row',
                   alignItems: 'center',
                   padding: 10,
+                  borderRadius: 5,
                 }}>
                 <TouchableOpacity
                   style={{

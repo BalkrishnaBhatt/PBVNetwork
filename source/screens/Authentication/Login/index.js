@@ -36,7 +36,7 @@ const Login = ({navigation, route}) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   // const [emailId, setEmailId] = useState('pbvnetwork');
-  // const [password, setPassword] = useState('Oqy6sCcFYB(UlDQ6%23x');
+  // const [password, setPassword] = useState('Oqy6sCcFYB(UlDQ6#x');
   // const [emailId, setEmailId] = useState('testuser01');
   // const [password, setPassword] = useState(')WqFQ5Mm%JPuslWfQEw0pasb');
   const [emailId, setEmailId] = useState('');
