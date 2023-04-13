@@ -26,6 +26,7 @@ export const getFaqs = navigation => {
         );
         // handle success
         dispatch(get_faqs(response.data));
+        dispatch(set_loader(false));
       })
       .catch(function (error) {
         // handle error
