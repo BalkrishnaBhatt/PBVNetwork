@@ -1,10 +1,8 @@
-import React, {useRef} from 'react';
-import {TextInput, Text, View, TouchableOpacity, Image} from 'react-native';
+import React from 'react';
+import {Text, TouchableOpacity} from 'react-native';
 import {Colors} from '../../utils/colors';
 import {Fonts} from '../../utils/fonts';
 
-import HTML from 'react-native-render-html';
-import {FavouriteSymbol, CommentsSymbol, DeleteSymbol} from '../../utils/svg';
 const GroupNewsView = ({item}) => {
   return (
     <TouchableOpacity

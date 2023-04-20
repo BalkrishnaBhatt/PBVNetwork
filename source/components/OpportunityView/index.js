@@ -125,7 +125,7 @@ const OpportunityView = ({
     rawData.append('opportunity_name', item.opportunity_name);
     rawData.append('email', email);
     rawData.append('user_id', user_id);
-    rawData.append('message', email);
+    rawData.append('message', message);
 
     rawData.append('opportunity_file', {
       uri: cvSelected.uri,
