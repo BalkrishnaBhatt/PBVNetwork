@@ -1,5 +1,6 @@
 import React from 'react';
 import {Text, TouchableOpacity, Image, Dimensions} from 'react-native';
+import {NAVIGATION} from '../../constant';
 import {Colors} from '../../utils/colors';
 
 const screen_width = Dimensions.get('window').width;

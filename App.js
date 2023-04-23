@@ -51,6 +51,8 @@ import {CustomLoader, CustomDrawer} from './source/components';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 import {useSelector, useDispatch} from 'react-redux';
+import AboutUs from './source/screens/DrawerScreens/AboutUs';
+import NewsDetails from './source/screens/DrawerScreens/NewsDetails';
 
 const DrawerNavigator = () => {
   let LoaderReducer = useSelector(state => state.LoaderReducer);
@@ -130,6 +132,8 @@ const DrawerNavigator = () => {
          component={ProfileScreen}
        /> */}
 
+        <Drawer.Screen name={NAVIGATION.ABOUT_US} component={AboutUs} />
+        <Drawer.Screen name={NAVIGATION.NEWS_DETAILS} component={NewsDetails} />
         <Drawer.Screen name={NAVIGATION.SETTINGS} component={Settings} />
       </Drawer.Navigator>
     </>

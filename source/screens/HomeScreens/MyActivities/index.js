@@ -9,16 +9,10 @@ import {
   FlatList,
   TextInput,
 } from 'react-native';
-import {
-  FavouriteSymbol,
-  CommentsSymbol,
-  DeleteSymbol,
-} from '../../../utils/svg';
 import {Colors} from '../../../utils/colors';
 import Styles from './style';
 import {Fonts} from '../../../utils/fonts';
 import {useSelector, useDispatch} from 'react-redux';
-import {NAVIGATION, EMAIL_PATTERN, VARIABLE} from '../../../constant';
 import {
   getHomeActivities,
   getHomeNews,
@@ -28,17 +22,12 @@ import axiosInstance from '../../../axios';
 import {console_log} from '../../../utils/loggers';
 import {Store} from '../../../redux/store';
 
-import DropDownPicker from 'react-native-dropdown-picker';
 import {
   MyActivityView,
   NewsView,
   ContentLoader,
-  CustomSafeAreaView,
   EmptyList,
 } from '../../../components';
-import images from '../../../utils/images';
-const screen_width = Dimensions.get('window').width;
-const screen_height = Dimensions.get('window').height;
 
 const MyActivities = ({navigation, route}) => {
   const dispatch = useDispatch();
@@ -96,71 +85,32 @@ const MyActivities = ({navigation, route}) => {
       });
   };
   const [newsCategory, setNewsCategory] = useState([
-    {
-      news_category: 'LATEST NEWS',
-    },
-    {
-      news_category: 'ENTERTAINMENT',
-    },
-    {
-      news_category: 'CLIMATE',
-    },
+    // {
+    //   news_category: 'LATEST NEWS',
+    // },
   ]);
   const [newsList, setNewsList] = useState([
-    {
-      news_title:
-        'Telereal Trillium’s £7.9 Million Acquisition of Marlborough House',
-      news_details:
-        'Reed Smith has advised Telereal Trillium on the deal. Telereal Trillium, one of ...',
-    },
-    {
-      news_title: 'Sonoma Pharmaceuticals’ $6 Million At-The-Market Offering',
-      news_details: '',
-    },
-    {
-      news_title: 'Magna International’s Acquisition of Venoeer',
-      news_details: '',
-    },
+    // {
+    //   news_title:
+    //     'Telereal Trillium’s £7.9 Million Acquisition of Marlborough House',
+    //   news_details:
+    //     'Reed Smith has advised Telereal Trillium on the deal. Telereal Trillium, one of ...',
+    // },
   ]);
   const [posts, setPosts] = useState([
-    {
-      image: 'https://picsum.photos/200/300',
-      person_name: 'RodolfoVega',
-      description: 'joined the group',
-      group_name: 'Baraona Marshall y Cia',
-      date: '1630489742',
-      number_of_comments: '20',
-    },
-    {
-      image: 'https://picsum.photos/200/300',
-      person_name: 'RodolfoVega',
-      description: 'joined the group',
-      group_name: 'Baraona Marshall y Cia',
-      date: '1630489742',
-      number_of_comments: '20',
-    },
-    {
-      image: 'https://picsum.photos/200/300',
-      person_name: 'RodolfoVega',
-      description: 'joined the group',
-      group_name: 'Baraona Marshall y Cia',
-      date: '1630489742',
-      number_of_comments: '20',
-    },
-    {
-      image: 'https://picsum.photos/200/300',
-      person_name: 'RodolfoVega',
-      description: 'joined the group',
-      group_name: 'Baraona Marshall y Cia',
-      date: '1630489742',
-      number_of_comments: '20',
-    },
+    // {
+    //   image: 'https://picsum.photos/200/300',
+    //   person_name: 'RodolfoVega',
+    //   description: 'joined the group',
+    //   group_name: 'Baraona Marshall y Cia',
+    //   date: '1630489742',
+    //   number_of_comments: '20',
+    // }
   ]);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
-    {label: 'My Profile', value: 'My Profile'},
-    {label: 'My Group', value: 'My Group'},
+    // {label: 'My Profile', value: 'My Profile'}
   ]);
   // const [open2, setOpen2] = useState(false);
   // const [value2, setValue2] = useState(null);
@@ -202,7 +152,7 @@ const MyActivities = ({navigation, route}) => {
     );
   };
   const renderNews = ({item}) => {
-    return <NewsView item={item} />;
+    return <NewsView item={item} navigation={navigation} />;
   };
   const validatePost = () => {
     if (searchText == '') {
@@ -379,7 +329,7 @@ const MyActivities = ({navigation, route}) => {
                     flex: 1,
                   }}>
                   {newsList.map(item => {
-                    return <NewsView item={item} />;
+                    return <NewsView item={item}  navigation={navigation} />;
                   })}
                 </View> */}
               </>

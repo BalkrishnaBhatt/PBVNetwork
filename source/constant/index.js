@@ -16,6 +16,8 @@ export const NAVIGATION = {
   GROUP_OPPORTUNITY: 'group_opportuniy',
   MANAGE_DETAILS: 'Details',
   MANAGE_MEMBERS: 'Members',
+  ABOUT_US: 'about_us',
+  NEWS_DETAILS: 'news_details',
   ///////////////////////////////////////////////////
   CLIENT_PORTFOLIO: 'Client Portfolio',
   PBV_RATING: 'PBV Rating',

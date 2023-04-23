@@ -87,12 +87,12 @@ const CreateOpportunity = props => {
           `getOpportunityDetails response :`,
           JSON.stringify(response, null, 2),
         );
+        // console.log('itemsJurisdiction: ', itemsJurisdiction.length);
         let data = response.data.data;
 
         if (data.jurisdiction.length > 0 && itemsJurisdiction.length > 0) {
           let to_show = [];
           let to_set = [];
-          // console.log('itemsJurisdiction: ', itemsJurisdiction);
           itemsJurisdiction.map(element => {
             if (data.jurisdiction.indexOf(element.label) > -1) {
               to_show.push(element.label);
@@ -466,6 +466,14 @@ const CreateOpportunity = props => {
     if (is_edit) {
       opportunity_id = opportunityData.opportunity_id;
     }
+    let rawData = new FormData();
+    if (cvSelected.name !== '') {
+      rawData.append('opportunity_file', {
+        uri: cvSelected.uri,
+        type: cvSelected.type,
+        name: cvSelected.name,
+      });
+    }
     let url_to_pass = is_edit
       ? 'pbv/v1/update_opportunity'
       : 'pbv/v1/create_new_opportunity';
@@ -506,12 +514,12 @@ const CreateOpportunity = props => {
     console.log('url: ', url);
     const config = {
       headers: {
-        // 'Content-Type': 'application/json',
+        'Content-type': 'multipart/form-data',
         Authorization: 'Bearer ' + Store.getState().AuthenticationReducer.token,
       },
     };
     axiosInstance
-      .post(url, {}, config)
+      .post(url, rawData, config)
       .then(async response => {
         console_log(
           'PostOpportunity response: ',

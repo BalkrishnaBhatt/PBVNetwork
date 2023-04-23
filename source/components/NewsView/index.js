@@ -1,18 +1,19 @@
 import React from 'react';
 import {Text, TouchableOpacity} from 'react-native';
+import {NAVIGATION} from '../../constant';
 import {Colors} from '../../utils/colors';
 import {Fonts} from '../../utils/fonts';
 
-const NewsView = ({item}) => {
+const NewsView = ({item, navigation}) => {
   return (
     <TouchableOpacity
       style={{
-        // borderBottomWidth: 1,
-        // borderColor: Colors.grey,
         paddingVertical: 15,
       }}
       activeOpacity={0.8}
-      onPress={() => {}}>
+      onPress={() => {
+        navigation.navigate(NAVIGATION.NEWS_DETAILS, {newsDetails: item});
+      }}>
       <Text
         style={{
           fontSize: 14,

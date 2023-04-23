@@ -1,11 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useRef, useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   TextInput,
   Text,
   View,
   TouchableOpacity,
-  Image,
   StyleSheet,
   Modal,
   Alert,
@@ -18,20 +17,10 @@ import axiosInstance from '../../axios';
 import {console_log} from '../../utils/loggers';
 import {Store} from '../../redux/store';
 import DocumentPicker from 'react-native-document-picker';
-import {useSelector, useDispatch} from 'react-redux';
-import {setLoader, getUserProfile} from '../../redux/actions';
-
-import HTML from 'react-native-render-html';
-import {
-  FavouriteSymbol,
-  CommentsSymbol,
-  DeleteSymbol,
-  SaveSymbol,
-  CloseSymbol,
-  EditSymbol,
-} from '../../utils/svg';
+import {useDispatch} from 'react-redux';
+import {setLoader} from '../../redux/actions';
+import {SaveSymbol, CloseSymbol, EditSymbol} from '../../utils/svg';
 import {EMAIL_PATTERN, NAVIGATION} from '../../constant';
-import ImagePickerComponent from '../ImagePickerComponent';
 import ContentLoader from '../ContentLoader';
 import EmptyList from '../EmptyList';
 const OpportunityView = ({

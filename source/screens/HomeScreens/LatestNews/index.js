@@ -67,7 +67,7 @@ const LatestNews = ({navigation, route}) => {
     },
   ]);
   const renderNews = ({item}) => {
-    return <NewsView item={item} />;
+    return <NewsView item={item} navigation={navigation} />;
   };
   const renderNewsCategoy = ({item}) => {
     return (
