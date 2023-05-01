@@ -16,10 +16,10 @@ import {Fonts} from '../../../utils/fonts';
 import {console_log} from '../../../utils/loggers';
 import HTML from 'react-native-render-html';
 import moment from 'moment';
-
+import {useIsFocused} from '@react-navigation/native';
 const NewsDetails = ({navigation, route, ...props}) => {
   //   const {dark, theme, toggle} = useContext(ThemeContext);
-  const [newsDetails, setNewsDetails] = useState(route.params.newsDetails);
+  // const [newsDetails, setNewsDetails] = useState(route.params.newsDetails);
   const [isLoading, setIsLoading] = useState(false);
   // const getNewsDetails = async () => {
   //   const config = {
@@ -45,16 +45,17 @@ const NewsDetails = ({navigation, route, ...props}) => {
   //       setIsLoading(false);
   //     });
   // };
-  useEffect(() => {
-    // getNewsDetails();
-    const unsubscribe = navigation.addListener('focus', () => {
-      setNewsDetails(route.params.newsDetails);
-      console.log('focused');
-    });
+  const isFocused = useIsFocused();
+  // useEffect(() => {
+  //   // getNewsDetails();
+  //   const unsubscribe = navigation.addListener('focus', () => {
+  //     setNewsDetails(route.params.newsDetails);
+  //     console.log('focused');
+  //   });
 
-    // Return the function to unsubscribe from the event so it gets removed on unmount
-    return unsubscribe;
-  }, [navigation]);
+  //   // Return the function to unsubscribe from the event so it gets removed on unmount
+  //   return unsubscribe;
+  // }, [navigation]);
   const html_style = {
     p: {
       fontSize: 14,
@@ -68,29 +69,33 @@ const NewsDetails = ({navigation, route, ...props}) => {
       <CustomSafeAreaView backgroundColor={'#000'} barStyle={'light-content'} />
 
       <View style={Styles.View_Main}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <Text
-            style={{marginLeft: 20, marginBottom: 30, marginTop: 30}}
-            onPress={() => {
-              navigation.goBack();
-            }}>
-            Back
-          </Text>
-          <Text style={Styles.text_home}>{newsDetails.title.rendered}</Text>
-          <View style={Styles.view_dash} />
-          <Text style={Styles.text_date}>
-            {moment(newsDetails.date).format('MMM DD, YYYY')}
-          </Text>
-          <Text style={Styles.details_container}>
-            <HTML
-              // style={{marginLeft: 20}}
-              source={{
-                html: newsDetails.content.rendered,
-              }}
-              tagsStyles={html_style}
-            />
-          </Text>
-        </ScrollView>
+        {isFocused ? (
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <Text
+              style={{marginLeft: 20, marginBottom: 30, marginTop: 30}}
+              onPress={() => {
+                navigation.goBack();
+              }}>
+              Back
+            </Text>
+            <Text style={Styles.text_home}>
+              {route.params.newsDetails.title.rendered}
+            </Text>
+            <View style={Styles.view_dash} />
+            <Text style={Styles.text_date}>
+              {moment(route.params.newsDetails.date).format('MMM DD, YYYY')}
+            </Text>
+            <Text style={Styles.details_container}>
+              <HTML
+                // style={{marginLeft: 20}}
+                source={{
+                  html: route.params.newsDetails.content.rendered,
+                }}
+                tagsStyles={html_style}
+              />
+            </Text>
+          </ScrollView>
+        ) : null}
       </View>
     </>
   );

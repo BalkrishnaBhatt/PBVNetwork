@@ -56,18 +56,26 @@ const CreateOpportunity = props => {
 
     if (is_edit) {
       dispatch(setLoader(true));
-      // console_log(
-      //   'opportunityData: ',
-      //   JSON.stringify(opportunityData, null, 2),
-      // );
+      console_log(
+        'opportunityData: ',
+        JSON.stringify(opportunityData, null, 2),
+      );
       setExpirationDate(opportunityData.expire_date);
       setOpportunityDesc(opportunityData.description);
       setOpportunityTitle(opportunityData.opportunity_name);
       setTimeout(() => {
         getOpportunityDetails();
-      }, 6000);
+      }, 4000);
     }
   }, []);
+  // useEffect(() => {
+  //   console.log('is_edit: ', is_edit);
+  //   console.log('is_edititemsJurisdiction: ', itemsJurisdiction.length);
+  //   if (is_edit && itemsJurisdiction.length > 0) {
+  //     console.log('is_edititemsJurisdiction123: ', is_edit);
+  //     getOpportunityDetails();
+  //   }
+  // }, [JSON.stringify(itemsJurisdiction), itemsJurisdiction]);
 
   const getOpportunityDetails = async () => {
     setIsLoading(true);
@@ -87,7 +95,7 @@ const CreateOpportunity = props => {
           `getOpportunityDetails response :`,
           JSON.stringify(response, null, 2),
         );
-        // console.log('itemsJurisdiction: ', itemsJurisdiction.length);
+        console.log('itemsJurisdiction.length: ', itemsJurisdiction.length);
         let data = response.data.data;
 
         if (data.jurisdiction.length > 0 && itemsJurisdiction.length > 0) {
@@ -537,6 +545,7 @@ const CreateOpportunity = props => {
           setIndustrySegmentSelectedShow('');
           setClientDimensionSelectedShow('');
           setDealCaseDimensionSelectedShow('');
+          setCvSelected({name: ''});
 
           setValueJurisdiction(null);
           setValueTown(null);
