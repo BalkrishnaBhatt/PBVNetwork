@@ -411,6 +411,7 @@ const OpportunityView = ({
               activeOpacity={0.8}
               style={Styles.view_detail}
               onPress={() => {
+                setModalOpen(false);
                 navigation.push(NAVIGATION.EDIT_OPPORTUNITY, {
                   isEdit: true,
                   opportunityData: item,

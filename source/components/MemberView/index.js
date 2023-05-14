@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, TouchableOpacity, Image} from 'react-native';
+import {Text, View, TouchableOpacity, Image, Linking} from 'react-native';
 import {Colors} from '../../utils/colors';
 import {Fonts} from '../../utils/fonts';
 import moment from 'moment';
@@ -37,6 +37,7 @@ const MemberView = ({item}) => {
       }}
       activeOpacity={0.8}
       onPress={() => {
+        Linking.openURL(item.link);
         // route.params.from_group
         //   ? navigation.navigate(NAVIGATION.PROFILE_SCREEN)
         //   : null;

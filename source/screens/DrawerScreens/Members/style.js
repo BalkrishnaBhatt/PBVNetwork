@@ -128,6 +128,7 @@ export default StyleSheet.create({
     borderColor: Colors.border_color,
     marginVertical: 3,
     // padding: -10,
+    marginTop: 15,
   },
   placeholderStyle2: {
     color: Colors.border_color,
@@ -143,7 +144,7 @@ export default StyleSheet.create({
     zIndex: 10,
     // height: 120,
     position: 'relative',
-    marginTop: -45,
+    marginTop: -55,
   },
   textStyle2: {
     fontSize: 14,
