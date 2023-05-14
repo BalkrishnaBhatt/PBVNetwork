@@ -29,6 +29,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     marginHorizontal: 20,
     alignItems: 'center',
+    marginTop: 25,
   },
   view_whats_new_sub: {
     height: 25,

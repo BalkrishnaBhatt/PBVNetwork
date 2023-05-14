@@ -158,7 +158,7 @@ const PbvGroupProfile = ({navigation, route}) => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 flex: 1,
-                height: 45,
+                height: 60,
                 // position: 'absolute',
               }}>
               <Text

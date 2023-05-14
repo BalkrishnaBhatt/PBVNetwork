@@ -94,7 +94,7 @@ export default StyleSheet.create({
     // padding: -10,
     alignSelf: 'flex-end',
     marginRight: 20,
-    marginTop: -38,
+    marginTop: -54,
   },
   placeholderStyle: {
     color: Colors.primary_color,
@@ -112,7 +112,7 @@ export default StyleSheet.create({
     alignSelf: 'flex-end',
     marginLeft: -120,
     right: 20,
-    marginTop: -38,
+    marginTop: -54,
     // marginRight: 200,
   },
   textStyle: {

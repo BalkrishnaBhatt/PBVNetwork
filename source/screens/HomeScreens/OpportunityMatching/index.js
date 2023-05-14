@@ -3,36 +3,18 @@ import {
   ScrollView,
   Text,
   View,
-  Image,
-  TouchableOpacity,
   Dimensions,
   FlatList,
   TextInput,
 } from 'react-native';
-import {DownArrowSymbol, SearchSymbol} from '../../../utils/svg';
+import {SearchSymbol} from '../../../utils/svg';
 import {Colors} from '../../../utils/colors';
 import Styles from './style';
-import {NAVIGATION} from '../../../constant';
 import {Fonts} from '../../../utils/fonts';
-import {console_log} from '../../../utils/loggers';
 
-import {
-  MyActivityView,
-  NewsView,
-  ContentLoader,
-  CustomSafeAreaView,
-  OpportunityView,
-  EmptyList,
-  MemberView,
-} from '../../../components';
+import {CustomSafeAreaView, EmptyList, MemberView} from '../../../components';
 import {useSelector, useDispatch} from 'react-redux';
-import {
-  getHomeActivities,
-  getHomeNews,
-  setLoader,
-  getUserOpportunity,
-  getAllMember,
-} from '../../../redux/actions';
+import {getAllMember} from '../../../redux/actions';
 import DropDownPicker from 'react-native-dropdown-picker';
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;

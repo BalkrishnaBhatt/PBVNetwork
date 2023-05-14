@@ -169,8 +169,8 @@ const Groups = ({navigation, route, ...props}) => {
           <View
             style={{
               flexDirection: 'row',
-              margin: 20,
-              marginTop: 10,
+              marginHorizontal: 20,
+              marginVertical: 10,
             }}>
             <TouchableOpacity
               style={[
@@ -262,7 +262,7 @@ const Groups = ({navigation, route, ...props}) => {
             ) : (
               <FlatList
                 style={{
-                  marginVertical: 15,
+                  marginVertical: 20,
                   marginHorizontal: 16,
                   marginBottom: 150,
                   elevation: 0,
