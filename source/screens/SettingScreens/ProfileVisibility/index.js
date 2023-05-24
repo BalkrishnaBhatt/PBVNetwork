@@ -115,12 +115,7 @@ const ProfileVisibility = ({navigation, route, ...props}) => {
             children={
               <View style={Styles.menuTriggerView}>
                 <Text style={Styles.menuTriggertextStyle}>{item.value}</Text>
-                <DownArrowSymbol
-                  height={20}
-                  width={10}
-                  fill={Colors.grey}
-                  // style={{height: 20, width: 30}}
-                />
+                <DownArrowSymbol height={20} width={10} fill={Colors.grey} />
               </View>
             }
           />

@@ -66,17 +66,19 @@ const AboutUs = ({navigation, route, ...props}) => {
 
       <View style={Styles.View_Main}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <CustomHeader navigation={navigation} {...props}></CustomHeader>
+          <CustomHeader navigation={navigation} {...props} />
           <Text style={Styles.text_home}>About Us</Text>
-          <Text style={Styles.text_about_details}>
+          <View
+            style={{
+              padding: 16,
+            }}>
             <HTML
-              // style={{marginLeft: 20}}
               source={{
                 html: aboutDetails,
               }}
               tagsStyles={html_style}
             />
-          </Text>
+          </View>
         </ScrollView>
       </View>
     </>

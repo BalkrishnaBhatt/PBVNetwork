@@ -85,7 +85,7 @@ const NewsDetails = ({navigation, route, ...props}) => {
             <Text style={Styles.text_date}>
               {moment(route.params.newsDetails.date).format('MMM DD, YYYY')}
             </Text>
-            <Text style={Styles.details_container}>
+            <View style={Styles.details_container}>
               <HTML
                 // style={{marginLeft: 20}}
                 source={{
@@ -93,7 +93,7 @@ const NewsDetails = ({navigation, route, ...props}) => {
                 }}
                 tagsStyles={html_style}
               />
-            </Text>
+            </View>
           </ScrollView>
         ) : null}
       </View>

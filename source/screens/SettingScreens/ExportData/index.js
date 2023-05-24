@@ -81,7 +81,7 @@ const ExportData = ({navigation, route, ...props}) => {
             <Text style={[Styles.text_style, {marginVertical: 15}]}>
               If you want to make a request, please click on the button below:
             </Text>
-            <TouchableOpacity style={Styles.button_style}>
+            <TouchableOpacity style={Styles.button_style} activeOpacity={0.8}>
               <Text style={[Styles.text_style, {color: Colors.white}]}>
                 Request Personal Data Export
               </Text>
