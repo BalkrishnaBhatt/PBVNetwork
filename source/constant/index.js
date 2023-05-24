@@ -33,7 +33,8 @@ export const NAVIGATION = {
   SETTINGS: 'settings',
   GENERAL: 'General',
   EMAIL: 'Email',
-  // PROFILE_VISIBILITY: 'profile_visibility',
+  PROFILE_VISIBILITY: 'Profile Visibility',
+  EXPORT_DATA: 'Export Data',
   ///////////////////////////////////////////////////
   TERM_AND_CONDITION: 'term_and_condition',
   CREATE_OPPORTUNITY: 'create_opportunity',

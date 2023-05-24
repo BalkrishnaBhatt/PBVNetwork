@@ -47,6 +47,7 @@ import thunk from 'redux-thunk';
 import {Provider} from 'react-redux';
 import {Store} from './source/redux/store';
 import {CustomLoader, CustomDrawer} from './source/components';
+import {MenuProvider} from 'react-native-popup-menu';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -168,7 +169,8 @@ export default function App() {
 
   return (
     <Provider store={Store}>
-      {/* <SafeAreaView
+      <MenuProvider>
+        {/* <SafeAreaView
       style={{
         flex: 1,
         height: '100%',
@@ -176,27 +178,28 @@ export default function App() {
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{flex: 1}}> */}
-      <>
-        <StatusBar style="dark" />
-        <NavigationContainer>
-          <Stack.Navigator screenOptions={{headerShown: false}}>
-            <Stack.Screen name={NAVIGATION.SPLASH} component={Splash} />
-            <Stack.Screen name={NAVIGATION.LOGIN} component={Login} />
-            <Stack.Screen name={NAVIGATION.SIGN_UP} component={Signup} />
-            <Stack.Screen
-              name={NAVIGATION.DASHBOARD}
-              component={DrawerNavigator}
-            />
-            <Stack.Screen
-              name={NAVIGATION.EDIT_OPPORTUNITY}
-              component={CreateOpportunity}
-              initialParams={{createOpportunity: true, isEdit: true}}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </>
-      {/* </KeyboardAvoidingView>
+        <>
+          <StatusBar style="dark" />
+          <NavigationContainer>
+            <Stack.Navigator screenOptions={{headerShown: false}}>
+              <Stack.Screen name={NAVIGATION.SPLASH} component={Splash} />
+              <Stack.Screen name={NAVIGATION.LOGIN} component={Login} />
+              <Stack.Screen name={NAVIGATION.SIGN_UP} component={Signup} />
+              <Stack.Screen
+                name={NAVIGATION.DASHBOARD}
+                component={DrawerNavigator}
+              />
+              <Stack.Screen
+                name={NAVIGATION.EDIT_OPPORTUNITY}
+                component={CreateOpportunity}
+                initialParams={{createOpportunity: true, isEdit: true}}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </>
+        {/* </KeyboardAvoidingView>
      </SafeAreaView>  */}
+      </MenuProvider>
     </Provider>
   );
 }

@@ -11,4 +11,27 @@ export default StyleSheet.create({
     // justifyContent: 'center',
     // paddingHorizontal: 100
   },
+  menuTriggertextStyle: {
+    fontSize: 14,
+    fontFamily: Fonts.Regular_font,
+    color: Colors.black,
+    flex: 1,
+  },
+  menuTriggerView: {
+    borderRadius: 10,
+    borderWidth: 0.5,
+    borderColor: '#e5e5e5',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: 120,
+  },
+  menuOptionText: {
+    fontSize: 14,
+    fontFamily: Fonts.Regular_font,
+    color: Colors.black,
+    marginBottom: 5,
+  },
 });

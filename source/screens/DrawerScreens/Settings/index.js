@@ -15,6 +15,8 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import General from '../../SettingScreens/General';
 import Email from '../../SettingScreens/Email';
 import {Fonts} from '../../../utils/fonts';
+import ProfileVisibility from '../../SettingScreens/ProfileVisibility';
+import ExportData from '../../SettingScreens/ExportData';
 const Tab = createMaterialTopTabNavigator();
 const screen_width = Dimensions.get('window').width;
 const screen_height = Dimensions.get('window').height;
@@ -81,7 +83,7 @@ const Settings = ({navigation, route, ...props}) => {
                         borderColor: isFocused
                           ? Colors.white
                           : Colors.primary_color,
-                        marginRight: 4,
+                        marginRight: label == NAVIGATION.EXPORT_DATA ? 35 : 4,
                       }}>
                       <Text
                         style={{
@@ -110,6 +112,11 @@ const Settings = ({navigation, route, ...props}) => {
               component={Email}
               // initialParams={{from_group: false}}
             />
+            <Tab.Screen
+              name={NAVIGATION.PROFILE_VISIBILITY}
+              component={ProfileVisibility}
+            />
+            <Tab.Screen name={NAVIGATION.EXPORT_DATA} component={ExportData} />
           </Tab.Navigator>
         </ScrollView>
       </View>

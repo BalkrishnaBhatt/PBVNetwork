@@ -26,6 +26,7 @@
     "react-native-dropdown-picker": "^5.4.6",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-image-crop-picker": "^0.36.2",
+    "react-native-popup-menu": "^0.16.1",
     "react-native-ratings": "^8.1.0",
     "react-native-reanimated": "^1.9.0",
     "react-native-render-html": "^6.1.0",

@@ -36,6 +36,7 @@ import {console_log} from '../../../utils/loggers';
 import {Store} from '../../../redux/store';
 import {NAVIGATION} from '../../../constant';
 
+import {useIsFocused} from '@react-navigation/native';
 import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
 
@@ -63,19 +64,54 @@ const CreateOpportunity = props => {
       setExpirationDate(opportunityData.expire_date);
       setOpportunityDesc(opportunityData.description);
       setOpportunityTitle(opportunityData.opportunity_name);
-      setTimeout(() => {
-        getOpportunityDetails();
-      }, 4000);
+      // setTimeout(() => {
+      //   getOpportunityDetails();
+      // }, 4000);
+    } else {
+      clearFields();
     }
   }, []);
-  // useEffect(() => {
-  //   console.log('is_edit: ', is_edit);
-  //   console.log('is_edititemsJurisdiction: ', itemsJurisdiction.length);
-  //   if (is_edit && itemsJurisdiction.length > 0) {
-  //     console.log('is_edititemsJurisdiction123: ', is_edit);
-  //     getOpportunityDetails();
-  //   }
-  // }, [JSON.stringify(itemsJurisdiction), itemsJurisdiction]);
+  const clearFields = () => {
+    setOpportunityTitle('');
+    setOpportunityDesc('');
+    setExpirationDate('');
+    setAreaSelectedShow('');
+    setTownSelectedShow('');
+    setJurisdictionSelectedShow('');
+    setServiceLineSelectedShow('');
+    setIndustrySectorSelectedShow('');
+    setIndustrySegmentSelectedShow('');
+    setClientDimensionSelectedShow('');
+    setDealCaseDimensionSelectedShow('');
+    setCvSelected({name: ''});
+    setValueJurisdiction(null);
+    setValueTown(null);
+    setValueAreaPractice(null);
+    setValueLawyerRole(null);
+    setValueServiceLine(null);
+    setValueIndustrySector(null);
+    setValueIndustrySegment(null);
+    setValueClientDimension(null);
+    setValueDealCaseDimension(null);
+  };
+  useEffect(() => {
+    // console.log('is_edit: ', is_edit);
+    console.log('is_edititemsJurisdiction: ', itemsJurisdiction.length);
+    if (is_edit && itemsJurisdiction.length > 0) {
+      // console.log('is_edititemsJurisdiction123: ', is_edit);
+      getOpportunityDetails();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [itemsJurisdiction]);
+
+  const isFocused = useIsFocused();
+  useEffect(() => {
+    const unsubscribe = props.navigation.addListener('focus', () => {
+      clearFields();
+    });
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [isFocused]);
 
   const getOpportunityDetails = async () => {
     setIsLoading(true);
@@ -534,28 +570,7 @@ const CreateOpportunity = props => {
           JSON.stringify(response, null, 2),
         );
         if (response.status == 200) {
-          setOpportunityTitle('');
-          setOpportunityDesc('');
-          setExpirationDate('');
-          setAreaSelectedShow('');
-          setTownSelectedShow('');
-          setJurisdictionSelectedShow('');
-          setServiceLineSelectedShow('');
-          setIndustrySectorSelectedShow('');
-          setIndustrySegmentSelectedShow('');
-          setClientDimensionSelectedShow('');
-          setDealCaseDimensionSelectedShow('');
-          setCvSelected({name: ''});
-
-          setValueJurisdiction(null);
-          setValueTown(null);
-          setValueAreaPractice(null);
-          setValueLawyerRole(null);
-          setValueServiceLine(null);
-          setValueIndustrySector(null);
-          setValueIndustrySegment(null);
-          setValueClientDimension(null);
-          setValueDealCaseDimension(null);
+          clearFields();
 
           dispatch(setLoader(false));
           Alert.alert(

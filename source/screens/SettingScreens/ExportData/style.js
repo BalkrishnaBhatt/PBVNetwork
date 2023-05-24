@@ -7,8 +7,16 @@ export default StyleSheet.create({
   View_Main: {
     flex: 1,
     backgroundColor: Colors.white,
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    // paddingHorizontal: 100
+    paddingHorizontal: 16,
+  },
+  text_style: {
+    fontSize: 14,
+    fontFamily: Fonts.Regular_font,
+  },
+  button_style: {
+    backgroundColor: Colors.primary_color,
+    padding: 16,
+    borderRadius: 10,
+    alignSelf: 'center',
   },
 });
