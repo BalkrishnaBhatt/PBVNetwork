@@ -12,11 +12,14 @@ export default StyleSheet.create({
   text_style: {
     fontSize: 14,
     fontFamily: Fonts.Regular_font,
+    color: Colors.primary_color,
   },
   button_style: {
-    backgroundColor: Colors.primary_color,
-    padding: 16,
+    backgroundColor: Colors.light_primary_color,
+    paddingHorizontal: 26,
+    paddingVertical: 10,
     borderRadius: 10,
     alignSelf: 'center',
+    marginBottom: 10,
   },
 });

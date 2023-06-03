@@ -94,7 +94,7 @@ const Login = ({navigation, route}) => {
       .post(url, config)
       .then(async response => {
         setIsLoading(false);
-        // console_log('login response: ', JSON.stringify(response.data, null, 2));
+        console_log('login response: ', JSON.stringify(response.data, null, 2));
         // handle success
         if (response.data && response.data.token) {
           await AsyncStorage.setItem(
